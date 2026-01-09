@@ -1,0 +1,17 @@
+{
+  "name": "@fnd/contracts",
+  "version": "1.0.0",
+  "description": "Service contracts and interfaces",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rimraf dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "@fnd/domain": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

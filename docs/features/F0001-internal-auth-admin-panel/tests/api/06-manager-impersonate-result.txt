@@ -1,0 +1,75 @@
+* Variables:
+*     TEST_EMAIL: test-1734747100@example.com
+*     API_URL: http://localhost:3099/api/v1
+*     superAdminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+*     accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjdhOTAzYjc5LTUyZmYtNGUyMi05ZGU2LTY0OGIxMzc3ZTI3ZSIsImlhdCI6MTc2NjI3OTYzNywiZXhwIjoxNzY2MjgwNTM3LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.be7KSGU53OoCG25s3x3vHaJ7SvqPgTBUKzaDRi1sqO4
+*     userId: 4e37ce84-c70a-49da-add0-b2f900482488
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/manager/impersonate
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo' --header 'Content-Type: application/json' --data $'{\n  "userId": "4e37ce84-c70a-49da-add0-b2f900482488"\n}' 'http://localhost:3099/api/v1/manager/impersonate'
+*
+** Host localhost:3099 was resolved.
+** IPv6: ::1
+** IPv4: 127.0.0.1
+**   Trying [::1]:3099...
+** Established connection to localhost (::1 port 3099) from ::1 port 60551 
+** using HTTP/1.x
+> POST /api/v1/manager/impersonate HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 54
+>
+* Request body:
+* {
+*   "userId": "4e37ce84-c70a-49da-add0-b2f900482488"
+* }
+** upload completely sent off: 54 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 249 bytes in 15 ms)
+*
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 249
+< ETag: W/"f9-wGHtRwUI3k/sAI3qZf3+IF06V7g"
+< Date: Sun, 21 Dec 2025 01:15:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":["property userId should not exist","targetUserId should not be empty","targetUserId must be a string","Reason must be at least 10 characters","reason should not be empty","reason must be a string"],"error":"Bad Request","statusCode":400}
+*
+* Timings:
+* begin: 2025-12-21 01:15:17.000431600 UTC
+* end: 2025-12-21 01:15:17.016183200 UTC
+* namelookup: 101 µs
+* connect: 1420 µs
+* app_connect: 0 µs
+* pre_transfer: 1664 µs
+* start_transfer: 15661 µs
+* total: 15682 µs
+*
+error: Assert status code
+   --> 06-manager-impersonate.hurl:22:6
+    |
+    | POST {{API_URL}}/manager/impersonate
+    | ...
+ 22 | HTTP 200
+    |      ^^^ actual value is <400>
+    |
+

@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Backgrounds */
+    --background: 0 0% 98%;           /* #FAFAFA - Off-white softer */
+    --foreground: 224 71% 4%;         /* #030712 - Near black */
+    --card: 0 0% 100%;                /* #FFFFFF - Pure white cards */
+    --card-foreground: 224 71% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+
+    /* Brand */
+    --primary: 210 100% 56%;          /* #3B9EFF - Blue vibrant */
+    --primary-foreground: 0 0% 100%;
+
+    /* Neutrals */
+    --secondary: 220 14% 96%;         /* #F4F4F5 - Light gray */
+    --secondary-foreground: 224 71% 4%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;   /* #6B7280 - Medium gray */
+    --accent: 200 90% 48%;            /* #1AA3E0 - Blue darker */
+    --accent-foreground: 0 0% 100%;
+
+    /* Feedback */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+    --info: 200 98% 39%;
+    --info-foreground: 0 0% 100%;
+
+    /* UI Elements */
+    --border: 220 13% 91%;            /* #E5E7EB - Subtle border */
+    --input: 220 13% 91%;
+    --ring: 210 100% 56%;
+    --radius: 0.75rem;                /* 12px - Modern rounded */
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  }
+
+  .dark {
+    /* Backgrounds - Layered depth */
+    --background: 224 71% 4%;         /* #030712 - Deep dark */
+    --foreground: 210 20% 98%;        /* #F8FAFC - Crisp white text */
+    --card: 224 40% 8%;               /* #0F172A - Elevated surface */
+    --card-foreground: 210 20% 98%;
+    --popover: 224 40% 10%;           /* #1E293B - Popover layer */
+    --popover-foreground: 210 20% 98%;
+
+    /* Brand - Slightly adjusted for dark */
+    --primary: 210 100% 60%;          /* Lighter blue for contrast */
+    --primary-foreground: 0 0% 100%;
+
+    /* Neutrals */
+    --secondary: 224 30% 12%;         /* Subtle elevation */
+    --secondary-foreground: 210 20% 98%;
+    --muted: 224 30% 15%;
+    --muted-foreground: 215 20% 65%;  /* Readable secondary text */
+    --accent: 200 90% 52%;            /* Brighter blue in dark */
+    --accent-foreground: 0 0% 100%;
+
+    /* Feedback - Same with adjusted luminance */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+    --info: 200 98% 50%;
+    --info-foreground: 0 0% 100%;
+
+    /* UI Elements */
+    --border: 224 30% 18%;            /* Subtle in dark */
+    --input: 224 30% 15%;
+    --ring: 210 100% 60%;
+
+    /* Shadows - Darker, subtler */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+    --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-background/80 backdrop-blur-lg border border-border/50;
+  }
+
+  .gradient-brand {
+    @apply bg-gradient-to-br from-primary/20 via-background to-accent/10;
+  }
+
+  .gradient-radial {
+    background: radial-gradient(ellipse at top, hsl(var(--primary) / 0.15), transparent 50%);
+  }
+
+  .gradient-glow {
+    background: radial-gradient(circle at center, hsl(var(--primary) / 0.2) 0%, transparent 70%);
+  }
+
+  /* Focus styles */
+  .focus-visible:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}

@@ -1,0 +1,134 @@
+"use client"
+
+import * as React from "react"
+import { formatDistanceToNow } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { Monitor, MapPin, Chrome, Clock, CheckCircle2, LogOut } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { cn } from "@/lib/utils"
+
+interface Session {
+  id: string
+  device: string
+  browser: string
+  location: string
+  lastActive: string
+  isCurrent: boolean
+}
+
+interface SessionCardProps {
+  session: Session
+  onRevoke: (session: Session) => void
+  className?: string
+}
+
+export function SessionCard({ session, onRevoke, className }: SessionCardProps) {
+  const formatLastActive = (dateString: string) => {
+    return formatDistanceToNow(new Date(dateString), {
+      addSuffix: true,
+      locale: ptBR,
+    })
+  }
+
+  return (
+    <Card className={cn("border transition-all hover:shadow-md", className)}>
+      <CardContent className="p-4">
+        <div className="flex flex-col gap-3">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="rounded-lg bg-primary/10 p-2 shrink-0">
+                <Monitor className="h-4 w-4 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-semibold text-sm truncate">{session.device}</h4>
+                {session.isCurrent && (
+                  <Badge variant="default" className="mt-1 gap-1">
+                    <CheckCircle2 className="h-3 w-3" />
+                    Sessão Atual
+                  </Badge>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Details */}
+          <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Chrome className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">{session.browser}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">{session.location}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">
+                Última atividade {formatLastActive(session.lastActive)}
+              </span>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="pt-2 border-t">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="w-full gap-2"
+                  disabled={session.isCurrent}
+                >
+                  <LogOut className="h-4 w-4" />
+                  Revogar Sessão
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Revogar Sessão?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Esta ação irá encerrar a sessão em{" "}
+                    <span className="font-semibold text-foreground">
+                      {session.device}
+                    </span>
+                    . O dispositivo precisará fazer login novamente para acessar sua conta.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => onRevoke(session)}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    Revogar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            {session.isCurrent && (
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Você não pode revogar a sessão atual
+              </p>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+SessionCard.displayName = "SessionCard"

@@ -1,0 +1,116 @@
+* Variables:
+*     API_URL: http://localhost:3099/api/v1
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/
+*
+* Request can be run with the following curl command:
+* curl 'http://localhost:3099/api/v1/'
+*
+** Host localhost:3099 was resolved.
+** IPv6: ::1
+** IPv4: 127.0.0.1
+**   Trying [::1]:3099...
+** Established connection to localhost (::1 port 3099) from ::1 port 58807 
+** using HTTP/1.x
+> GET /api/v1/ HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 59 bytes in 3 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 59
+< ETag: W/"3b-pYd222uG/IECXMvDuO8RWdd2oIU"
+< Date: Sun, 21 Dec 2025 01:10:36 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"status":"healthy","timestamp":"2025-12-21T01:10:36.542Z"}
+*
+* Timings:
+* begin: 2025-12-21 01:10:36.540408400 UTC
+* end: 2025-12-21 01:10:36.543710800 UTC
+* namelookup: 77 µs
+* connect: 1754 µs
+* app_connect: 0 µs
+* pre_transfer: 1930 µs
+* start_transfer: 3203 µs
+* total: 3224 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 2
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "admin@fnd.dev",\n  "password": "SuperAdmin123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 62
+>
+* Request body:
+* {
+*   "email": "admin@fnd.dev",
+*   "password": "SuperAdmin123!"
+* }
+** upload completely sent off: 62 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 790 bytes in 333 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 790
+< ETag: W/"316-2Cdvtus7OJens/BQhJoHk5Qldfw"
+< Date: Sun, 21 Dec 2025 01:10:36 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo","refreshToken":"2d3320310cb89bca1b3110d425bbd338020c5510cba2cf9df80ca5667f31e172","user":{"id":"00000000-0000-0000-0000-000000000002","email":"admin@fnd.dev","fullName":"Super Admin","emailVerified":true,"accountId":"00000000-0000-0000-0000-000000000001"},"session":{"id":"8ec0c077-7c88-422f-81d6-0aec4b9939d1","expiresAt":"2025-12-28T01:10:36.861Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:10:36.544064400 UTC
+* end: 2025-12-21 01:10:36.877560100 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 211 µs
+* start_transfer: 333406 µs
+* total: 333437 µs
+* Captures:
+* superAdminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+* superAdminRefreshToken: 2d3320310cb89bca1b3110d425bbd338020c5510cba2cf9df80ca5667f31e172
+* superAdminUserId: 00000000-0000-0000-0000-000000000002
+*
+{"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo","refreshToken":"2d3320310cb89bca1b3110d425bbd338020c5510cba2cf9df80ca5667f31e172","user":{"id":"00000000-0000-0000-0000-000000000002","email":"admin@fnd.dev","fullName":"Super Admin","emailVerified":true,"accountId":"00000000-0000-0000-0000-000000000001"},"session":{"id":"8ec0c077-7c88-422f-81d6-0aec4b9939d1","expiresAt":"2025-12-28T01:10:36.861Z"}}

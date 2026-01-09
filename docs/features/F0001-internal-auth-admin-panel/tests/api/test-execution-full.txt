@@ -1,0 +1,697 @@
+* Variables:
+*     TEST_EMAIL: test4@example.com
+*     TEST_PASSWORD: Password123!
+*     TEST_NAME: Test User
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     API_URL: http://localhost:3099/api/v1
+*     TEST_WORKSPACE: Test Workspace
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/
+*
+* Request can be run with the following curl command:
+* curl 'http://localhost:3099/api/v1/'
+*
+> GET /api/v1/ HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> User-Agent: hurl/7.1.0
+>
+* Response: (received 59 bytes in 3 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 59
+< ETag: W/"3b-z5uEbq3/dtgvftdTVzkRIfPQGCA"
+< Date: Sun, 21 Dec 2025 00:56:16 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 2
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "admin@fnd.dev",\n  "password": "SuperAdmin123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 62
+>
+* Response: (received 722 bytes in 108 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 722
+< ETag: W/"2d2-AbCgQypdjoveOrslo1K6KoOvk7Q"
+< Date: Sun, 21 Dec 2025 00:56:16 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Captures:
+* superAdminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJpYXQiOjE3NjYyNzg1NzYsImV4cCI6MTc2NjI3OTQ3NiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.RAnloGsyN0SIQIqYL_I0fHuPpjm24YSaxlOVzxlSSSo
+* superAdminRefreshToken: 37bc7cd773891f6fb53496ab20b043e339a4932c0d79d2353cc39cac24f4a7b2
+* superAdminUserId: 00000000-0000-0000-0000-000000000002
+*
+* Variables:
+*     TEST_EMAIL: test4@example.com
+*     TEST_PASSWORD: Password123!
+*     TEST_NAME: Test User
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+*     API_URL: http://localhost:3099/api/v1
+*     TEST_WORKSPACE: Test Workspace
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test4@example.com",\n  "password": "Password123!",\n  "name": "Test User",\n  "workspaceName": "Test Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 124
+>
+* Response: (received 731 bytes in 91 ms)
+*
+< HTTP/1.1 201 Created
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 731
+< ETag: W/"2db-C9qfQwPhxJC0hMs+CpAmyJ/Eplo"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Captures:
+* userId: 71f2fd8f-da59-4a39-ba17-8b314d594a2b
+* accountId: 8c8ab07b-92ff-49e5-8234-ead9d21f8915
+* accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MWYyZmQ4Zi1kYTU5LTRhMzktYmExNy04YjMxNGQ1OTRhMmIiLCJhY2NvdW50SWQiOiI4YzhhYjA3Yi05MmZmLTQ5ZTUtODIzNC1lYWQ5ZDIxZjg5MTUiLCJlbWFpbCI6InRlc3Q0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzY2Mjc4NTc3LCJleHAiOjE3NjYyNzk0NzcsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.-fviiJ4kHF3ijLc3muqj9_Pp9JNCHbJ7LKY-XJw2ozA
+* refreshToken: 8435ab9022e843921961327f05a3cae0bb8be07ee0a1f0501b0e3dd6ceefef16
+*
+* ------------------------------------------------------------------------------
+* Executing entry 2
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test4@example.com",\n  "password": "Password123!",\n  "name": "Another User",\n  "workspaceName": "Another Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 130
+>
+* Response: (received 69 bytes in 2 ms)
+*
+< HTTP/1.1 409 Conflict
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 69
+< ETag: W/"45-FyguBnUmCTz+clkVRvuxbyd4F4Y"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 3
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "invalid-email",\n  "password": "Password123!",\n  "name": "Test User",\n  "workspaceName": "Test Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 120
+>
+* Response: (received 77 bytes in 1 ms)
+*
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 77
+< ETag: W/"4d-3V3Uy1KR57m8txxwRQ1zEUNG0HY"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 4
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "weak@example.com",\n  "password": "weak",\n  "name": "Test User",\n  "workspaceName": "Test Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 115
+>
+* Response: (received 108 bytes in 0 ms)
+*
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 108
+< ETag: W/"6c-uKPJtUKomS7XXjwztpmLkNDCU2A"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 5
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test4@example.com",\n  "password": "WrongPassword123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 69
+>
+* Response: (received 79 bytes in 74 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 79
+< ETag: W/"4f-9E4+VrHwuCO3fvv9JZS1TuLe34s"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 6
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test4@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 64
+>
+* Response: (received 731 bytes in 93 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 731
+< ETag: W/"2db-jmzmc1LfToJ/ERyaP5ZDIX6ee84"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Captures:
+* accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MWYyZmQ4Zi1kYTU5LTRhMzktYmExNy04YjMxNGQ1OTRhMmIiLCJhY2NvdW50SWQiOiI4YzhhYjA3Yi05MmZmLTQ5ZTUtODIzNC1lYWQ5ZDIxZjg5MTUiLCJlbWFpbCI6InRlc3Q0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzY2Mjc4NTc3LCJleHAiOjE3NjYyNzk0NzcsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.-fviiJ4kHF3ijLc3muqj9_Pp9JNCHbJ7LKY-XJw2ozA
+* refreshToken: 9b536718f9f68a85f747b83185d539c26b981fd3d1f60ce7842bc9a4fe03da72
+* sessionId: 4e7bc74c-0123-483e-be2d-52722e9e2886
+*
+* ------------------------------------------------------------------------------
+* Executing entry 7
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "nonexistent@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 70
+>
+* Response: (received 79 bytes in 5 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 79
+< ETag: W/"4f-9E4+VrHwuCO3fvv9JZS1TuLe34s"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 8
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MWYyZmQ4Zi1kYTU5LTRhMzktYmExNy04YjMxNGQ1OTRhMmIiLCJhY2NvdW50SWQiOiI4YzhhYjA3Yi05MmZmLTQ5ZTUtODIzNC1lYWQ5ZDIxZjg5MTUiLCJlbWFpbCI6InRlc3Q0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzY2Mjc4NTc3LCJleHAiOjE3NjYyNzk0NzcsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.-fviiJ4kHF3ijLc3muqj9_Pp9JNCHbJ7LKY-XJw2ozA
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MWYyZmQ4Zi1kYTU5LTRhMzktYmExNy04YjMxNGQ1OTRhMmIiLCJhY2NvdW50SWQiOiI4YzhhYjA3Yi05MmZmLTQ5ZTUtODIzNC1lYWQ5ZDIxZjg5MTUiLCJlbWFpbCI6InRlc3Q0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzY2Mjc4NTc3LCJleHAiOjE3NjYyNzk0NzcsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.-fviiJ4kHF3ijLc3muqj9_Pp9JNCHbJ7LKY-XJw2ozA' 'http://localhost:3099/api/v1/auth/me'
+*
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MWYyZmQ4Zi1kYTU5LTRhMzktYmExNy04YjMxNGQ1OTRhMmIiLCJhY2NvdW50SWQiOiI4YzhhYjA3Yi05MmZmLTQ5ZTUtODIzNC1lYWQ5ZDIxZjg5MTUiLCJlbWFpbCI6InRlc3Q0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzY2Mjc4NTc3LCJleHAiOjE3NjYyNzk0NzcsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.-fviiJ4kHF3ijLc3muqj9_Pp9JNCHbJ7LKY-XJw2ozA
+> User-Agent: hurl/7.1.0
+>
+* Response: (received 232 bytes in 3 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 232
+< ETag: W/"e8-l/btAKTiyTxyX3q0oDTCLKKsVss"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 9
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+*
+* Request can be run with the following curl command:
+* curl 'http://localhost:3099/api/v1/auth/me'
+*
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> User-Agent: hurl/7.1.0
+>
+* Response: (received 43 bytes in 1 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 43
+< ETag: W/"2b-dGnJzt6gv1nJjX6DJ9RztDWptng"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 10
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+* Authorization: Bearer invalid-token-12345
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer invalid-token-12345' 'http://localhost:3099/api/v1/auth/me'
+*
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer invalid-token-12345
+> User-Agent: hurl/7.1.0
+>
+* Response: (received 43 bytes in 1 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 43
+< ETag: W/"2b-dGnJzt6gv1nJjX6DJ9RztDWptng"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* Variables:
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     TEST_PASSWORD: Password123!
+*     TEST_EMAIL: test4@example.com
+*     TEST_WORKSPACE: Test Workspace
+*     API_URL: http://localhost:3099/api/v1
+*     TEST_NAME: Test User
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+* ------------------------------------------------------------------------------
+* Executing entry 1
+error: Undefined variable
+   --> 02-auth-sessions.hurl:18:25
+    |
+    | GET {{API_URL}}/auth/sessions
+ 18 | Authorization: Bearer {{accessToken}}
+    |                         ^^^^^^^^^^^ you must set the variable accessToken
+    |
+
+* Variables:
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+*     TEST_EMAIL: test4@example.com
+*     TEST_NAME: Test User
+*     TEST_WORKSPACE: Test Workspace
+*     API_URL: http://localhost:3099/api/v1
+*     TEST_PASSWORD: Password123!
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/forgot-password
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test4@example.com"\n}' 'http://localhost:3099/api/v1/auth/forgot-password'
+*
+> POST /api/v1/auth/forgot-password HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 34
+>
+* Response: (received 71 bytes in 7 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 71
+< ETag: W/"47-SgV4rwqBg8Kzm7eujlKXO3wkf88"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 2
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/forgot-password
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "nonexistent@example.com"\n}' 'http://localhost:3099/api/v1/auth/forgot-password'
+*
+> POST /api/v1/auth/forgot-password HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 40
+>
+* Response: (received 71 bytes in 3 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 71
+< ETag: W/"47-SgV4rwqBg8Kzm7eujlKXO3wkf88"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 3
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/forgot-password
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "invalid-email"\n}' 'http://localhost:3099/api/v1/auth/forgot-password'
+*
+> POST /api/v1/auth/forgot-password HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 30
+>
+* Response: (received 77 bytes in 1 ms)
+*
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 77
+< ETag: W/"4d-3V3Uy1KR57m8txxwRQ1zEUNG0HY"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* ------------------------------------------------------------------------------
+* Executing entry 4
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/reset-password
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "token": "invalid-token-12345",\n  "newPassword": "NewPassword123!"\n}' 'http://localhost:3099/api/v1/auth/reset-password'
+*
+> POST /api/v1/auth/reset-password HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 72
+>
+* Response: (received 83 bytes in 3 ms)
+*
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 83
+< ETag: W/"53-Er/1AB3OJhyhQxAjBrc7MWImRM4"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+* Variables:
+*     TEST_WORKSPACE: Test Workspace
+*     TEST_NAME: Test User
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     TEST_PASSWORD: Password123!
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+*     API_URL: http://localhost:3099/api/v1
+*     TEST_EMAIL: test4@example.com
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "verify@example.com",\n  "password": "Password123!",\n  "name": "Verify User",\n  "workspaceName": "Verify Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 129
+>
+* Response: (received 69 bytes in 4 ms)
+*
+< HTTP/1.1 409 Conflict
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 69
+< ETag: W/"45-FyguBnUmCTz+clkVRvuxbyd4F4Y"
+< Date: Sun, 21 Dec 2025 00:56:17 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+*
+error: Assert status code
+   --> 04-auth-email-verification.hurl:20:6
+    |
+    | POST {{API_URL}}/auth/signup
+    | ...
+ 20 | HTTP 201
+    |      ^^^ actual value is <409>
+    |
+
+* Variables:
+*     TEST_NAME: Test User
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+*     TEST_WORKSPACE: Test Workspace
+*     TEST_EMAIL: test4@example.com
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     TEST_PASSWORD: Password123!
+*     API_URL: http://localhost:3099/api/v1
+* ------------------------------------------------------------------------------
+* Executing entry 1
+error: Undefined variable
+   --> 05-manager-users.hurl:16:25
+    |
+    | GET {{API_URL}}/manager/users
+ 16 | Authorization: Bearer {{superAdminAccessToken}}
+    |                         ^^^^^^^^^^^^^^^^^^^^^ you must set the variable superAdminAccessToken
+    |
+
+* Variables:
+*     TEST_NAME: Test User
+*     TEST_WORKSPACE: Test Workspace
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     TEST_EMAIL: test4@example.com
+*     TEST_PASSWORD: Password123!
+*     API_URL: http://localhost:3099/api/v1
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+* ------------------------------------------------------------------------------
+* Executing entry 1
+error: Undefined variable
+   --> 06-manager-impersonate.hurl:16:25
+    |
+    | POST {{API_URL}}/manager/impersonate
+ 16 | Authorization: Bearer {{superAdminAccessToken}}
+    |                         ^^^^^^^^^^^^^^^^^^^^^ you must set the variable superAdminAccessToken
+    |
+
+* Variables:
+*     TEST_NAME: Test User
+*     API_URL: http://localhost:3099/api/v1
+*     TEST_WORKSPACE: Test Workspace
+*     TEST_EMAIL: test4@example.com
+*     SUPER_ADMIN_EMAIL: admin@fnd.dev
+*     SUPER_ADMIN_PASSWORD: SuperAdmin123!
+*     TEST_PASSWORD: Password123!
+* ------------------------------------------------------------------------------
+* Executing entry 1
+error: Undefined variable
+   --> 07-manager-metrics.hurl:16:25
+    |
+    | GET {{API_URL}}/manager/metrics
+ 16 | Authorization: Bearer {{superAdminAccessToken}}
+    |                         ^^^^^^^^^^^^^^^^^^^^^ you must set the variable superAdminAccessToken
+    |
+
+{"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJpYXQiOjE3NjYyNzg1NzYsImV4cCI6MTc2NjI3OTQ3NiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.RAnloGsyN0SIQIqYL_I0fHuPpjm24YSaxlOVzxlSSSo","refreshToken":"37bc7cd773891f6fb53496ab20b043e339a4932c0d79d2353cc39cac24f4a7b2","user":{"id":"00000000-0000-0000-0000-000000000002","email":"admin@fnd.dev","fullName":"Super Admin","emailVerified":true,"accountId":"00000000-0000-0000-0000-000000000001"},"session":{"id":"8c18f616-bad8-4994-b063-6b0ff863bef3","expiresAt":"2025-12-28T00:56:16.955Z"}}{"message":"Unauthorized","statusCode":401}{"message":"Invalid or expired reset token","error":"Bad Request","statusCode":400}

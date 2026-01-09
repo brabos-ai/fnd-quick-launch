@@ -1,0 +1,13 @@
+{
+  "watch": ["src"],
+  "ext": "ts,json",
+  "ignore": ["src/**/*.spec.ts", "dist", "node_modules"],
+  "exec": "node --require @swc-node/register src/local.ts",
+  "delay": 500,
+  "legacyWatch": false,
+  "verbose": false,
+  "restartable": "rs",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

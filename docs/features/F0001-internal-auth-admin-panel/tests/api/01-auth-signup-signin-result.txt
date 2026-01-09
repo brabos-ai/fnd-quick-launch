@@ -1,0 +1,555 @@
+* Variables:
+*     TEST_EMAIL: test-1734747100@example.com
+*     TEST_WORKSPACE: Test Workspace
+*     API_URL: http://localhost:3099/api/v1
+*     TEST_PASSWORD: Password123!
+*     TEST_NAME: Test User
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "Password123!",\n  "name": "Test User",\n  "workspaceName": "Test Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+** Host localhost:3099 was resolved.
+** IPv6: ::1
+** IPv4: 127.0.0.1
+**   Trying [::1]:3099...
+** Established connection to localhost (::1 port 3099) from ::1 port 50409 
+** using HTTP/1.x
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 134
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "Password123!",
+*   "name": "Test User",
+*   "workspaceName": "Test Workspace"
+* }
+** upload completely sent off: 134 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 822 bytes in 140 ms)
+*
+< HTTP/1.1 201 Created
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 822
+< ETag: W/"336-jC1IrIspftv18P0F+1QtDbw30GE"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImRkN2NjYmFjLTM3N2UtNGVlMy1iZjc4LTI5YzBiNTg0YjI4NyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.wH9ptcVTZtuApjPt5Gz2E8pOOL2lnSbu8qV3FB97KC4","refreshToken":"05b5d6030023eb3aeee11923e09610e0bcb132778403bc5ae6bce15ed9aa88a5","user":{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","fullName":"Test User","emailVerified":false,"accountId":"a64d60e1-cc03-41c9-9d43-491f7c6a67b6"},"session":{"id":"dd7ccbac-377e-4ee3-bf78-29c0b584b287","expiresAt":"2025-12-28T01:11:15.347Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.215316100 UTC
+* end: 2025-12-21 01:11:15.356213800 UTC
+* namelookup: 71 µs
+* connect: 23838 µs
+* app_connect: 0 µs
+* pre_transfer: 24211 µs
+* start_transfer: 140786 µs
+* total: 140815 µs
+* Captures:
+* userId: 4e37ce84-c70a-49da-add0-b2f900482488
+* accountId: a64d60e1-cc03-41c9-9d43-491f7c6a67b6
+* accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImRkN2NjYmFjLTM3N2UtNGVlMy1iZjc4LTI5YzBiNTg0YjI4NyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.wH9ptcVTZtuApjPt5Gz2E8pOOL2lnSbu8qV3FB97KC4
+* refreshToken: 05b5d6030023eb3aeee11923e09610e0bcb132778403bc5ae6bce15ed9aa88a5
+*
+* ------------------------------------------------------------------------------
+* Executing entry 2
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "Password123!",\n  "name": "Another User",\n  "workspaceName": "Another Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 140
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "Password123!",
+*   "name": "Another User",
+*   "workspaceName": "Another Workspace"
+* }
+** upload completely sent off: 140 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 69 bytes in 4 ms)
+*
+< HTTP/1.1 409 Conflict
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 69
+< ETag: W/"45-FyguBnUmCTz+clkVRvuxbyd4F4Y"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"User already exists","error":"Conflict","statusCode":409}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.356897700 UTC
+* end: 2025-12-21 01:11:15.360933800 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 253 µs
+* start_transfer: 3971 µs
+* total: 3993 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 3
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "invalid-email",\n  "password": "Password123!",\n  "name": "Test User",\n  "workspaceName": "Test Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 120
+>
+* Request body:
+* {
+*   "email": "invalid-email",
+*   "password": "Password123!",
+*   "name": "Test User",
+*   "workspaceName": "Test Workspace"
+* }
+** upload completely sent off: 120 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 77 bytes in 2 ms)
+*
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 77
+< ETag: W/"4d-3V3Uy1KR57m8txxwRQ1zEUNG0HY"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":["email must be an email"],"error":"Bad Request","statusCode":400}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.361364600 UTC
+* end: 2025-12-21 01:11:15.363640 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 331 µs
+* start_transfer: 2191 µs
+* total: 2215 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 4
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "weak@example.com",\n  "password": "weak",\n  "name": "Test User",\n  "workspaceName": "Test Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 115
+>
+* Request body:
+* {
+*   "email": "weak@example.com",
+*   "password": "weak",
+*   "name": "Test User",
+*   "workspaceName": "Test Workspace"
+* }
+** upload completely sent off: 115 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 108 bytes in 1 ms)
+*
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 108
+< ETag: W/"6c-uKPJtUKomS7XXjwztpmLkNDCU2A"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":["password must be longer than or equal to 8 characters"],"error":"Bad Request","statusCode":400}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.363997600 UTC
+* end: 2025-12-21 01:11:15.365881100 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 356 µs
+* start_transfer: 1820 µs
+* total: 1841 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 5
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "WrongPassword123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 79
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "WrongPassword123!"
+* }
+** upload completely sent off: 79 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 79 bytes in 76 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 79
+< ETag: W/"4f-9E4+VrHwuCO3fvv9JZS1TuLe34s"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Invalid email or password","error":"Unauthorized","statusCode":401}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.366192100 UTC
+* end: 2025-12-21 01:11:15.442492100 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 214 µs
+* start_transfer: 76238 µs
+* total: 76257 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 6
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 74
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "Password123!"
+* }
+** upload completely sent off: 74 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 822 bytes in 84 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 822
+< ETag: W/"336-hROXzeTfMRX7dAMC/MS4vsKMQ/U"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k","refreshToken":"c53cd30e94ff72964ad506a7c313d1a0dbd72cae4ab5e713a8c44151a26611e1","user":{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","fullName":"Test User","emailVerified":false,"accountId":"a64d60e1-cc03-41c9-9d43-491f7c6a67b6"},"session":{"id":"c8af9619-6058-48c5-b5aa-de2d1391ab9c","expiresAt":"2025-12-28T01:11:15.524Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.442759700 UTC
+* end: 2025-12-21 01:11:15.527731200 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 151 µs
+* start_transfer: 84897 µs
+* total: 84924 µs
+* Captures:
+* accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+* refreshToken: c53cd30e94ff72964ad506a7c313d1a0dbd72cae4ab5e713a8c44151a26611e1
+* sessionId: c8af9619-6058-48c5-b5aa-de2d1391ab9c
+*
+* ------------------------------------------------------------------------------
+* Executing entry 7
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "nonexistent@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 70
+>
+* Request body:
+* {
+*   "email": "nonexistent@example.com",
+*   "password": "Password123!"
+* }
+** upload completely sent off: 70 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 79 bytes in 7 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 79
+< ETag: W/"4f-9E4+VrHwuCO3fvv9JZS1TuLe34s"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Invalid email or password","error":"Unauthorized","statusCode":401}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.528299500 UTC
+* end: 2025-12-21 01:11:15.535690400 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 319 µs
+* start_transfer: 7321 µs
+* total: 7344 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 8
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/me'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 242 bytes in 7 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 242
+< ETag: W/"f2-cFGc5FYeo6EmI1+5pm/V8XmNpvI"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"user":{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","fullName":"Test User","emailVerified":false,"accountId":"a64d60e1-cc03-41c9-9d43-491f7c6a67b6","role":"owner","createdAt":"2025-12-21T01:11:15.337Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.536093300 UTC
+* end: 2025-12-21 01:11:15.543759500 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 152 µs
+* start_transfer: 7581 µs
+* total: 7611 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 9
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+*
+* Request can be run with the following curl command:
+* curl 'http://localhost:3099/api/v1/auth/me'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 43 bytes in 1 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 43
+< ETag: W/"2b-dGnJzt6gv1nJjX6DJ9RztDWptng"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Unauthorized","statusCode":401}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.544254800 UTC
+* end: 2025-12-21 01:11:15.545882300 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 183 µs
+* start_transfer: 1549 µs
+* total: 1578 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 10
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+* Authorization: Bearer invalid-token-12345
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer invalid-token-12345' 'http://localhost:3099/api/v1/auth/me'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer invalid-token-12345
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 43 bytes in 1 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 43
+< ETag: W/"2b-dGnJzt6gv1nJjX6DJ9RztDWptng"
+< Date: Sun, 21 Dec 2025 01:11:15 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Unauthorized","statusCode":401}
+*
+* Timings:
+* begin: 2025-12-21 01:11:15.546280800 UTC
+* end: 2025-12-21 01:11:15.547620900 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 182 µs
+* start_transfer: 1269 µs
+* total: 1293 µs
+*
+{"message":"Unauthorized","statusCode":401}

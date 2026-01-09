@@ -1,0 +1,100 @@
+* Variables:
+*     accountId: a64d60e1-cc03-41c9-9d43-491f7c6a67b6
+*     superAdminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+*     accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjdhOTAzYjc5LTUyZmYtNGUyMi05ZGU2LTY0OGIxMzc3ZTI3ZSIsImlhdCI6MTc2NjI3OTYzNywiZXhwIjoxNzY2MjgwNTM3LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.be7KSGU53OoCG25s3x3vHaJ7SvqPgTBUKzaDRi1sqO4
+*     API_URL: http://localhost:3099/api/v1
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/manager/metrics
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo' 'http://localhost:3099/api/v1/manager/metrics'
+*
+** Host localhost:3099 was resolved.
+** IPv6: ::1
+** IPv4: 127.0.0.1
+**   Trying [::1]:3099...
+** Established connection to localhost (::1 port 3099) from ::1 port 54174 
+** using HTTP/1.x
+> GET /api/v1/manager/metrics HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 86 bytes in 60 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 86
+< ETag: W/"56-XvQlyMcMT8rYZSH7+j8Fx2VOrmM"
+< Date: Sun, 21 Dec 2025 01:16:05 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"totalUsers":4,"activeUsers":4,"lockedAccounts":0,"recentSignups":4,"recentLogins":5}
+*
+* Timings:
+* begin: 2025-12-21 01:16:05.325166 UTC
+* end: 2025-12-21 01:16:05.385342900 UTC
+* namelookup: 135 µs
+* connect: 23073 µs
+* app_connect: 0 µs
+* pre_transfer: 23379 µs
+* start_transfer: 60052 µs
+* total: 60077 µs
+*
+error: Assert failure
+   --> 07-manager-metrics.hurl:20:0
+    |
+    | GET {{API_URL}}/manager/metrics
+    | ...
+ 20 | jsonpath "$.users" exists
+    |   actual:   none
+    |   expected: something
+    |
+
+error: Assert failure
+   --> 07-manager-metrics.hurl:21:0
+    |
+    | GET {{API_URL}}/manager/metrics
+    | ...
+ 21 | jsonpath "$.sessions" exists
+    |   actual:   none
+    |   expected: something
+    |
+
+error: Assert failure
+   --> 07-manager-metrics.hurl:22:0
+    |
+    | GET {{API_URL}}/manager/metrics
+    | ...
+ 22 | jsonpath "$.loginAttempts" exists
+    |   actual:   none
+    |   expected: something
+    |
+
+error: Assert failure
+   --> 07-manager-metrics.hurl:23:0
+    |
+    | GET {{API_URL}}/manager/metrics
+    | ...
+ 23 | jsonpath "$.signups" exists
+    |   actual:   none
+    |   expected: something
+    |
+

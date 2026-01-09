@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "files": [],
+  "references": [
+    { "path": "./libs/backend" },
+    { "path": "./libs/contracts" },
+    { "path": "./libs/database" },
+    { "path": "./apps/admin" },
+    { "path": "./apps/server" },
+    { "path": "./apps/site" },
+    { "path": "./apps/web" }
+  ]
+}

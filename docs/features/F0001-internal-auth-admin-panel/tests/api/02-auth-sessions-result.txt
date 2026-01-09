@@ -1,0 +1,952 @@
+* Variables:
+*     TEST_PASSWORD: Password123!
+*     accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*     API_URL: http://localhost:3099/api/v1
+*     sessionId: c8af9619-6058-48c5-b5aa-de2d1391ab9c
+*     userId: 4e37ce84-c70a-49da-add0-b2f900482488
+*     TEST_EMAIL: test-1734747100@example.com
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/sessions
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/sessions'
+*
+** Host localhost:3099 was resolved.
+** IPv6: ::1
+** IPv4: 127.0.0.1
+**   Trying [::1]:3099...
+** Established connection to localhost (::1 port 3099) from ::1 port 65412 
+** using HTTP/1.x
+> GET /api/v1/auth/sessions HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 344 bytes in 21 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 344
+< ETag: W/"158-Zaf/AzNfgR+7jgMS1ZhGlFm0rrM"
+< Date: Sun, 21 Dec 2025 01:12:00 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"sessions":[{"id":"dd7ccbac-377e-4ee3-bf78-29c0b584b287","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:11:15.347Z","createdAt":"2025-12-21T01:11:15.347Z"},{"id":"c8af9619-6058-48c5-b5aa-de2d1391ab9c","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:11:15.524Z","createdAt":"2025-12-21T01:11:15.524Z"}]}
+*
+* Timings:
+* begin: 2025-12-21 01:12:00.953950100 UTC
+* end: 2025-12-21 01:12:00.974984300 UTC
+* namelookup: 76 µs
+* connect: 1237 µs
+* app_connect: 0 µs
+* pre_transfer: 1350 µs
+* start_transfer: 20949 µs
+* total: 20970 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 2
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+* User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --header 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)
+> Content-Length: 74
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "Password123!"
+* }
+** upload completely sent off: 74 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 822 bytes in 75 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 822
+< ETag: W/"336-itVQ0W4onyA3J0OtW1XQ65MVSgE"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImUwMTM4NDc1LThmZGMtNGMwMS04NzM4LTZjZDg5ZDJjNWMwYSIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.xOLOQ7ZGn2_Ojz0W9kSEq6n1T2a25Ol25-Dch1PxObk","refreshToken":"aa1d0513a277b425fcd227e5c10b41c975269c8690c46ec9fc45f8151b84faf6","user":{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","fullName":"Test User","emailVerified":false,"accountId":"a64d60e1-cc03-41c9-9d43-491f7c6a67b6"},"session":{"id":"e0138475-8fdc-4c01-8738-6cd89d2c5c0a","expiresAt":"2025-12-28T01:12:01.052Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:12:00.980661900 UTC
+* end: 2025-12-21 01:12:01.055819900 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 296 µs
+* start_transfer: 75094 µs
+* total: 75116 µs
+* Captures:
+* accessToken2: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImUwMTM4NDc1LThmZGMtNGMwMS04NzM4LTZjZDg5ZDJjNWMwYSIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.xOLOQ7ZGn2_Ojz0W9kSEq6n1T2a25Ol25-Dch1PxObk
+* sessionId2: e0138475-8fdc-4c01-8738-6cd89d2c5c0a
+*
+* ------------------------------------------------------------------------------
+* Executing entry 3
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/sessions
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/sessions'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/sessions HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 509 bytes in 6 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 509
+< ETag: W/"1fd-M/hXhA2dcArmJRag9Idi5KST3ZM"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"sessions":[{"id":"dd7ccbac-377e-4ee3-bf78-29c0b584b287","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:11:15.347Z","createdAt":"2025-12-21T01:11:15.347Z"},{"id":"c8af9619-6058-48c5-b5aa-de2d1391ab9c","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:11:15.524Z","createdAt":"2025-12-21T01:11:15.524Z"},{"id":"e0138475-8fdc-4c01-8738-6cd89d2c5c0a","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:12:01.052Z","createdAt":"2025-12-21T01:12:01.052Z"}]}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.056164 UTC
+* end: 2025-12-21 01:12:01.062762500 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 115 µs
+* start_transfer: 6529 µs
+* total: 6552 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 4
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+* User-Agent: Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X)
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --header 'User-Agent: Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X)' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X)
+> Content-Length: 74
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "Password123!"
+* }
+** upload completely sent off: 74 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 822 bytes in 84 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 822
+< ETag: W/"336-vJWOjyjyaMzUxdG/atdNU5mTaqM"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjJmYzFkMTgxLWQ5OTktNGMzYy05MmZkLTNiZGFjMzk5NzYwOCIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0._nhB7b6lg4waXKoAHNdKPgrja3W1GZmFY_40h9JXAas","refreshToken":"db0f53f865d50cac368d838245820edc45c3adc7bb9eb82327354993be7cfcf6","user":{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","fullName":"Test User","emailVerified":false,"accountId":"a64d60e1-cc03-41c9-9d43-491f7c6a67b6"},"session":{"id":"2fc1d181-d999-4c3c-92fd-3bdac3997608","expiresAt":"2025-12-28T01:12:01.143Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.063220600 UTC
+* end: 2025-12-21 01:12:01.147468100 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 251 µs
+* start_transfer: 84179 µs
+* total: 84202 µs
+* Captures:
+* sessionId3: 2fc1d181-d999-4c3c-92fd-3bdac3997608
+*
+* ------------------------------------------------------------------------------
+* Executing entry 5
+*
+* Cookie store:
+*
+* Request:
+* DELETE http://localhost:3099/api/v1/auth/sessions/e0138475-8fdc-4c01-8738-6cd89d2c5c0a
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --request DELETE --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/sessions/e0138475-8fdc-4c01-8738-6cd89d2c5c0a'
+*
+** Reusing existing http: connection with host localhost
+> DELETE /api/v1/auth/sessions/e0138475-8fdc-4c01-8738-6cd89d2c5c0a HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 42 bytes in 9 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 42
+< ETag: W/"2a-3LI6EPCAQbuG9PgRcZFOfXKbWEk"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Session revoked successfully"}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.147871400 UTC
+* end: 2025-12-21 01:12:01.157312400 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 154 µs
+* start_transfer: 9361 µs
+* total: 9384 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 6
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/sessions
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/sessions'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/sessions HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 509 bytes in 6 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 509
+< ETag: W/"1fd-bEjlADPMhS5hCayrbfsLAs06rps"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"sessions":[{"id":"dd7ccbac-377e-4ee3-bf78-29c0b584b287","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:11:15.347Z","createdAt":"2025-12-21T01:11:15.347Z"},{"id":"c8af9619-6058-48c5-b5aa-de2d1391ab9c","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:11:15.524Z","createdAt":"2025-12-21T01:11:15.524Z"},{"id":"2fc1d181-d999-4c3c-92fd-3bdac3997608","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:12:01.143Z","createdAt":"2025-12-21T01:12:01.143Z"}]}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.157634900 UTC
+* end: 2025-12-21 01:12:01.164030700 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 125 µs
+* start_transfer: 6327 µs
+* total: 6346 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 7
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImUwMTM4NDc1LThmZGMtNGMwMS04NzM4LTZjZDg5ZDJjNWMwYSIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.xOLOQ7ZGn2_Ojz0W9kSEq6n1T2a25Ol25-Dch1PxObk
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImUwMTM4NDc1LThmZGMtNGMwMS04NzM4LTZjZDg5ZDJjNWMwYSIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.xOLOQ7ZGn2_Ojz0W9kSEq6n1T2a25Ol25-Dch1PxObk' 'http://localhost:3099/api/v1/auth/me'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImUwMTM4NDc1LThmZGMtNGMwMS04NzM4LTZjZDg5ZDJjNWMwYSIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.xOLOQ7ZGn2_Ojz0W9kSEq6n1T2a25Ol25-Dch1PxObk
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 78 bytes in 2 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 78
+< ETag: W/"4e-bWR0xxXmy07Ay7zxIqXt7MlFSHw"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Session has been revoked","error":"Unauthorized","statusCode":401}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.164329800 UTC
+* end: 2025-12-21 01:12:01.167273400 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 103 µs
+* start_transfer: 2882 µs
+* total: 2903 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 8
+*
+* Cookie store:
+*
+* Request:
+* DELETE http://localhost:3099/api/v1/auth/sessions/99999999-9999-9999-9999-999999999999
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --request DELETE --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/sessions/99999999-9999-9999-9999-999999999999'
+*
+** Reusing existing http: connection with host localhost
+> DELETE /api/v1/auth/sessions/99999999-9999-9999-9999-999999999999 HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 68 bytes in 5 ms)
+*
+< HTTP/1.1 404 Not Found
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 68
+< ETag: W/"44-ksv372XxDiXZq5OtACr+lgmK6R4"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Session not found","error":"Not Found","statusCode":404}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.167555400 UTC
+* end: 2025-12-21 01:12:01.173391800 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 156 µs
+* start_transfer: 5776 µs
+* total: 5794 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 9
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signup
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test2@example.com",\n  "password": "Password123!",\n  "name": "Second Test User",\n  "workspaceName": "Second Workspace"\n}' 'http://localhost:3099/api/v1/auth/signup'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signup HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 133
+>
+* Request body:
+* {
+*   "email": "test2@example.com",
+*   "password": "Password123!",
+*   "name": "Second Test User",
+*   "workspaceName": "Second Workspace"
+* }
+** upload completely sent off: 133 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 806 bytes in 80 ms)
+*
+< HTTP/1.1 201 Created
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 806
+< ETag: W/"326-9MvX5QHg/Dt9ozgLIOu8+H480Kc"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyODQxZDIxMi04OWE4LTQ0N2EtOGRhMC1hMTJmMmQzMzI2ZmIiLCJhY2NvdW50SWQiOiJlMDVmMjFmYi1kZjI1LTQ3YjItYjNhNS1hNmQ3NDNhM2EzYzIiLCJlbWFpbCI6InRlc3QyQGV4YW1wbGUuY29tIiwic2Vzc2lvbklkIjoiOWI2MTQ0MmYtNDZlZi00MWJiLTgzNWEtZWY3MzdmNjM4NmQ3IiwiaWF0IjoxNzY2Mjc5NTIxLCJleHAiOjE3NjYyODA0MjEsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.4vk2xwbOlKB2mWgnSmM8fvjT6Rj2ABYK5cwqYdz2m68","refreshToken":"32d9855f235f45e2bf4f50123db51a7454411044d79495eb3952ce5325c68e46","user":{"id":"2841d212-89a8-447a-8da0-a12f2d3326fb","email":"test2@example.com","fullName":"Second Test User","emailVerified":false,"accountId":"e05f21fb-df25-47b2-b3a5-a6d743a3a3c2"},"session":{"id":"9b61442f-46ef-41bb-835a-ef737f6386d7","expiresAt":"2025-12-28T01:12:01.251Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.173681100 UTC
+* end: 2025-12-21 01:12:01.254054300 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 164 µs
+* start_transfer: 80321 µs
+* total: 80339 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 10
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test2@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 64
+>
+* Request body:
+* {
+*   "email": "test2@example.com",
+*   "password": "Password123!"
+* }
+** upload completely sent off: 64 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 806 bytes in 108 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 806
+< ETag: W/"326-SqdmAIcByVAT8hJfHcJ2nZeIVzk"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyODQxZDIxMi04OWE4LTQ0N2EtOGRhMC1hMTJmMmQzMzI2ZmIiLCJhY2NvdW50SWQiOiJlMDVmMjFmYi1kZjI1LTQ3YjItYjNhNS1hNmQ3NDNhM2EzYzIiLCJlbWFpbCI6InRlc3QyQGV4YW1wbGUuY29tIiwic2Vzc2lvbklkIjoiNzdjMzE3N2MtNzkyZC00MjhiLWJhMjUtZWQ1MWJmYzA1MTY4IiwiaWF0IjoxNzY2Mjc5NTIxLCJleHAiOjE3NjYyODA0MjEsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.XDGsrDHecuqDLoWjNIs5oUupuQ-kAF2oA5mXJQ4PYQ4","refreshToken":"68f01b89d3a08bee15acf14d225d40609a98de1340cdf725d7a56c94b289c75c","user":{"id":"2841d212-89a8-447a-8da0-a12f2d3326fb","email":"test2@example.com","fullName":"Second Test User","emailVerified":false,"accountId":"e05f21fb-df25-47b2-b3a5-a6d743a3a3c2"},"session":{"id":"77c3177c-792d-428b-ba25-ed51bfc05168","expiresAt":"2025-12-28T01:12:01.356Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.254315400 UTC
+* end: 2025-12-21 01:12:01.363190100 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 169 µs
+* start_transfer: 108741 µs
+* total: 108785 µs
+* Captures:
+* accessToken2ndUser: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyODQxZDIxMi04OWE4LTQ0N2EtOGRhMC1hMTJmMmQzMzI2ZmIiLCJhY2NvdW50SWQiOiJlMDVmMjFmYi1kZjI1LTQ3YjItYjNhNS1hNmQ3NDNhM2EzYzIiLCJlbWFpbCI6InRlc3QyQGV4YW1wbGUuY29tIiwic2Vzc2lvbklkIjoiNzdjMzE3N2MtNzkyZC00MjhiLWJhMjUtZWQ1MWJmYzA1MTY4IiwiaWF0IjoxNzY2Mjc5NTIxLCJleHAiOjE3NjYyODA0MjEsImF1ZCI6ImZuZC1lYXN5Zmxvdy1hcGkiLCJpc3MiOiJmbmQtZWFzeWZsb3cifQ.XDGsrDHecuqDLoWjNIs5oUupuQ-kAF2oA5mXJQ4PYQ4
+* sessionId2ndUser: 77c3177c-792d-428b-ba25-ed51bfc05168
+*
+* ------------------------------------------------------------------------------
+* Executing entry 11
+*
+* Cookie store:
+*
+* Request:
+* DELETE http://localhost:3099/api/v1/auth/sessions/77c3177c-792d-428b-ba25-ed51bfc05168
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --request DELETE --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/sessions/77c3177c-792d-428b-ba25-ed51bfc05168'
+*
+** Reusing existing http: connection with host localhost
+> DELETE /api/v1/auth/sessions/77c3177c-792d-428b-ba25-ed51bfc05168 HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 88 bytes in 7 ms)
+*
+< HTTP/1.1 403 Forbidden
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 88
+< ETag: W/"58-AHdV7g1GJULB39RS4CTU7GIWxb8"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"You can only revoke your own sessions","error":"Forbidden","statusCode":403}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.364137300 UTC
+* end: 2025-12-21 01:12:01.372090200 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 398 µs
+* start_transfer: 7881 µs
+* total: 7901 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 12
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/logout
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --request POST --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/logout'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/logout HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 37 bytes in 6 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 37
+< ETag: W/"25-71uUsMgZY3FdZp9j1h5YMrBIOgg"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Logged out successfully"}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.372473700 UTC
+* end: 2025-12-21 01:12:01.378688 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 332 µs
+* start_transfer: 6149 µs
+* total: 6168 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 13
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/me
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k' 'http://localhost:3099/api/v1/auth/me'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/me HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6ImM4YWY5NjE5LTYwNTgtNDhjNS1iNWFhLWRlMmQxMzkxYWI5YyIsImlhdCI6MTc2NjI3OTQ3NSwiZXhwIjoxNzY2MjgwMzc1LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.R59TmLwgyh1oAvAc30RNQ4beKXZW9jQ75_GiIxWOJ5k
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 78 bytes in 4 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 78
+< ETag: W/"4e-bWR0xxXmy07Ay7zxIqXt7MlFSHw"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Session has been revoked","error":"Unauthorized","statusCode":401}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.378942100 UTC
+* end: 2025-12-21 01:12:01.383619 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 118 µs
+* start_transfer: 4619 µs
+* total: 4639 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 14
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: hurl/7.1.0
+> Content-Length: 74
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "Password123!"
+* }
+** upload completely sent off: 74 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 822 bytes in 107 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 822
+< ETag: W/"336-1fA8jlAthVtzhN1D95KsFW92ahc"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts","refreshToken":"c0b74b8eff377044b9dc2537a7dcdee95a267c478bce15d8076f1cbfc3c51fe4","user":{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","fullName":"Test User","emailVerified":false,"accountId":"a64d60e1-cc03-41c9-9d43-491f7c6a67b6"},"session":{"id":"41f20de5-c9f8-4bc4-a5ca-fbddd6398532","expiresAt":"2025-12-28T01:12:01.485Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.383901700 UTC
+* end: 2025-12-21 01:12:01.490970500 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 157 µs
+* start_transfer: 106938 µs
+* total: 106983 µs
+* Captures:
+* accessTokenFresh: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts
+*
+* ------------------------------------------------------------------------------
+* Executing entry 15
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/signin
+* Content-Type: application/json
+* User-Agent: Mozilla/5.0 (Android)
+*
+* Request can be run with the following curl command:
+* curl --header 'Content-Type: application/json' --header 'User-Agent: Mozilla/5.0 (Android)' --data $'{\n  "email": "test-1734747100@example.com",\n  "password": "Password123!"\n}' 'http://localhost:3099/api/v1/auth/signin'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/signin HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Content-Type: application/json
+> User-Agent: Mozilla/5.0 (Android)
+> Content-Length: 74
+>
+* Request body:
+* {
+*   "email": "test-1734747100@example.com",
+*   "password": "Password123!"
+* }
+** upload completely sent off: 74 bytes
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 822 bytes in 103 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 822
+< ETag: W/"336-UOrjLf/4cIIZ42BaAXpKeqPxV7M"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQyZWJlMjRlLTY2ZWItNDY1OC04ODllLWU2OGM1MDZlNDA1YiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.bvNmUe3bKYpv3wksGW94wWtWKpPOqrrQufw_QmyGbAU","refreshToken":"3d2d62e258c14bd25f5ee5c6e47906fe2cd819fe670f25c11aa80c22350f5603","user":{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","fullName":"Test User","emailVerified":false,"accountId":"a64d60e1-cc03-41c9-9d43-491f7c6a67b6"},"session":{"id":"42ebe24e-66eb-4658-889e-e68c506e405b","expiresAt":"2025-12-28T01:12:01.592Z"}}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.491876400 UTC
+* end: 2025-12-21 01:12:01.595053900 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 514 µs
+* start_transfer: 103113 µs
+* total: 103132 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 16
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/sessions
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts' 'http://localhost:3099/api/v1/auth/sessions'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/sessions HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 344 bytes in 8 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 344
+< ETag: W/"158-p+7l4s0/BxvCgNkm484tuyxBLqE"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"sessions":[{"id":"41f20de5-c9f8-4bc4-a5ca-fbddd6398532","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:12:01.485Z","createdAt":"2025-12-21T01:12:01.485Z"},{"id":"42ebe24e-66eb-4658-889e-e68c506e405b","deviceName":null,"ipAddress":"::1","lastActivityAt":"2025-12-21T01:12:01.592Z","createdAt":"2025-12-21T01:12:01.592Z"}]}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.595341200 UTC
+* end: 2025-12-21 01:12:01.604183800 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 133 µs
+* start_transfer: 8765 µs
+* total: 8791 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 17
+*
+* Cookie store:
+*
+* Request:
+* POST http://localhost:3099/api/v1/auth/logout?all=true
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts
+*
+* Request can be run with the following curl command:
+* curl --request POST --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts' 'http://localhost:3099/api/v1/auth/logout?all=true'
+*
+** Reusing existing http: connection with host localhost
+> POST /api/v1/auth/logout?all=true HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 37 bytes in 12 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 37
+< ETag: W/"25-71uUsMgZY3FdZp9j1h5YMrBIOgg"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Logged out successfully"}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.604844500 UTC
+* end: 2025-12-21 01:12:01.617485200 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 309 µs
+* start_transfer: 12573 µs
+* total: 12594 µs
+*
+* ------------------------------------------------------------------------------
+* Executing entry 18
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/auth/sessions
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts' 'http://localhost:3099/api/v1/auth/sessions'
+*
+** Reusing existing http: connection with host localhost
+> GET /api/v1/auth/sessions HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjQxZjIwZGU1LWM5ZjgtNGJjNC1hNWNhLWZiZGRkNjM5ODUzMiIsImlhdCI6MTc2NjI3OTUyMSwiZXhwIjoxNzY2MjgwNDIxLCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.Sd3K5V93tPVL5Pds3uNWVWy92kAX_enZxr95z3D59Ts
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 78 bytes in 3 ms)
+*
+< HTTP/1.1 401 Unauthorized
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 78
+< ETag: W/"4e-bWR0xxXmy07Ay7zxIqXt7MlFSHw"
+< Date: Sun, 21 Dec 2025 01:12:01 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* {"message":"Session has been revoked","error":"Unauthorized","statusCode":401}
+*
+* Timings:
+* begin: 2025-12-21 01:12:01.617840700 UTC
+* end: 2025-12-21 01:12:01.621034 UTC
+* namelookup: 0 µs
+* connect: 0 µs
+* app_connect: 0 µs
+* pre_transfer: 125 µs
+* start_transfer: 3136 µs
+* total: 3155 µs
+*
+{"message":"Session has been revoked","error":"Unauthorized","statusCode":401}

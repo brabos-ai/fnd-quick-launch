@@ -1,0 +1,92 @@
+* Variables:
+*     accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZTM3Y2U4NC1jNzBhLTQ5ZGEtYWRkMC1iMmY5MDA0ODI0ODgiLCJhY2NvdW50SWQiOiJhNjRkNjBlMS1jYzAzLTQxYzktOWQ0My00OTFmN2M2YTY3YjYiLCJlbWFpbCI6InRlc3QtMTczNDc0NzEwMEBleGFtcGxlLmNvbSIsInNlc3Npb25JZCI6IjdhOTAzYjc5LTUyZmYtNGUyMi05ZGU2LTY0OGIxMzc3ZTI3ZSIsImlhdCI6MTc2NjI3OTYzNywiZXhwIjoxNzY2MjgwNTM3LCJhdWQiOiJmbmQtZWFzeWZsb3ctYXBpIiwiaXNzIjoiZm5kLWVhc3lmbG93In0.be7KSGU53OoCG25s3x3vHaJ7SvqPgTBUKzaDRi1sqO4
+*     userId: 4e37ce84-c70a-49da-add0-b2f900482488
+*     TEST_EMAIL: test-1734747100@example.com
+*     TEST_NAME: Test User
+*     API_URL: http://localhost:3099/api/v1
+*     superAdminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+* ------------------------------------------------------------------------------
+* Executing entry 1
+*
+* Cookie store:
+*
+* Request:
+* GET http://localhost:3099/api/v1/manager/users
+* Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+*
+* Request can be run with the following curl command:
+* curl --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo' 'http://localhost:3099/api/v1/manager/users'
+*
+** Host localhost:3099 was resolved.
+** IPv6: ::1
+** IPv4: 127.0.0.1
+**   Trying [::1]:3099...
+** Established connection to localhost (::1 port 3099) from ::1 port 51804 
+** using HTTP/1.x
+> GET /api/v1/manager/users HTTP/1.1
+> Host: localhost:3099
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJhY2NvdW50SWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDEiLCJlbWFpbCI6ImFkbWluQGZuZC5kZXYiLCJzZXNzaW9uSWQiOiI4ZWMwYzA3Ny03Yzg4LTQyMmYtODFkNi0wYWVjNGI5OTM5ZDEiLCJpYXQiOjE3NjYyNzk0MzYsImV4cCI6MTc2NjI4MDMzNiwiYXVkIjoiZm5kLWVhc3lmbG93LWFwaSIsImlzcyI6ImZuZC1lYXN5ZmxvdyJ9.CKBw5XtK9ye5bgiDZGQQAMnYShsKXSN9QRs7PaUnaoo
+> User-Agent: hurl/7.1.0
+>
+* Request body:
+*
+** Request completely sent off
+** Connection #0 to host localhost:3099 left intact
+* Response: (received 870 bytes in 36 ms)
+*
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost:3000
+< Vary: Origin
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 870
+< ETag: W/"366-rM28VQVwDaIf2TznxLFm1lQ4Xeo"
+< Date: Sun, 21 Dec 2025 01:14:25 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+<
+* Response body:
+* [{"id":"a23481a1-59a7-418f-8d2e-d29f96e787e3","email":"verify@example.com","name":"Verify User","status":"active","emailVerified":false,"createdAt":"2025-12-21T01:13:02.520Z","lastLoginAt":"2025-12-21T01:13:02.527Z"},{"id":"2841d212-89a8-447a-8da0-a12f2d3326fb","email":"test2@example.com","name":"Second Test User","status":"active","emailVerified":false,"createdAt":"2025-12-21T01:12:01.244Z","lastLoginAt":"2025-12-21T01:12:01.356Z"},{"id":"4e37ce84-c70a-49da-add0-b2f900482488","email":"test-1734747100@example.com","name":"Test User","status":"active","emailVerified":false,"createdAt":"2025-12-21T01:11:15.337Z","lastLoginAt":"2025-12-21T01:13:57.448Z"},{"id":"00000000-0000-0000-0000-000000000002","email":"admin@fnd.dev","name":"Super Admin","status":"active","emailVerified":true,"createdAt":"2025-12-21T01:09:22.473Z","lastLoginAt":"2025-12-21T01:10:36.861Z"}]
+*
+* Timings:
+* begin: 2025-12-21 01:14:25.891109100 UTC
+* end: 2025-12-21 01:14:25.927170 UTC
+* namelookup: 101 µs
+* connect: 2096 µs
+* app_connect: 0 µs
+* pre_transfer: 2413 µs
+* start_transfer: 35888 µs
+* total: 35918 µs
+*
+error: Assert failure
+   --> 05-manager-users.hurl:20:0
+    |
+    | GET {{API_URL}}/manager/users
+    | ...
+ 20 | jsonpath "$.users" isCollection
+    |   actual:   none
+    |   expected: collection
+    |
+
+error: Assert failure
+   --> 05-manager-users.hurl:21:0
+    |
+    | GET {{API_URL}}/manager/users
+    | ...
+ 21 | jsonpath "$.total" isInteger
+    |   actual:   none
+    |   expected: integer
+    |
+
+error: Assert failure
+   --> 05-manager-users.hurl:22:0
+    |
+    | GET {{API_URL}}/manager/users
+    | ...
+ 22 | jsonpath "$.total" > 0
+    |   actual:   none
+    |   expected: greater than <integer <0>>
+    |
+
