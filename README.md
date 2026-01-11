@@ -5,6 +5,18 @@
 <h1 align="center">Fábrica de Negócios Digitais</h1>
 
 <p align="center">
+  <a href="https://github.com/xmaiconx/fnd-quick-launch/actions/workflows/ci.yml">
+    <img src="https://github.com/xmaiconx/fnd-quick-launch/actions/workflows/ci.yml/badge.svg" alt="CI Status" />
+  </a>
+  <a href="https://github.com/xmaiconx/fnd-quick-launch/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+  </a>
+  <a href="https://chat.whatsapp.com/FGvSsWQlMV6DGBL17IWfQr">
+    <img src="https://img.shields.io/badge/WhatsApp-Comunidade-25D366?logo=whatsapp&logoColor=white" alt="WhatsApp Community" />
+  </a>
+</p>
+
+<p align="center">
   <strong>Você não precisa aprender a programar.<br>Precisa aprender a LIDERAR.</strong>
 </p>
 

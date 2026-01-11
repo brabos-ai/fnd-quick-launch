@@ -1,7 +1,29 @@
 {
   "name": "fnd-quicklaunch",
-  "version": "1.0.0",
-  "description": "FND QuickLaunch - Template para alunos FND lançarem SaaS rapidamente",
+  "version": "0.9.0",
+  "description": "Template SaaS completo com autenticação, multi-tenancy, pagamentos e infraestrutura pronta para produção",
+  "keywords": [
+    "saas",
+    "template",
+    "nestjs",
+    "react",
+    "typescript",
+    "stripe",
+    "multi-tenancy",
+    "authentication",
+    "monorepo",
+    "turborepo"
+  ],
+  "homepage": "https://github.com/xmaiconx/fnd-quick-launch#readme",
+  "bugs": {
+    "url": "https://github.com/xmaiconx/fnd-quick-launch/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmaiconx/fnd-quick-launch.git"
+  },
+  "license": "MIT",
+  "author": "Maicon Matsubara",
   "private": true,
   "packageManager": "npm@9.0.0",
   "workspaces": [
