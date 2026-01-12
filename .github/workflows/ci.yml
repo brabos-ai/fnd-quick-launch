@@ -35,15 +35,8 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
-      - name: Lint (Critical - errors only)
-        run: npm run lint -- --quiet
-        # --quiet: só mostra erros, ignora warnings
-
-      - name: Lint (Full report)
-        run: npm run lint --max-warnings=100
-        continue-on-error: true
-        # Mostra todos os warnings mas não bloqueia o CI
-        # Útil para melhorias incrementais
+      - name: Lint
+        run: npm run lint
 
       - name: Build
         run: npm run build
