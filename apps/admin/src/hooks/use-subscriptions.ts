@@ -7,6 +7,7 @@ import type {
   GrantTrialInput,
   ManualUpgradeInput,
   ManualCancelInput,
+  AxiosErrorWithResponse,
 } from '@/types'
 import { toast } from 'sonner'
 
@@ -50,7 +51,7 @@ export function useExtendAccess() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'subscriptions', variables.id] })
       toast.success('Acesso estendido com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao estender acesso'
       toast.error(message)
     },
@@ -68,7 +69,7 @@ export function useGrantTrial() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'subscriptions'] })
       toast.success('Trial concedido com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao conceder trial'
       toast.error(message)
     },
@@ -87,7 +88,7 @@ export function useManualUpgrade() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'subscriptions', variables.id] })
       toast.success('Upgrade realizado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao realizar upgrade'
       toast.error(message)
     },
@@ -106,7 +107,7 @@ export function useManualCancel() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'subscriptions', variables.id] })
       toast.success('Assinatura cancelada com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao cancelar assinatura'
       toast.error(message)
     },

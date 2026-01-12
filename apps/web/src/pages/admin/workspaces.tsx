@@ -1,4 +1,3 @@
-import * as React from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { motion } from "framer-motion"
@@ -71,7 +70,7 @@ export function WorkspacesPage() {
       try {
         const response = await api.get<Workspace[]>("/workspaces")
         return response.data
-      } catch (error) {
+      } catch (_error) {
         // Fallback to mock data in development
         console.warn("Using mock workspaces data")
         return mockWorkspaces

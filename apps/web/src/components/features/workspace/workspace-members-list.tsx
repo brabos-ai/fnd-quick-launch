@@ -1,11 +1,12 @@
 "use client"
 
-import * as React from "react"
+import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Users, MoreVertical, Shield, Trash2 } from "lucide-react"
 import { toast } from "@/lib/toast"
+import type { AxiosErrorWithResponse } from "@/types"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Table,
@@ -49,8 +50,8 @@ export function WorkspaceMembersList({ workspaceId }: WorkspaceMembersListProps)
   const queryClient = useQueryClient()
   const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
   const currentUser = useAuthStore((state) => state.user)
-  const [memberToRemove, setMemberToRemove] = React.useState<WorkspaceMember | null>(null)
-  const [addMemberDialogOpen, setAddMemberDialogOpen] = React.useState(false)
+  const [memberToRemove, setMemberToRemove] = useState<WorkspaceMember | null>(null)
+  const [addMemberDialogOpen, setAddMemberDialogOpen] = useState(false)
 
   // Fetch members
   const { data: members, isLoading } = useQuery({
@@ -71,7 +72,7 @@ export function WorkspaceMembersList({ workspaceId }: WorkspaceMembersListProps)
       toast.success("Membro removido com sucesso")
       setMemberToRemove(null)
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       console.error("Remove member error:", error)
       const message = error.response?.data?.message || "Erro ao remover membro"
       toast.error(message)
@@ -91,7 +92,7 @@ export function WorkspaceMembersList({ workspaceId }: WorkspaceMembersListProps)
       queryClient.invalidateQueries({ queryKey: ["workspace-members", workspaceId] })
       toast.success("Função atualizada com sucesso")
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       console.error("Update role error:", error)
       const message = error.response?.data?.message || "Erro ao atualizar função"
       toast.error(message)
@@ -111,7 +112,7 @@ export function WorkspaceMembersList({ workspaceId }: WorkspaceMembersListProps)
       queryClient.invalidateQueries({ queryKey: ["workspace-members", workspaceId] })
       toast.success("Membro adicionado com sucesso")
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       console.error("Add member error:", error)
       const message = error.response?.data?.message || "Erro ao adicionar membro"
       toast.error(message)
@@ -215,7 +216,7 @@ export function WorkspaceMembersList({ workspaceId }: WorkspaceMembersListProps)
           onOpenChange={setAddMemberDialogOpen}
           workspaceId={workspaceId}
           currentMembers={members || []}
-          onAddMember={async (data) => await addMemberMutation.mutateAsync(data)}
+          onAddMember={async (data) => { await addMemberMutation.mutateAsync(data) }}
           isLoading={addMemberMutation.isPending}
         />
       </>
@@ -394,7 +395,7 @@ export function WorkspaceMembersList({ workspaceId }: WorkspaceMembersListProps)
         onOpenChange={setAddMemberDialogOpen}
         workspaceId={workspaceId}
         currentMembers={members || []}
-        onAddMember={async (data) => await addMemberMutation.mutateAsync(data)}
+        onAddMember={async (data) => { await addMemberMutation.mutateAsync(data) }}
         isLoading={addMemberMutation.isPending}
       />
     </>

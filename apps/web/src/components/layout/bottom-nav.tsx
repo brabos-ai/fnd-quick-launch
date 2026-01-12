@@ -1,5 +1,6 @@
-import * as React from "react"
+import { useState } from "react"
 import { Home, Settings, User, Shield, Users, Mail, FileText, Building2 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -10,22 +11,29 @@ interface BottomNavProps {
   className?: string
 }
 
+type NavItem = {
+  icon: LucideIcon
+  label: string
+  href?: string
+  isDrawerTrigger?: boolean
+}
+
 export function BottomNav({ currentPath = "/", className }: BottomNavProps) {
-  const [adminDrawerOpen, setAdminDrawerOpen] = React.useState(false)
+  const [adminDrawerOpen, setAdminDrawerOpen] = useState(false)
   const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
 
   // Compute admin access
   const isAdmin = currentWorkspace?.role === 'owner' || currentWorkspace?.role === 'admin'
 
   // Member items (3 items)
-  const memberNavItems = [
+  const memberNavItems: NavItem[] = [
     { icon: Home, label: "Home", href: "/" },
     { icon: Settings, label: "Config", href: "/settings" },
     { icon: User, label: "Perfil", href: "/settings?tab=profile" },
   ]
 
   // Admin items (4 items - includes drawer trigger)
-  const adminNavItems = [
+  const adminNavItems: NavItem[] = [
     { icon: Home, label: "Home", href: "/" },
     { icon: Settings, label: "Config", href: "/settings" },
     { icon: Shield, label: "Admin", isDrawerTrigger: true },

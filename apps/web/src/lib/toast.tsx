@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { toast as sonnerToast } from 'sonner'
 import type { ExternalToast } from 'sonner'
 import {

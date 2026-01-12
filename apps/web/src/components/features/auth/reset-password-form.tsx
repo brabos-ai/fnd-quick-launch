@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { AlertCircle } from "lucide-react"
 import { api } from "@/lib/api"
+import type { AxiosErrorWithResponse } from "@/types"
 
 const resetPasswordSchema = z
   .object({
@@ -70,17 +71,18 @@ export function ResetPasswordForm() {
       })
       toast.success("Senha redefinida com sucesso!")
       navigate("/login")
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const apiError = error as AxiosErrorWithResponse
       const message =
-        err.response?.data?.message ||
-        err.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao redefinir senha. Tente novamente."
 
       // Check if token is invalid or expired
       if (
         message.includes("inválido") ||
         message.includes("expirado") ||
-        err.response?.status === 400
+        apiError.response?.status === 400
       ) {
         setTokenInvalid(true)
       }

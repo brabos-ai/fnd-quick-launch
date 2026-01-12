@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { motion } from "framer-motion"
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"

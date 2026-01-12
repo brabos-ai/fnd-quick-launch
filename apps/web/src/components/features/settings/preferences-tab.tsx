@@ -1,4 +1,3 @@
-import * as React from "react"
 import { Construction } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 

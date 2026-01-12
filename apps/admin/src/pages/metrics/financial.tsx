@@ -129,7 +129,12 @@ export function FinancialPage() {
 
       <ChartCard title="Receita por Plano" isLoading={revenueQuery.isLoading}>
         {revenueQuery.data && (
-          <HorizontalBarChart data={revenueQuery.data.charts.revenueByPlan} />
+          <HorizontalBarChart
+            data={revenueQuery.data.charts.revenueByPlan.map(item => ({
+              name: item.planName,
+              value: item.revenue
+            }))}
+          />
         )}
       </ChartCard>
     </>
@@ -177,7 +182,12 @@ export function FinancialPage() {
 
       <ChartCard title="Motivos de Cancelamento" isLoading={churnQuery.isLoading}>
         {churnQuery.data && (
-          <DonutChart data={churnQuery.data.charts.cancellationReasons} />
+          <DonutChart
+            data={churnQuery.data.charts.cancellationReasons.map((item) => ({
+              name: item.reason,
+              value: item.count,
+            }))}
+          />
         )}
       </ChartCard>
     </>

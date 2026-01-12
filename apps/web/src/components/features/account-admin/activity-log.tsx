@@ -1,9 +1,6 @@
 "use client"
 
-import * as React from "react"
-import { Loader2 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EmptyState } from "@/components/ui/empty-state"
 import { ActivityCard } from "./activity-card"
@@ -16,7 +13,7 @@ interface ActivityLogProps {
 }
 
 export function ActivityLog({ userId, limit = 50 }: ActivityLogProps) {
-  const { data: activities, isLoading } = useAccountAuditLogs({
+  const { data: auditLogs, isLoading } = useAccountAuditLogs({
     userId,
     limit,
   })
@@ -31,7 +28,7 @@ export function ActivityLog({ userId, limit = 50 }: ActivityLogProps) {
     )
   }
 
-  if (!activities || activities.length === 0) {
+  if (!auditLogs || auditLogs.length === 0) {
     return (
       <EmptyState
         icon={Activity}
@@ -40,6 +37,16 @@ export function ActivityLog({ userId, limit = 50 }: ActivityLogProps) {
       />
     )
   }
+
+  // Map AuditLog to Activity
+  const activities = auditLogs.map((log) => ({
+    id: log.id,
+    action: log.action,
+    timestamp: log.createdAt,
+    details: log.metadata,
+    userName: log.user?.fullName,
+    userEmail: log.user?.email,
+  }))
 
   return (
     <ScrollArea className="h-[600px]">

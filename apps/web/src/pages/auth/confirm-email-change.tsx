@@ -1,14 +1,14 @@
 "use client"
 
-import * as React from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { motion } from "framer-motion"
-import { toast } from "@/lib/toast"
 import { CheckCircle2, Loader2, XCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { AuthLayout } from "@/components/layout/auth-layout"
 import { useConfirmEmailChange } from "@/hooks/use-email-change"
+import type { AxiosErrorWithResponse } from "@/types"
 
 type ConfirmationStatus = "loading" | "success" | "error"
 
@@ -16,13 +16,13 @@ function ConfirmEmailChangeContent() {
   const navigate = useNavigate()
   const { token } = useParams<{ token: string }>()
 
-  const [status, setStatus] = React.useState<ConfirmationStatus>("loading")
-  const [error, setError] = React.useState<string | null>(null)
+  const [status, setStatus] = useState<ConfirmationStatus>("loading")
+  const [error, setError] = useState<string | null>(null)
   const confirmEmailChange = useConfirmEmailChange()
-  const hasConfirmed = React.useRef(false)
+  const hasConfirmed = useRef(false)
 
   // Auto-confirm on mount
-  React.useEffect(() => {
+  useEffect(() => {
     const confirmChange = async () => {
       if (!token || hasConfirmed.current) {
         if (!token && !hasConfirmed.current) {
@@ -38,11 +38,12 @@ function ConfirmEmailChangeContent() {
         await confirmEmailChange.mutateAsync({ token })
         setStatus("success")
         // Navigation is handled by the hook
-      } catch (err: any) {
+      } catch (error: unknown) {
         setStatus("error")
+        const apiError = error as AxiosErrorWithResponse
         const message =
-          err.response?.data?.message ||
-          err.message ||
+          apiError.response?.data?.message ||
+          apiError.message ||
           "Erro ao confirmar alteração de email. Token pode estar inválido ou expirado."
         setError(message)
       }

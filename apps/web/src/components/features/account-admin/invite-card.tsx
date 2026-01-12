@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Mail, RefreshCw, X } from "lucide-react"
@@ -49,8 +48,6 @@ const statusLabels: Record<string, string> = {
 }
 
 export function InviteCard({ invite, onResend, onCancel, className }: InviteCardProps) {
-  const isExpired = invite.status === 'expired'
-
   return (
     <Card className={cn("border", className)}>
       <CardContent className="p-4">

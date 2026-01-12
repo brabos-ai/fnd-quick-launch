@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import {
@@ -55,7 +55,7 @@ export function InviteDialog({
     register,
     handleSubmit,
     setValue,
-    watch,
+    control,
     reset,
     formState: { errors },
   } = useForm<InviteFormData>({
@@ -67,7 +67,7 @@ export function InviteDialog({
     },
   })
 
-  const roleValue = watch('role')
+  const roleValue = useWatch({ control, name: 'role' })
 
   React.useEffect(() => {
     setValue('workspaceIds', selectedWorkspaces)
@@ -79,7 +79,7 @@ export function InviteDialog({
       reset()
       setSelectedWorkspaces([])
       onOpenChange(false)
-    } catch (error) {
+    } catch (_error) {
       // Error handled by mutation
     }
   }

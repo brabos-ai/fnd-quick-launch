@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -11,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { api } from "@/lib/api"
 import { useAuthStore } from "@/stores/auth-store"
-import type { Workspace, UpdateWorkspaceDto } from "@/types"
+import type { Workspace, UpdateWorkspaceDto, AxiosErrorWithResponse } from "@/types"
 
 const updateWorkspaceSchema = z.object({
   name: z.string().min(2, "Nome deve ter no mínimo 2 caracteres"),
@@ -55,11 +54,12 @@ export function WorkspaceGeneralForm({ workspace, onUpdate }: WorkspaceGeneralFo
 
       // Call callback
       onUpdate?.(data)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Update workspace error:", error)
+      const apiError = error as AxiosErrorWithResponse
       const message =
-        error.response?.data?.message ||
-        error.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao atualizar workspace"
       toast.error(message)
     }

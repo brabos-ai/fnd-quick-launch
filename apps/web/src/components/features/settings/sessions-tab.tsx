@@ -1,8 +1,7 @@
-import * as React from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Monitor, Smartphone, Tablet, Globe, MapPin, Chrome, Clock, LogOut, AlertCircle } from "lucide-react"
+import { Monitor, Smartphone, Tablet, Globe, MapPin, Clock, LogOut, AlertCircle } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -25,18 +24,25 @@ import { cn } from "@/lib/utils"
 import type { Session } from "@/types"
 import { toast } from "@/lib/toast"
 
-function getDeviceIcon(device: string) {
+const iconMap = {
+  smartphone: Smartphone,
+  tablet: Tablet,
+  monitor: Monitor,
+  globe: Globe,
+} as const
+
+function getDeviceIconKey(device: string): keyof typeof iconMap {
   const deviceLower = device.toLowerCase()
   if (deviceLower.includes('mobile') || deviceLower.includes('iphone') || deviceLower.includes('android')) {
-    return Smartphone
+    return 'smartphone'
   }
   if (deviceLower.includes('tablet') || deviceLower.includes('ipad')) {
-    return Tablet
+    return 'tablet'
   }
   if (deviceLower.includes('desktop') || deviceLower.includes('windows') || deviceLower.includes('mac') || deviceLower.includes('linux')) {
-    return Monitor
+    return 'monitor'
   }
-  return Globe
+  return 'globe'
 }
 
 interface SessionCardProps {
@@ -47,7 +53,8 @@ interface SessionCardProps {
 }
 
 function SessionCard({ session, onRevoke, isRevoking, className }: SessionCardProps) {
-  const DeviceIcon = getDeviceIcon(session.device)
+  const iconKey = getDeviceIconKey(session.device)
+  const DeviceIcon = iconMap[iconKey]
   const isCurrentSession = session.isCurrent
 
   return (

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { api } from '@/lib/api'
-import type { User, LoginDto, SignupDto, AuthResponse, SignupResponse, Workspace } from '@/types'
+import type { User, LoginDto, SignupDto, AuthResponse, SignupResponse, Workspace, AxiosErrorWithResponse } from '@/types'
 import { toast } from '@/lib/toast'
 
 interface AuthState {
@@ -67,15 +67,16 @@ export const useAuthStore = create<AuthState>()(
           })
 
           // Toast é mostrado pelo componente (login-form.tsx)
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error('Login error:', error)
+          const apiError = error as AxiosErrorWithResponse
 
           // Check if it's an email not verified error
-          if (error.errorCode === 'EMAIL_NOT_VERIFIED') {
+          if (apiError.response?.data?.errorCode === 'EMAIL_NOT_VERIFIED') {
             throw error
           }
 
-          const message = error.response?.data?.message || error.message || 'Erro ao fazer login'
+          const message = apiError.response?.data?.message || apiError.message || 'Erro ao fazer login'
           toast.error(message)
           throw error
         }
@@ -106,9 +107,10 @@ export const useAuthStore = create<AuthState>()(
           }
 
           return result
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error('Signup error:', error)
-          const message = error.response?.data?.message || error.message || 'Erro ao criar conta'
+          const apiError = error as AxiosErrorWithResponse
+          const message = apiError.response?.data?.message || apiError.message || 'Erro ao criar conta'
           toast.error(message)
           throw error
         }

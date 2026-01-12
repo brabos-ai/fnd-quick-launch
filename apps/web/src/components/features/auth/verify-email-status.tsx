@@ -10,6 +10,7 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { api } from "@/lib/api"
+import type { AxiosErrorWithResponse } from "@/types"
 
 type VerificationStatus = "loading" | "success" | "error"
 
@@ -47,11 +48,12 @@ export function VerifyEmailStatus() {
         setTimeout(() => {
           navigate("/login")
         }, 3000)
-      } catch (err: any) {
+      } catch (error: unknown) {
         setStatus("error")
+        const apiError = error as AxiosErrorWithResponse
         const message =
-          err.response?.data?.message ||
-          err.message ||
+          apiError.response?.data?.message ||
+          apiError.message ||
           "Erro ao verificar email. Token pode estar inválido ou expirado."
         setError(message)
       }
@@ -81,10 +83,11 @@ export function VerifyEmailStatus() {
       await api.post("/auth/resend-verification", { email })
       toast.success("Email de verificação reenviado!")
       setCooldown(60) // Start 60 second cooldown
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const apiError = error as AxiosErrorWithResponse
       const message =
-        err.response?.data?.message ||
-        err.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao reenviar email. Tente novamente."
       toast.error(message)
     } finally {

@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useState } from "react"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { User, Mail, Calendar, Shield, Pencil, X, Check } from "lucide-react"
@@ -11,6 +11,7 @@ import { useAuthStore } from "@/stores/auth-store"
 import { toast } from "@/lib/toast"
 import { api } from "@/lib/api"
 import { EmailChangeDialog } from "./email-change-dialog"
+import type { AxiosErrorWithResponse } from "@/types"
 
 const roleTranslation: Record<string, string> = {
   'super-admin': 'Super Administrador',
@@ -24,8 +25,8 @@ export function ProfileTab() {
   const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
   const setUser = useAuthStore((state) => state.setUser)
 
-  const [isEditingName, setIsEditingName] = React.useState(false)
-  const [newFullName, setNewFullName] = React.useState(user?.fullName || '')
+  const [isEditingName, setIsEditingName] = useState(false)
+  const [newFullName, setNewFullName] = useState(user?.fullName || '')
 
   if (!user) {
     return null
@@ -58,9 +59,10 @@ export function ProfileTab() {
       setUser(response.data.user)
       setIsEditingName(false)
       toast.success('Nome atualizado com sucesso!')
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to update profile:', error)
-      const message = error.response?.data?.message || 'Erro ao atualizar nome'
+      const apiError = error as AxiosErrorWithResponse
+      const message = apiError.response?.data?.message || 'Erro ao atualizar nome'
       toast.error(message)
     }
   }

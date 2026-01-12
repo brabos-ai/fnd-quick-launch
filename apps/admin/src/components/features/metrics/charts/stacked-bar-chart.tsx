@@ -1,3 +1,4 @@
+import type { TooltipProps } from 'recharts'
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
 import { format, parseISO, isValid } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
@@ -9,13 +10,13 @@ interface BarConfig {
 }
 
 interface StackedBarChartProps {
-  data: any[]
+  data: Array<Record<string, string | number>>
   bars: BarConfig[]
   xAxisKey: string
   height?: string
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     // Validate date string before parsing
     let formattedLabel = label
@@ -24,7 +25,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       if (isValid(parsedDate)) {
         formattedLabel = format(parsedDate, 'dd MMM yyyy', { locale: ptBR })
       }
-    } catch (error) {
+    } catch {
       // Keep original label if parsing fails
     }
 
@@ -34,7 +35,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
           <span className="text-[0.70rem] uppercase text-muted-foreground">
             {formattedLabel}
           </span>
-          {payload.map((entry, index) => (
+          {payload.map((entry, index: number) => (
             <div key={index} className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
               <span className="text-sm font-medium">{entry.name}:</span>
@@ -61,7 +62,7 @@ export function StackedBarChart({ data, bars, xAxisKey, height = '300px' }: Stac
       if (isValid(parsedDate)) {
         return format(parsedDate, 'dd/MM', { locale: ptBR })
       }
-    } catch (error) {
+    } catch {
       // Return value as-is if not a valid date
     }
     return value

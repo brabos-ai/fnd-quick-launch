@@ -1,7 +1,7 @@
 "use client"
 
-import * as React from "react"
-import { useForm } from "react-hook-form"
+import { useMemo, useEffect } from "react"
+import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import {
@@ -25,7 +25,7 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import { EmptyState } from "@/components/ui/empty-state"
 import { Users } from "lucide-react"
 import { useAccountUsers } from "@/hooks/use-account-admin"
-import type { WorkspaceMember, AccountUser } from "@/types"
+import type { WorkspaceMember } from "@/types"
 
 const addMemberSchema = z.object({
   userId: z.string().min(1, "Selecione um usuário"),
@@ -46,7 +46,6 @@ interface AddMemberDialogProps {
 export function AddMemberDialog({
   open,
   onOpenChange,
-  workspaceId,
   currentMembers,
   onAddMember,
   isLoading,
@@ -55,9 +54,9 @@ export function AddMemberDialog({
 
   const {
     setValue,
-    watch,
     reset,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<AddMemberFormData>({
     resolver: zodResolver(addMemberSchema),
@@ -67,11 +66,11 @@ export function AddMemberDialog({
     },
   })
 
-  const selectedUserId = watch('userId')
-  const selectedRole = watch('role')
+  const selectedUserId = useWatch({ control, name: 'userId' })
+  const selectedRole = useWatch({ control, name: 'role' })
 
   // Filter out users already in workspace
-  const availableUsers = React.useMemo(() => {
+  const availableUsers = useMemo(() => {
     if (!accountUsers) return []
     const memberUserIds = new Set(currentMembers.map(m => m.userId))
     return accountUsers.filter(user => !memberUserIds.has(user.id))
@@ -82,13 +81,13 @@ export function AddMemberDialog({
       await onAddMember(data)
       reset()
       onOpenChange(false)
-    } catch (error) {
+    } catch (_error) {
       // Error handled by parent
     }
   }
 
   // Reset form when dialog closes
-  React.useEffect(() => {
+  useEffect(() => {
     if (!open) {
       reset()
     }

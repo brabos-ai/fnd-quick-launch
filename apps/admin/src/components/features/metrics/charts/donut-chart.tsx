@@ -1,3 +1,4 @@
+import type { TooltipProps } from 'recharts'
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
 
 interface DonutChartProps {
@@ -16,7 +17,7 @@ const DEFAULT_COLORS = [
   'hsl(221.2 83.2% 53.3%)', // info
 ]
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     const total = payload[0].payload.payload.total || 0
     const value = payload[0].value as number
@@ -67,7 +68,7 @@ export function DonutChart({
             }
             labelLine={false}
           >
-            {dataWithTotal.map((entry, index) => (
+            {dataWithTotal.map((_, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Pie>
@@ -75,8 +76,10 @@ export function DonutChart({
           <Legend
             verticalAlign="bottom"
             height={36}
-            formatter={(value, entry: any) => {
-              const percentage = ((entry.payload.value / total) * 100).toFixed(1)
+            formatter={(value, entry) => {
+              const entryPayload = entry.payload as { value: number } | undefined
+              if (!entryPayload) return value
+              const percentage = ((entryPayload.value / total) * 100).toFixed(1)
               return `${value} (${percentage}%)`
             }}
           />

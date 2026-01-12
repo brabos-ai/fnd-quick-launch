@@ -1,4 +1,3 @@
-import * as React from "react"
 import { motion } from "framer-motion"
 import { Home, Building2, Settings, ChevronDown, PanelLeftClose, PanelLeft, Check, Loader2, Users, Mail, Shield, FileText, CreditCard } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -12,7 +11,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { useAuthStore } from "@/stores/auth-store"
-import type { Workspace } from "@/types"
 
 // Section Label Component
 function SidebarSectionLabel({ label }: { label: string }) {

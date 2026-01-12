@@ -1,4 +1,5 @@
 import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
+import type { TooltipProps } from 'recharts'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -7,7 +8,7 @@ interface ComposedChurnChartProps {
   height?: string
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     return (
       <div className="rounded-lg border bg-background p-2 shadow-sm">
@@ -15,11 +16,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
           <span className="text-[0.70rem] uppercase text-muted-foreground">
             {format(parseISO(label), 'dd MMM yyyy', { locale: ptBR })}
           </span>
-          {payload.map((entry, index) => (
+          {payload.map((entry, index: number) => (
             <div key={index} className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
               <span className="text-sm font-medium">{entry.name}:</span>
-              <span className="text-sm font-bold">{(entry.value as number).toFixed(1)}%</span>
+              <span className="text-sm font-bold">{typeof entry.value === 'number' ? entry.value.toFixed(1) : '0.0'}%</span>
             </div>
           ))}
         </div>

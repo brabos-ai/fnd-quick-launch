@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { RefreshCw, X } from "lucide-react"

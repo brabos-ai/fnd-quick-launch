@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { AlertTriangle, LogOut, Trash2 } from "lucide-react"
 import { toast } from "@/lib/toast"
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { api } from "@/lib/api"
 import { useAuthStore } from "@/stores/auth-store"
+import type { AxiosErrorWithResponse } from "@/types"
 import type { Workspace } from "@/types"
 
 interface WorkspaceDangerZoneProps {
@@ -26,10 +27,10 @@ interface WorkspaceDangerZoneProps {
 
 export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
   const navigate = useNavigate()
-  const [showLeaveDialog, setShowLeaveDialog] = React.useState(false)
-  const [showDeleteDialog, setShowDeleteDialog] = React.useState(false)
-  const [isLeaving, setIsLeaving] = React.useState(false)
-  const [isDeleting, setIsDeleting] = React.useState(false)
+  const [showLeaveDialog, setShowLeaveDialog] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [isLeaving, setIsLeaving] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const removeWorkspace = useAuthStore((state) => state.removeWorkspace)
   const setCurrentWorkspace = useAuthStore((state) => state.setCurrentWorkspace)
@@ -47,17 +48,20 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
       // Remove from store
       removeWorkspace(workspace.id)
 
-      // If this was the current workspace, switch to another or null
+      // If this was the current workspace, switch to another
       if (currentWorkspace?.id === workspace.id) {
         const otherWorkspace = workspaceList.find((w) => w.id !== workspace.id)
-        setCurrentWorkspace(otherWorkspace || null)
+        if (otherWorkspace) {
+          setCurrentWorkspace(otherWorkspace)
+        }
       }
 
       toast.success("Você saiu do workspace")
       navigate("/settings/workspaces")
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Leave workspace error:", error)
-      const message = error.response?.data?.message || "Erro ao sair do workspace"
+      const apiError = error as AxiosErrorWithResponse
+      const message = apiError.response?.data?.message || "Erro ao sair do workspace"
       toast.error(message)
     } finally {
       setIsLeaving(false)
@@ -73,17 +77,20 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
       // Remove from store
       removeWorkspace(workspace.id)
 
-      // If this was the current workspace, switch to another or null
+      // If this was the current workspace, switch to another
       if (currentWorkspace?.id === workspace.id) {
         const otherWorkspace = workspaceList.find((w) => w.id !== workspace.id)
-        setCurrentWorkspace(otherWorkspace || null)
+        if (otherWorkspace) {
+          setCurrentWorkspace(otherWorkspace)
+        }
       }
 
       toast.success("Workspace excluído com sucesso")
       navigate("/settings/workspaces")
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Delete workspace error:", error)
-      const message = error.response?.data?.message || "Erro ao excluir workspace"
+      const apiError = error as AxiosErrorWithResponse
+      const message = apiError.response?.data?.message || "Erro ao excluir workspace"
       toast.error(message)
     } finally {
       setIsDeleting(false)

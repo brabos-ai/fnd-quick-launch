@@ -28,8 +28,6 @@ export async function bootstrapWorkers() {
     module: 'WorkersBootstrap',
   });
 
-  console.log('[Workers Mode] BullMQ workers active and consuming queues');
-  console.log('[Workers Mode] Queues: email, audit, stripe-webhook');
 
   return app;
 }

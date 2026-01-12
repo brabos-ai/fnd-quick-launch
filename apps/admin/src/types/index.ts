@@ -5,6 +5,9 @@
 export type EntityStatus = 'active' | 'inactive' | 'deleted'
 export type UserRole = 'owner' | 'admin' | 'member'
 
+// Error types
+export type { DisplayType, ErrorResponse, AxiosErrorWithResponse } from './errors'
+
 // Auth DTOs
 export interface LoginDto {
   email: string

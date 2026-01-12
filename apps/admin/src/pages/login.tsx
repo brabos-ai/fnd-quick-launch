@@ -38,7 +38,7 @@ export function LoginPage() {
     try {
       await login(data)
       navigate('/users', { replace: true })
-    } catch (error) {
+    } catch {
       // Error handled by store
     }
   }

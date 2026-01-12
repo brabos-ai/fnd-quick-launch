@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -32,7 +32,7 @@ interface EmailChangeDialogProps {
 }
 
 export function EmailChangeDialog({ currentEmail }: EmailChangeDialogProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const requestEmailChange = useRequestEmailChange()
 
   const {
@@ -50,7 +50,7 @@ export function EmailChangeDialog({ currentEmail }: EmailChangeDialogProps) {
   })
 
   // Auto-focus newEmail input when dialog opens
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       setTimeout(() => setFocus("newEmail"), 100)
     }
@@ -61,7 +61,7 @@ export function EmailChangeDialog({ currentEmail }: EmailChangeDialogProps) {
       await requestEmailChange.mutateAsync(data as RequestEmailChangeRequest)
       setOpen(false)
       reset()
-    } catch (error) {
+    } catch (_error) {
       // Error handling is done in the hook via toast
       // No additional action needed here
     }

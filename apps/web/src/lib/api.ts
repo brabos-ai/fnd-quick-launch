@@ -53,7 +53,6 @@ const updateTokens = (accessToken: string, refreshToken: string) => {
 
 // Helper to clear auth and redirect to login
 const clearAuthAndRedirect = () => {
-  console.log('[API] Clearing auth and redirecting to login')
   localStorage.removeItem(AUTH_STORAGE_KEY)
   window.location.replace('/login')
 }
@@ -175,7 +174,6 @@ api.interceptors.response.use(
     const refreshToken = authState?.refreshToken
 
     if (!refreshToken) {
-      console.log('[API] No refresh token available')
       isRefreshing = false
       processQueue(new Error('No refresh token'))
       clearAuthAndRedirect()
@@ -183,13 +181,11 @@ api.interceptors.response.use(
     }
 
     try {
-      console.log('[API] Attempting token refresh...')
 
       // Use refreshApi (without interceptors) to avoid recursion
       const response = await refreshApi.post('/auth/refresh', { refreshToken })
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data
 
-      console.log('[API] Token refresh successful')
 
       // Update tokens in localStorage
       updateTokens(newAccessToken, newRefreshToken)

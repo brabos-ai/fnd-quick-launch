@@ -259,13 +259,6 @@ export interface PaginatedResponse<T> {
   totalPages: number
 }
 
-// API Error types
-export interface ApiError {
-  message: string
-  errorCode?: string
-  statusCode?: number
-}
-
 // Account Admin types
 export type UserRole = 'owner' | 'admin' | 'member'
 export type UserStatus = 'active' | 'inactive'
@@ -356,4 +349,4 @@ export interface ConfirmEmailChangeRequest {
 }
 
 // Error types
-export type { DisplayType, ErrorResponse } from './errors'
+export type { DisplayType, ErrorResponse, AxiosErrorWithResponse } from './errors'

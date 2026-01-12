@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -18,9 +18,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LoadingButton } from "@/components/ui/loading-button"
+import type { AxiosErrorWithResponse } from "@/types"
 import { api } from "@/lib/api"
 import { useAuthStore } from "@/stores/auth-store"
-import type { Workspace, CreateWorkspaceDto } from "@/types"
+import type { Workspace } from "@/types"
 
 const createWorkspaceSchema = z.object({
   name: z.string().min(2, "Nome deve ter no mínimo 2 caracteres"),
@@ -34,7 +35,7 @@ interface CreateWorkspaceDialogProps {
 }
 
 export function CreateWorkspaceDialog({ onSuccess }: CreateWorkspaceDialogProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const addWorkspace = useAuthStore((state) => state.addWorkspace)
 
   const {
@@ -52,7 +53,7 @@ export function CreateWorkspaceDialog({ onSuccess }: CreateWorkspaceDialogProps)
   })
 
   // Auto-focus name input when dialog opens
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       setTimeout(() => setFocus("name"), 100)
     }
@@ -72,11 +73,12 @@ export function CreateWorkspaceDialog({ onSuccess }: CreateWorkspaceDialogProps)
 
       // Call success callback
       onSuccess?.()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Create workspace error:", error)
+      const apiError = error as AxiosErrorWithResponse
       const message =
-        error.response?.data?.message ||
-        error.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao criar workspace"
       toast.error(message)
     }

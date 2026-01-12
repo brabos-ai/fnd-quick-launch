@@ -14,6 +14,7 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import { AlertCircle, Loader2 } from "lucide-react"
 import { useAuthStore } from "@/stores/auth-store"
 import { api } from "@/lib/api"
+import type { AxiosErrorWithResponse } from "@/types"
 
 const signupSchema = z
   .object({
@@ -65,8 +66,9 @@ export function SignupForm() {
           setInviteInfo(response.data)
           setValue("email", response.data.email)
         })
-        .catch((err) => {
-          const message = err.response?.data?.message || "Convite inválido ou expirado"
+        .catch((error: unknown) => {
+          const apiError = error as AxiosErrorWithResponse
+          const message = apiError.response?.data?.message || "Convite inválido ou expirado"
           setError(message)
         })
         .finally(() => {
@@ -99,10 +101,11 @@ export function SignupForm() {
         toast.success("Conta criada com sucesso!")
         navigate("/email-not-verified")
       }
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const apiError = error as AxiosErrorWithResponse
       const message =
-        err.response?.data?.message ||
-        err.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao criar conta. Tente novamente."
       setError(message)
     }

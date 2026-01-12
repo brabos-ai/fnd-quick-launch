@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { AlertCircle } from "lucide-react"
 import { api } from "@/lib/api"
+import type { AxiosErrorWithResponse } from "@/types"
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -44,10 +45,11 @@ export function ForgotPasswordForm() {
       await api.post("/auth/forgot-password", data)
       setSuccess(true)
       toast.success("Email enviado com sucesso!")
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const apiError = error as AxiosErrorWithResponse
       const message =
-        err.response?.data?.message ||
-        err.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao enviar email. Tente novamente."
       setError(message)
     }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 
 /**
  * Custom hook to detect if a media query matches
@@ -11,13 +11,13 @@ import { useEffect, useState } from "react"
  * const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)")
  */
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(false)
+  const [matches, setMatches] = useState(() => {
+    if (typeof window === "undefined") return false
+    return window.matchMedia(query).matches
+  })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const media = window.matchMedia(query)
-
-    // Set initial value
-    setMatches(media.matches)
 
     // Define listener
     const listener = (e: MediaQueryListEvent) => {

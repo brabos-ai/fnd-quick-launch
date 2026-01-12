@@ -6,6 +6,7 @@ import type {
   UpdatePlanInput,
   CreatePlanPriceInput,
   PlanPrice,
+  AxiosErrorWithResponse,
 } from '@/types'
 import { toast } from 'sonner'
 
@@ -42,7 +43,7 @@ export function useCreatePlan() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'plans'] })
       toast.success('Plano criado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao criar plano'
       toast.error(message)
     },
@@ -62,7 +63,7 @@ export function useUpdatePlan() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'plans', variables.id] })
       toast.success('Plano atualizado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao atualizar plano'
       toast.error(message)
     },
@@ -81,7 +82,7 @@ export function useActivatePlan() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'plans', id] })
       toast.success('Plano ativado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao ativar plano'
       toast.error(message)
     },
@@ -100,7 +101,7 @@ export function useDeactivatePlan() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'plans', id] })
       toast.success('Plano desativado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao desativar plano'
       toast.error(message)
     },
@@ -120,7 +121,7 @@ export function useCreatePlanPrice() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'plans', variables.planId] })
       toast.success('Preço adicionado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao adicionar preço'
       toast.error(message)
     },
@@ -139,7 +140,7 @@ export function useLinkStripe() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'plans', variables.planId] })
       toast.success('Stripe vinculado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao vincular Stripe'
       toast.error(message)
     },

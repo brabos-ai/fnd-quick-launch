@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
-import type { UserListItem, UserDetails, UpdateUserStatusRequest } from '@/types'
+import type { UserListItem, UserDetails, UpdateUserStatusRequest, AxiosErrorWithResponse } from '@/types'
 import { toast } from 'sonner'
 
 export function useUsers(search?: string, status?: string) {
@@ -46,7 +46,7 @@ export function useUpdateUserStatus() {
       queryClient.invalidateQueries({ queryKey: ['manager', 'users', variables.userId] })
       toast.success('Status atualizado com sucesso!')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao atualizar status'
       toast.error(message)
     },

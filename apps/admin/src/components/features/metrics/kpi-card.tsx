@@ -45,18 +45,6 @@ const getTrendColor = (direction?: 'up' | 'down' | 'neutral') => {
   }
 }
 
-const getTrendIcon = (direction?: 'up' | 'down' | 'neutral') => {
-  switch (direction) {
-    case 'up':
-      return TrendingUp
-    case 'down':
-      return TrendingDown
-    case 'neutral':
-    default:
-      return Minus
-  }
-}
-
 const getVariantStyles = (variant?: 'default' | 'success' | 'warning' | 'destructive') => {
   switch (variant) {
     case 'success':
@@ -81,8 +69,18 @@ export function KPICard({
   icon: Icon,
   variant = 'default',
 }: KPICardProps) {
-  const TrendIcon = getTrendIcon(trendDirection)
   const formattedValue = formatValue(value, formatter)
+
+  const renderTrendIcon = () => {
+    switch (trendDirection) {
+      case 'up':
+        return <TrendingUp className="h-4 w-4" />
+      case 'down':
+        return <TrendingDown className="h-4 w-4" />
+      default:
+        return <Minus className="h-4 w-4" />
+    }
+  }
 
   return (
     <Card className={cn('transition-all hover:shadow-md', getVariantStyles(variant))}>
@@ -94,7 +92,7 @@ export function KPICard({
 
             {trend && (
               <div className={cn('flex items-center gap-1 text-sm font-medium', getTrendColor(trendDirection))}>
-                <TrendIcon className="h-4 w-4" />
+                {renderTrendIcon()}
                 <span>{trend.label}</span>
               </div>
             )}

@@ -26,7 +26,7 @@ Este guia explica como fazer deploy do FND SaaS QuickLaunch em produção usando
 ## 📦 O Que Você Vai Precisar
 
 ### Contas (todas gratuitas para começar)
-- ✅ [Railway](https://railway.app) - Backend + Database
+- ✅ [Railway](https://railway.com/deploy/fnd-initial-template?referralCode=td8iG1&utm_medium=integration&utm_source=template&utm_campaign=github) - Backend + Database
 - ✅ [Cloudflare](https://pages.cloudflare.com) - Frontend hosting
 - ✅ [Stripe](https://stripe.com) - Pagamentos
 - ✅ [Resend](https://resend.com) - Emails transacionais
@@ -40,7 +40,7 @@ Este guia explica como fazer deploy do FND SaaS QuickLaunch em produção usando
 
 ### Passo 1: Deploy com um Clique
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/fnd-quicklaunch)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/fnd-initial-template?referralCode=td8iG1&utm_medium=integration&utm_source=template&utm_campaign=github)
 
 Ou manualmente:
 

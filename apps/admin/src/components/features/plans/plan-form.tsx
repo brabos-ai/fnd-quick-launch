@@ -63,6 +63,7 @@ export function PlanForm({ open, onOpenChange, plan }: PlanFormProps) {
         features: defaultFeatures,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plan])
 
   const createMutation = useCreatePlan()

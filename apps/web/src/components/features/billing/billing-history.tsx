@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Download, FileText } from "lucide-react"
@@ -17,7 +16,6 @@ import {
 } from "@/components/ui/table"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EmptyState } from "@/components/ui/empty-state"
-import { cn } from "@/lib/utils"
 
 export interface Invoice {
   id: string

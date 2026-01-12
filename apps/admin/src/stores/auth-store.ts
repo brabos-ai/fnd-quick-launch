@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { api } from '@/lib/api'
-import type { User, LoginDto, AuthResponse } from '@/types'
+import type { User, LoginDto, AuthResponse, AxiosErrorWithResponse } from '@/types'
 import { toast } from 'sonner'
 
 interface AuthState {
@@ -53,9 +53,10 @@ export const useAuthStore = create<AuthState>()(
           })
 
           toast.success('Login realizado com sucesso!')
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error('Login error:', error)
-          const message = error.response?.data?.message || error.message || 'Erro ao fazer login'
+          const apiError = error as AxiosErrorWithResponse
+          const message = apiError.response?.data?.message || apiError.message || 'Erro ao fazer login'
           toast.error(message)
           throw error
         }

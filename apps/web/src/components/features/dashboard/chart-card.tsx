@@ -1,5 +1,3 @@
-import * as React from "react"
-import { TrendingUp } from "lucide-react"
 import {
   ResponsiveContainer,
   AreaChart,
@@ -10,6 +8,7 @@ import {
   Tooltip,
 } from "recharts"
 import { format } from "date-fns"
+import { TrendingUp } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"

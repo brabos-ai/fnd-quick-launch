@@ -1,3 +1,4 @@
+import type { TooltipProps } from 'recharts'
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from 'recharts'
 
 interface HorizontalBarChartProps {
@@ -13,7 +14,7 @@ const COLORS = [
   'hsl(48 96% 53%)', // warning
 ]
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     return (
       <div className="rounded-lg border bg-background p-2 shadow-sm">
@@ -67,7 +68,7 @@ export function HorizontalBarChart({
           />
           <Tooltip content={<CustomTooltip />} />
           <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-            {data.map((entry, index) => (
+            {data.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Bar>

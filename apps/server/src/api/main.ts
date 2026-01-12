@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
-import { IConfigurationService, IAsyncContextService, IMetricsService } from '@fnd/contracts';
+import { IConfigurationService, IAsyncContextService, IMetricsService, ILoggerService } from '@fnd/contracts';
 import { StartupLoggerService } from '../shared/services/startup-logger.service';
 import { RequestIdMiddleware } from './middlewares/request-id.middleware';
 
@@ -40,8 +40,13 @@ export async function api() {
   const configService = app.get<IConfigurationService>('IConfigurationService');
   const port = configService.getApiPort();
 
+  const logger = app.get<ILoggerService>('ILoggerService');
+
   await app.listen(port);
-  console.log(`FND Template API running on http://localhost:${port}/api/v1`);
+  logger.info(`FND Template API running on http://localhost:${port}/api/v1`, {
+    module: 'APIMain',
+    port,
+  });
 
   // Log startup information including super-admin status
   const startupLogger = app.get(StartupLoggerService);

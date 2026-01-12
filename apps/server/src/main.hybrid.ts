@@ -54,14 +54,16 @@ export async function bootstrapHybrid() {
 
   // Start HTTP server
   await app.listen(port);
-  console.log(`[Hybrid Mode] HTTP server running on http://localhost:${port}/api/v1`);
+  logger.info(`[Hybrid Mode] HTTP server running on http://localhost:${port}/api/v1`, {
+    module: 'HybridBootstrap',
+    port,
+    mode: 'hybrid',
+  });
 
   logger.info('[Hybrid Mode] BullMQ workers active', {
     module: 'HybridBootstrap',
     queues: ['email', 'audit', 'stripe-webhook'],
   });
-
-  console.log('[Hybrid Mode] BullMQ workers active: email, audit, stripe-webhook');
 
   // Log startup information
   const startupLogger = app.get(StartupLoggerService);

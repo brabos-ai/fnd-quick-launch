@@ -1,9 +1,9 @@
-import * as React from "react"
-import { Sun, Moon, LogOut, User, CreditCard } from "lucide-react"
+import { Fragment } from "react"
+import { Sun, Moon, LogOut, User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,8 +34,8 @@ export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
   }
 
   // Get user initials for avatar fallback
-  const userInitials = user?.name
-    ? user.name
+  const userInitials = user?.fullName
+    ? user.fullName
         .split(" ")
         .map((n) => n[0])
         .join("")
@@ -54,7 +54,7 @@ export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm">
           {breadcrumb.map((item, index) => (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               {index > 0 && <span className="text-muted-foreground">/</span>}
               <span
                 className={cn({
@@ -64,7 +64,7 @@ export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
               >
                 {item}
               </span>
-            </React.Fragment>
+            </Fragment>
           ))}
         </nav>
 
@@ -94,7 +94,7 @@ export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
                 <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="hidden flex-col items-start text-left text-sm xl:flex">
-                <span className="font-medium">{user?.name || "Usuário"}</span>
+                <span className="font-medium">{user?.fullName || "Usuário"}</span>
                 <span className="text-xs text-muted-foreground">{user?.email || ""}</span>
               </div>
             </Button>

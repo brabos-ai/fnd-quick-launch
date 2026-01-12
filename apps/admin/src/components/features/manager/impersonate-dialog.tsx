@@ -48,7 +48,7 @@ export function ImpersonateDialog({ user, open, onOpenChange }: ImpersonateDialo
       })
       reset()
       onOpenChange(false)
-    } catch (error) {
+    } catch {
       // Error handled by hook
     }
   }

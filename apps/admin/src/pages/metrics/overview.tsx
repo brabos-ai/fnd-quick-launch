@@ -100,11 +100,26 @@ export function OverviewPage() {
       {/* Charts */}
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
         <ChartCard title="Evolução MRR" isLoading={isLoading}>
-          {data && <MRRAreaChart data={data.charts.mrrTrend} height="300px" />}
+          {data && (
+            <MRRAreaChart
+              data={data.charts.mrrTrend.map((item) => ({
+                date: item.date,
+                mrr: item.value,
+              }))}
+              height="300px"
+            />
+          )}
         </ChartCard>
 
         <ChartCard title="Distribuição por Plano" isLoading={isLoading}>
-          {data && <DonutChart data={data.charts.planDistribution} />}
+          {data && (
+            <DonutChart
+              data={data.charts.planDistribution.map((item) => ({
+                name: item.planName,
+                value: item.count,
+              }))}
+            />
+          )}
         </ChartCard>
       </div>
     </div>

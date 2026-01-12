@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './api/app.module';
-import { IConfigurationService } from '@fnd/contracts';
+import { IConfigurationService, ILoggerService } from '@fnd/contracts';
 import { StartupLoggerService } from './shared/services/startup-logger.service';
 import { HttpExceptionFilter } from './api/filters/http-exception.filter';
 
@@ -50,9 +50,16 @@ export async function bootstrapApi() {
   const configService = app.get<IConfigurationService>('IConfigurationService');
   const port = configService.getApiPort();
 
+  // Get logger
+  const logger = app.get<ILoggerService>('ILoggerService');
+
   // Start HTTP server
   await app.listen(port);
-  console.log(`[API Mode] HTTP server running on http://localhost:${port}/api/v1`);
+  logger.info(`[API Mode] HTTP server running on http://localhost:${port}/api/v1`, {
+    module: 'APIBootstrap',
+    port,
+    mode: 'api',
+  });
 
   // Log startup information
   const startupLogger = app.get(StartupLoggerService);

@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { AlertCircle } from "lucide-react"
 import { useAuthStore } from "@/stores/auth-store"
+import type { AxiosErrorWithResponse } from "@/types"
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -46,18 +47,20 @@ export function LoginForm() {
       await login(data)
       toast.success("Login realizado com sucesso!")
       navigate("/")
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const apiError = error as AxiosErrorWithResponse
+
       // Check if it's an email not verified error
-      if (err.errorCode === "EMAIL_NOT_VERIFIED") {
+      if (apiError.response?.data?.errorCode === "EMAIL_NOT_VERIFIED") {
         navigate("/email-not-verified", {
-          state: { email: err.email }
+          state: { email: apiError.response.data.details?.email }
         })
         return
       }
 
       const message =
-        err.response?.data?.message ||
-        err.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao fazer login. Verifique suas credenciais."
       setError(message)
     }

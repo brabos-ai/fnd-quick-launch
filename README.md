@@ -173,7 +173,7 @@ npm run dev
 
 **Pronto para colocar no ar?** Deploy completo em minutos:
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/fnd-quicklaunch)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/fnd-initial-template?referralCode=td8iG1&utm_medium=integration&utm_source=template&utm_campaign=github)
 
 **Arquitetura recomendada:**
 - **Backend:** Railway (API + Workers + PostgreSQL + Redis)

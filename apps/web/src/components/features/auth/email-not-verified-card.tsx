@@ -7,6 +7,7 @@ import { Mail } from "lucide-react"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { api } from "@/lib/api"
 import { useAuthStore } from "@/stores/auth-store"
+import type { AxiosErrorWithResponse } from "@/types"
 
 interface EmailNotVerifiedCardProps {
   email?: string
@@ -41,10 +42,11 @@ export function EmailNotVerifiedCard({ email }: EmailNotVerifiedCardProps) {
       await api.post("/auth/resend-verification", { email: userEmail })
       toast.success("Email de verificação enviado com sucesso!")
       setCooldown(60) // Start 60 second cooldown
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const apiError = error as AxiosErrorWithResponse
       const message =
-        err.response?.data?.message ||
-        err.message ||
+        apiError.response?.data?.message ||
+        apiError.message ||
         "Erro ao reenviar email. Tente novamente."
       toast.error(message)
     } finally {
