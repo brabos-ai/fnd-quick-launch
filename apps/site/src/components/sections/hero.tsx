@@ -70,7 +70,7 @@ export function Hero() {
           >
             <Button size="xl" className="group" asChild>
               <a
-                href="https://github.com/xmaiconx/fnd-easyflow-template"
+                href="https://github.com/xmaiconx/fnd-quick-launch"
                 target="_blank"
                 rel="noopener noreferrer"
               >

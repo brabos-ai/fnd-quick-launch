@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { label: 'Features', href: '#features' },
   { label: 'Como Funciona', href: '#how-it-works' },
+  { label: 'FND Pro', href: '#fnd-pro' },
   { label: 'Preços', href: '#pricing' },
   { label: 'FAQ', href: '#faq' },
 ];
@@ -66,16 +67,16 @@ export function Navbar() {
             {/* CTA */}
             <div className="hidden md:flex items-center gap-4">
               <a
-                href="https://brabos.ai"
+                href="https://brabos.ai/fnd-pro"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-orange-500 hover:text-orange-400 transition-colors"
               >
-                Sobre a FND
+                FND Pro
               </a>
               <Button size="sm" asChild>
                 <a
-                  href="https://github.com/xmaiconx/fnd-easyflow-template"
+                  href="https://github.com/xmaiconx/fnd-quick-launch"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -136,7 +137,7 @@ export function Navbar() {
                 <hr className="my-2" />
                 <Button className="w-full" asChild>
                   <a
-                    href="https://github.com/xmaiconx/fnd-easyflow-template"
+                    href="https://github.com/xmaiconx/fnd-quick-launch"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -148,8 +149,8 @@ export function Navbar() {
                   className="w-full border-orange-500/30 text-orange-500"
                   asChild
                 >
-                  <a href="https://brabos.ai" target="_blank" rel="noopener noreferrer">
-                    Conhecer a FND
+                  <a href="https://brabos.ai/fnd-pro" target="_blank" rel="noopener noreferrer">
+                    Conhecer o FND Pro
                   </a>
                 </Button>
               </div>

@@ -2,7 +2,7 @@
 
 ## Versões Suportadas
 
-Atualmente, damos suporte às seguintes versões do FND QuickLaunch:
+Atualmente, damos suporte às seguintes versões do FND SaaS QuickLaunch:
 
 | Versão | Suportada          |
 | ------ | ------------------ |
@@ -10,7 +10,7 @@ Atualmente, damos suporte às seguintes versões do FND QuickLaunch:
 
 ## Reportando uma Vulnerabilidade
 
-A segurança do FND QuickLaunch é prioridade. Se você descobriu uma vulnerabilidade de segurança, por favor, siga estas diretrizes:
+A segurança do FND SaaS QuickLaunch é prioridade. Se você descobriu uma vulnerabilidade de segurança, por favor, siga estas diretrizes:
 
 ### Como Reportar
 
@@ -57,7 +57,7 @@ Em troca, nós:
 
 ## Segurança do Template
 
-O FND QuickLaunch implementa diversas práticas de segurança por padrão:
+O FND SaaS QuickLaunch implementa diversas práticas de segurança por padrão:
 
 ### Autenticação & Autorização
 - JWT com refresh tokens
@@ -84,7 +84,7 @@ O FND QuickLaunch implementa diversas práticas de segurança por padrão:
 
 ## Escopo
 
-Esta política cobre vulnerabilidades no código do FND QuickLaunch. **Não** cobre:
+Esta política cobre vulnerabilidades no código do FND SaaS QuickLaunch. **Não** cobre:
 
 - Vulnerabilidades em dependências de terceiros (reporte diretamente aos mantenedores)
 - Problemas de configuração específicos da sua implantação
@@ -106,4 +106,4 @@ Para questões gerais sobre segurança (não vulnerabilidades específicas), abr
 
 ---
 
-**Agradecemos sua ajuda em manter o FND QuickLaunch seguro!**
+**Agradecemos sua ajuda em manter o FND SaaS QuickLaunch seguro!**

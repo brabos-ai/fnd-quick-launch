@@ -1,7 +1,7 @@
 {
   "name": "@fnd/server",
   "version": "1.0.0",
-  "description": "Backend API para FND QuickLaunch",
+  "description": "Backend API para FND SaaS QuickLaunch",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",

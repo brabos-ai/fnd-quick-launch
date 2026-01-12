@@ -1,6 +1,6 @@
 # Guia de Contribuição
 
-Obrigado por considerar contribuir com o FND QuickLaunch! 🎉
+Obrigado por considerar contribuir com o FND SaaS QuickLaunch! 🎉
 
 Este documento guia você através do processo de contribuição, desde reportar bugs até enviar Pull Requests.
 
@@ -127,7 +127,7 @@ fnd-quick-launch/
 │   ├── contracts/       # Interfaces TypeScript
 │   ├── database/        # Migrations e Repositórios
 │   └── domain/          # Entidades de domínio
-└── .claude/             # Skills FND TECHLEAD
+└── .claude/             # Skills FND PRO
 ```
 
 ### Comandos Úteis
@@ -323,7 +323,7 @@ Quando você abre um PR:
 
 ---
 
-**Obrigado por contribuir com o FND QuickLaunch!** 🚀
+**Obrigado por contribuir com o FND SaaS QuickLaunch!** 🚀
 
 Sua contribuição ajuda empreendedores não-técnicos a construir seus SaaS com qualidade.
 

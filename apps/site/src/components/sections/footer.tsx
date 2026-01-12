@@ -4,17 +4,18 @@ const links = {
   template: [
     { label: 'Features', href: '#features' },
     { label: 'Como Funciona', href: '#how-it-works' },
+    { label: 'FND Pro', href: '#fnd-pro' },
     { label: 'Preços', href: '#pricing' },
     { label: 'FAQ', href: '#faq' },
   ],
   recursos: [
-    { label: 'GitHub', href: 'https://github.com/xmaiconx/fnd-easyflow-template' },
-    { label: 'Documentação', href: 'https://github.com/xmaiconx/fnd-easyflow-template#readme' },
-    { label: 'Licença MIT', href: 'https://github.com/xmaiconx/fnd-easyflow-template/blob/main/LICENSE' },
+    { label: 'GitHub', href: 'https://github.com/xmaiconx/fnd-quick-launch' },
+    { label: 'Documentação', href: 'https://github.com/xmaiconx/fnd-quick-launch#readme' },
+    { label: 'Licença MIT', href: 'https://github.com/xmaiconx/fnd-quick-launch/blob/main/LICENSE' },
   ],
   fnd: [
     { label: 'Sobre a FND', href: 'https://brabos.ai' },
-    { label: 'FND TECHLEAD', href: 'https://brabos.ai' },
+    { label: 'FND Pro', href: 'https://brabos.ai/fnd-pro' },
   ],
 };
 

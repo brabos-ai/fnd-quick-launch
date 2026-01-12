@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Obrigado por contribuir com ideias! Por favor, descreva a funcionalidade que você gostaria de ver no FND QuickLaunch.
+        Obrigado por contribuir com ideias! Por favor, descreva a funcionalidade que você gostaria de ver no FND SaaS QuickLaunch.
 
   - type: checkboxes
     id: checklist

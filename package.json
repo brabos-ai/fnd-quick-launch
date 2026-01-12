@@ -36,6 +36,7 @@
     "dev": "turbo run dev --parallel",
     "dev:api": "cd apps/server && npm run dev:api",
     "dev:workers": "cd apps/server && npm run dev:workers",
+    "dev:site": "cd apps/site && npm run dev",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

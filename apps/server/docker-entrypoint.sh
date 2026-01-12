@@ -2,7 +2,7 @@
 set -e
 
 echo "======================================"
-echo "FND QuickLaunch - Docker Entrypoint"
+echo "FND SaaS QuickLaunch - Docker Entrypoint"
 echo "======================================"
 
 # ========================================

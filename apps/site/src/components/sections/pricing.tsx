@@ -26,11 +26,11 @@ const plans = [
   },
   {
     name: 'FND Completo',
-    description: 'TECHLEAD + Template + Método',
+    description: 'FND PRO + Template + Método',
     price: 'Consulte',
     priceNote: 'vagas limitadas',
     features: [
-      'FND TECHLEAD (Tech Lead Virtual)',
+      'FND PRO (Tech Lead Virtual)',
       'Template QuickLaunch + suporte',
       'SalesFlow (Landing Page com IA)',
       'Treinamento modular completo',

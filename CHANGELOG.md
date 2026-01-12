@@ -11,7 +11,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Lançamento Inicial Open Source
 
-Este é o primeiro lançamento público do FND QuickLaunch, o template SaaS usado pelos alunos da Fábrica de Negócios Digitais.
+Este é o primeiro lançamento público do FND SaaS QuickLaunch, o template SaaS usado pelos alunos da Fábrica de Negócios Digitais.
 
 ### Incluído
 
@@ -65,7 +65,7 @@ Este é o primeiro lançamento público do FND QuickLaunch, o template SaaS usad
 ### Workflows FND
 - Skills para Claude Code (.claude/skills/)
 - Scripts de automação (.claude/scripts/)
-- Metodologia FND TECHLEAD integrada
+- Metodologia FND PRO integrada
 
 ---
 

@@ -10,20 +10,20 @@ const faqs = [
   {
     question: 'O template é realmente grátis?',
     answer:
-      'Sim! O FND QuickLaunch é 100% open source sob licença MIT. Você pode usar para projetos comerciais, modificar como quiser e não precisa pagar nada. O template inclui auth, billing, multi-tenancy e arquitetura completa.',
+      'Sim! O FND SaaS QuickLaunch é 100% open source sob licença MIT. Você pode usar para projetos comerciais, modificar como quiser e não precisa pagar nada. O template inclui auth, billing, multi-tenancy e arquitetura completa.',
   },
   {
     question: 'Qual a diferença entre usar só o template e entrar na FND?',
     answer:
-      'O template é o código. A FND é o ecossistema completo: você ganha o FND TECHLEAD (Tech Lead Virtual que gerencia seu desenvolvimento), treinamento modular, comunidade exclusiva, mentorias ao vivo e suporte. É a diferença entre ter as ferramentas e ter quem te ensina a usar.',
+      'O template é o código. A FND é o ecossistema completo: você ganha o FND PRO (Tech Lead Virtual que gerencia seu desenvolvimento), treinamento modular, comunidade exclusiva, mentorias ao vivo e suporte. É a diferença entre ter as ferramentas e ter quem te ensina a usar.',
   },
   {
     question: 'Preciso saber programar para usar?',
     answer:
-      'Para usar apenas o template: sim, você precisa de conhecimento técnico em TypeScript, React e NestJS. Para usar o FND TECHLEAD: não necessariamente. O TECHLEAD assume as decisões técnicas e gerencia a IA que escreve o código. Você foca na visão de negócio.',
+      'Para usar apenas o template: sim, você precisa de conhecimento técnico em TypeScript, React e NestJS. Para usar o FND PRO: não necessariamente. O FND PRO assume as decisões técnicas e gerencia a IA que escreve o código. Você foca na visão de negócio.',
   },
   {
-    question: 'O que é o FND TECHLEAD exatamente?',
+    question: 'O que é o FND PRO exatamente?',
     answer:
       'É um sistema de inteligência que funciona como um Tech Lead virtual. Ele planeja arquitetura antes do código ser escrito, audita segurança em tempo real, diagnostica e corrige erros automaticamente. Pense nele como ter um engenheiro sênior de R$30k/mês trabalhando no seu projeto.',
   },

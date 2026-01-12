@@ -41,7 +41,7 @@ export function MobileHeader({ onMenuClick, className }: MobileHeaderProps) {
         {/* Logo */}
         <div className="flex-1 text-center">
           <span className="font-display text-lg font-bold text-primary">
-            FND QuickLaunch
+            FND SaaS QuickLaunch
           </span>
         </div>
 

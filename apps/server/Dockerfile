@@ -17,9 +17,9 @@ WORKDIR /app
 # Copy package files for dependency resolution
 COPY package*.json ./
 COPY turbo.json ./
-COPY apps/backend/package*.json ./apps/backend/
+COPY apps/server/package*.json ./apps/server/
 COPY libs/domain/package*.json ./libs/domain/
-COPY libs/backend/package*.json ./libs/backend/
+COPY libs/contracts/package*.json ./libs/contracts/
 COPY libs/database/package*.json ./libs/database/
 
 # Install all dependencies (including devDependencies for build)
@@ -35,30 +35,30 @@ WORKDIR /app
 # Copy TypeScript configs
 COPY tsconfig.base.json ./
 COPY libs/domain/tsconfig.json ./libs/domain/
-COPY libs/backend/tsconfig.json ./libs/backend/
+COPY libs/contracts/tsconfig.json ./libs/contracts/
 COPY libs/database/tsconfig.json ./libs/database/
-COPY apps/backend/tsconfig.json ./apps/backend/
+COPY apps/server/tsconfig.json ./apps/server/
 
 # Copy source code
 COPY libs/domain/src ./libs/domain/src
-COPY libs/backend/src ./libs/backend/src
+COPY libs/contracts/src ./libs/contracts/src
 COPY libs/database/src ./libs/database/src
 COPY libs/database/migrations ./libs/database/migrations
 COPY libs/database/knexfile.js ./libs/database/knexfile.js
-COPY apps/backend/src ./apps/backend/src
+COPY apps/server/src ./apps/server/src
 
 # Build packages in dependency order
 # 1. domain (no dependencies)
 RUN cd libs/domain && npm run build
 
 # 2. backend (depends on domain)
-RUN cd libs/backend && npm run build
+RUN cd libs/contracts && npm run build
 
 # 3. database (depends on domain)
 RUN cd libs/database && npm run build
 
 # 4. backend API (depends on all libs)
-RUN cd apps/backend && npm run build
+RUN cd apps/server && npm run build
 
 # ========================================
 # Stage 3: Production - Runtime
@@ -80,9 +80,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 COPY turbo.json ./
-COPY apps/backend/package*.json ./apps/backend/
+COPY apps/server/package*.json ./apps/server/
 COPY libs/domain/package*.json ./libs/domain/
-COPY libs/backend/package*.json ./libs/backend/
+COPY libs/contracts/package*.json ./libs/contracts/
 COPY libs/database/package*.json ./libs/database/
 
 # Install ONLY production dependencies
@@ -90,9 +90,9 @@ RUN npm ci --omit=dev --legacy-peer-deps && \
     npm cache clean --force
 
 # Copy compiled code from builder
-COPY --from=builder /app/apps/backend/dist ./apps/backend/dist
+COPY --from=builder /app/apps/server/dist ./apps/server/dist
 COPY --from=builder /app/libs/domain/dist ./libs/domain/dist
-COPY --from=builder /app/libs/backend/dist ./libs/backend/dist
+COPY --from=builder /app/libs/contracts/dist ./libs/contracts/dist
 COPY --from=builder /app/libs/database/dist ./libs/database/dist
 
 # Copy migration files (needed for runtime migrations)
@@ -100,7 +100,7 @@ COPY --from=builder /app/libs/database/migrations ./libs/database/migrations
 COPY --from=builder /app/libs/database/knexfile.js ./libs/database/knexfile.js
 
 # Copy entrypoint script
-COPY apps/backend/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY apps/server/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Change ownership to non-root user

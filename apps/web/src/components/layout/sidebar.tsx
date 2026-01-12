@@ -101,7 +101,7 @@ export function Sidebar({
       })}>
         {!isCollapsed && (
           <span className="font-display text-xl font-bold text-primary">
-            FND QuickLaunch
+            FND SaaS QuickLaunch
           </span>
         )}
         {!isMobile && onToggleCollapse && (

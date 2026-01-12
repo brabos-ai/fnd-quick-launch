@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/FND-QuickLaunch-FF6B00?style=for-the-badge&labelColor=000" alt="FND QuickLaunch" />
+  <img src="https://img.shields.io/badge/FND-SaaS%20QuickLaunch-FF6B00?style=for-the-badge&labelColor=000" alt="FND SaaS QuickLaunch" />
 </p>
 
-<h1 align="center">FND QuickLaunch</h1>
+<h1 align="center">FND SaaS QuickLaunch</h1>
 
 <p align="center">
   <strong>O Template SaaS Perfeito para Quem Usa IA para Desenvolver</strong>
@@ -27,7 +27,7 @@
 
 ## 🎯 Para Quem É Este Template?
 
-O **FND QuickLaunch** foi criado especialmente para **empreendedores não-técnicos** que usam **IA para desenvolver** (vibe coding com Claude, ChatGPT, Cursor, Windsurf, etc.).
+O **FND SaaS QuickLaunch** foi criado especialmente para **empreendedores não-técnicos** que usam **IA para desenvolver** (vibe coding com Claude, ChatGPT, Cursor, Windsurf, etc.).
 
 Se você:
 - ✅ Está criando um SaaS mas não sabe programar
@@ -361,7 +361,7 @@ VITE_API_URL=https://api.seudominio.com
 
 ## Observabilidade
 
-O FND QuickLaunch suporta envio de logs estruturados para múltiplos providers externos via configuração de ambiente.
+O FND SaaS QuickLaunch suporta envio de logs estruturados para múltiplos providers externos via configuração de ambiente.
 
 ### Axiom (Recomendado)
 
@@ -457,7 +457,7 @@ Sem restrições. É seu para usar como quiser.
 
 ## 🌟 Reconhecimentos
 
-O FND QuickLaunch foi criado por **Maicon Matsubara** como parte da metodologia [FND Pro](https://brabos.ai/fnd).
+O FND SaaS QuickLaunch foi criado por **Maicon Matsubara** como parte da metodologia [FND Pro](https://brabos.ai/fnd).
 
 Agradecimentos especiais:
 - A todos os alunos da Fábrica de Negócios Digitais que testaram e deram feedback

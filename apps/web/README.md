@@ -1,4 +1,4 @@
-# FND QuickLaunch - Frontend V2
+# FND SaaS QuickLaunch - Frontend V2
 
 Complete rebuild of the frontend application for F0002-frontend-v2-rebuild feature.
 

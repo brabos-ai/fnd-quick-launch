@@ -44,7 +44,7 @@ export function CTA() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="xl" className="group" asChild>
               <a
-                href="https://github.com/xmaiconx/fnd-easyflow-template"
+                href="https://github.com/xmaiconx/fnd-quick-launch"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -58,8 +58,8 @@ export function CTA() {
               className="group border-orange-500/30 hover:border-orange-500/50 hover:bg-orange-500/5"
               asChild
             >
-              <a href="https://brabos.ai" target="_blank" rel="noopener noreferrer">
-                Conhecer a FND
+              <a href="https://brabos.ai/fnd-pro" target="_blank" rel="noopener noreferrer">
+                Conhecer o FND Pro
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>

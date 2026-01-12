@@ -1,6 +1,6 @@
-# Guia de Deploy - FND QuickLaunch
+# Guia de Deploy - FND SaaS QuickLaunch
 
-Este guia explica como fazer deploy do FND QuickLaunch em produção usando **Railway** (backend) e **Cloudflare Pages** (frontend).
+Este guia explica como fazer deploy do FND SaaS QuickLaunch em produção usando **Railway** (backend) e **Cloudflare Pages** (frontend).
 
 ---
 
