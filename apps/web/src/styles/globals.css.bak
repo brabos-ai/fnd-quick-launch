@@ -13,17 +13,15 @@
     --popover-foreground: 224 71% 4%;
 
     /* Brand */
-    --primary: 217 91% 60%;           /* #2563EB - Blue desaturated */
+    --primary: 210 100% 56%;          /* #3B9EFF - Blue vibrant */
     --primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 91% 60%;    /* For menu selection */
-    --warning-action: 25 95% 53%;     /* Orange for danger zone */
 
     /* Neutrals */
     --secondary: 220 14% 96%;         /* #F4F4F5 - Light gray */
     --secondary-foreground: 224 71% 4%;
     --muted: 220 14% 96%;
     --muted-foreground: 220 9% 46%;   /* #6B7280 - Medium gray */
-    --accent: 217 91% 60%;            /* Use primary for accent */
+    --accent: 200 90% 48%;            /* #1AA3E0 - Blue darker */
     --accent-foreground: 0 0% 100%;
 
     /* Feedback */
@@ -39,14 +37,14 @@
     /* UI Elements */
     --border: 220 13% 91%;            /* #E5E7EB - Subtle border */
     --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --ring: 210 100% 56%;
     --radius: 0.75rem;                /* 12px - Modern rounded */
 
-    /* Shadows - with primary tint */
-    --shadow-sm: 0 1px 2px 0 rgb(37 99 235 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(37 99 235 / 0.08);
-    --shadow-lg: 0 10px 15px -3px rgb(37 99 235 / 0.1);
-    --shadow-xl: 0 25px 50px -12px rgb(37 99 235 / 0.15);
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   }
 
   .dark {
@@ -59,17 +57,15 @@
     --popover-foreground: 210 20% 98%;
 
     /* Brand - Slightly adjusted for dark */
-    --primary: 217 91% 65%;           /* Lighter blue for contrast */
+    --primary: 210 100% 60%;          /* Lighter blue for contrast */
     --primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 91% 65%;    /* For menu selection */
-    --warning-action: 25 95% 53%;     /* Orange for danger zone */
 
     /* Neutrals */
     --secondary: 224 30% 12%;         /* Subtle elevation */
     --secondary-foreground: 210 20% 98%;
     --muted: 224 30% 15%;
     --muted-foreground: 215 20% 65%;  /* Readable secondary text */
-    --accent: 217 91% 65%;            /* Use primary for accent */
+    --accent: 200 90% 52%;            /* Brighter blue in dark */
     --accent-foreground: 0 0% 100%;
 
     /* Feedback - Same with adjusted luminance */
@@ -85,7 +81,7 @@
     /* UI Elements */
     --border: 224 30% 18%;            /* Subtle in dark */
     --input: 224 30% 15%;
-    --ring: 217 91% 65%;
+    --ring: 210 100% 60%;
 
     /* Shadows - Darker, subtler */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);

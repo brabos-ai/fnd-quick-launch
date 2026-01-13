@@ -51,14 +51,14 @@ function ErrorToastContent({
   return (
     <div className={`flex ${hasDescription ? 'items-start' : 'items-center'} gap-3`}>
       <div className="flex-shrink-0">
-        <div className="w-6 h-6 rounded-full bg-red-500/15 flex items-center justify-center">
-          <Icon className="w-3.5 h-3.5 text-red-400" />
+        <div className="w-6 h-6 rounded-full bg-destructive/15 flex items-center justify-center">
+          <Icon className="w-3.5 h-3.5 text-destructive" />
         </div>
       </div>
       <div className="flex-1 min-w-0 pr-2">
-        <p className="text-[13px] font-medium text-zinc-100 leading-tight">{config.title}</p>
+        <p className="text-[13px] font-medium text-popover-foreground leading-tight">{config.title}</p>
         {config.description && (
-          <p className="text-[12px] text-zinc-400 mt-1 leading-normal">
+          <p className="text-[12px] text-muted-foreground mt-1 leading-normal">
             {config.description}
           </p>
         )}
@@ -66,7 +66,7 @@ function ErrorToastContent({
       {onDismiss && (
         <button
           onClick={onDismiss}
-          className="flex-shrink-0 p-0.5 -mr-1 text-zinc-500 hover:text-zinc-300 transition-colors rounded"
+          className="flex-shrink-0 p-0.5 -mr-1 text-muted-foreground hover:text-foreground transition-colors rounded"
         >
           <X className="w-3.5 h-3.5" />
         </button>
@@ -88,14 +88,14 @@ function SuccessToastContent({
   return (
     <div className={`flex ${description ? 'items-start' : 'items-center'} gap-3`}>
       <div className="flex-shrink-0">
-        <div className="w-6 h-6 rounded-full bg-emerald-500/15 flex items-center justify-center">
-          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="w-6 h-6 rounded-full bg-success/15 flex items-center justify-center">
+          <CheckCircle2 className="w-3.5 h-3.5 text-success" />
         </div>
       </div>
       <div className="flex-1 min-w-0 pr-2">
-        <p className="text-[13px] font-medium text-zinc-100 leading-tight">{message}</p>
+        <p className="text-[13px] font-medium text-popover-foreground leading-tight">{message}</p>
         {description && (
-          <p className="text-[12px] text-zinc-400 mt-1 leading-normal">
+          <p className="text-[12px] text-muted-foreground mt-1 leading-normal">
             {description}
           </p>
         )}
@@ -103,7 +103,7 @@ function SuccessToastContent({
       {onDismiss && (
         <button
           onClick={onDismiss}
-          className="flex-shrink-0 p-0.5 -mr-1 text-zinc-500 hover:text-zinc-300 transition-colors rounded"
+          className="flex-shrink-0 p-0.5 -mr-1 text-muted-foreground hover:text-foreground transition-colors rounded"
         >
           <X className="w-3.5 h-3.5" />
         </button>
@@ -125,14 +125,14 @@ function InfoToastContent({
   return (
     <div className={`flex ${description ? 'items-start' : 'items-center'} gap-3`}>
       <div className="flex-shrink-0">
-        <div className="w-6 h-6 rounded-full bg-blue-500/15 flex items-center justify-center">
-          <Info className="w-3.5 h-3.5 text-blue-400" />
+        <div className="w-6 h-6 rounded-full bg-info/15 flex items-center justify-center">
+          <Info className="w-3.5 h-3.5 text-info" />
         </div>
       </div>
       <div className="flex-1 min-w-0 pr-2">
-        <p className="text-[13px] font-medium text-zinc-100 leading-tight">{message}</p>
+        <p className="text-[13px] font-medium text-popover-foreground leading-tight">{message}</p>
         {description && (
-          <p className="text-[12px] text-zinc-400 mt-1 leading-normal">
+          <p className="text-[12px] text-muted-foreground mt-1 leading-normal">
             {description}
           </p>
         )}
@@ -140,7 +140,7 @@ function InfoToastContent({
       {onDismiss && (
         <button
           onClick={onDismiss}
-          className="flex-shrink-0 p-0.5 -mr-1 text-zinc-500 hover:text-zinc-300 transition-colors rounded"
+          className="flex-shrink-0 p-0.5 -mr-1 text-muted-foreground hover:text-foreground transition-colors rounded"
         >
           <X className="w-3.5 h-3.5" />
         </button>
@@ -162,14 +162,14 @@ function WarningToastContent({
   return (
     <div className={`flex ${description ? 'items-start' : 'items-center'} gap-3`}>
       <div className="flex-shrink-0">
-        <div className="w-6 h-6 rounded-full bg-amber-500/15 flex items-center justify-center">
-          <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+        <div className="w-6 h-6 rounded-full bg-warning/15 flex items-center justify-center">
+          <AlertTriangle className="w-3.5 h-3.5 text-warning" />
         </div>
       </div>
       <div className="flex-1 min-w-0 pr-2">
-        <p className="text-[13px] font-medium text-zinc-100 leading-tight">{message}</p>
+        <p className="text-[13px] font-medium text-popover-foreground leading-tight">{message}</p>
         {description && (
-          <p className="text-[12px] text-zinc-400 mt-1 leading-normal">
+          <p className="text-[12px] text-muted-foreground mt-1 leading-normal">
             {description}
           </p>
         )}
@@ -177,7 +177,7 @@ function WarningToastContent({
       {onDismiss && (
         <button
           onClick={onDismiss}
-          className="flex-shrink-0 p-0.5 -mr-1 text-zinc-500 hover:text-zinc-300 transition-colors rounded"
+          className="flex-shrink-0 p-0.5 -mr-1 text-muted-foreground hover:text-foreground transition-colors rounded"
         >
           <X className="w-3.5 h-3.5" />
         </button>
@@ -189,7 +189,7 @@ function WarningToastContent({
 // Toast options with custom styling
 const baseToastOptions: ExternalToast = {
   className:
-    'bg-zinc-900/95 backdrop-blur-sm border border-zinc-800/80 shadow-lg rounded-lg !py-3 !px-4',
+    'bg-popover backdrop-blur-sm border border-border shadow-lg rounded-lg !py-3 !px-4',
   duration: 5000,
 }
 

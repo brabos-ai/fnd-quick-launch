@@ -52,7 +52,7 @@ export function PlanCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      whileHover={{ scale: isCurrent ? 1 : 1.03 }}
+      
       whileTap={{ scale: isCurrent ? 1 : 0.98 }}
     >
       <Card

@@ -176,13 +176,13 @@ export function Sidebar({
                   <motion.a
                     key={item.href}
                     href={item.href}
-                    whileHover={{ scale: 1.02 }}
+                    
                     whileTap={{ scale: 0.98 }}
                     className={cn(
-                      "group relative flex h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
+                      "group relative flex h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-all ",
                       {
-                        "bg-accent text-accent-foreground border-l-2 border-primary": isActive,
-                        "text-muted-foreground": !isActive,
+                        "bg-primary/[0.08] text-foreground before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-[3px] before:rounded-full before:bg-primary": isActive,
+                        "text-muted-foreground hover:bg-muted hover:text-foreground": !isActive,
                         "justify-center": isCollapsed,
                       }
                     )}

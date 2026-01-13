@@ -73,7 +73,7 @@ export function ChartCard({ title, data, loading, className }: ChartCardProps) {
                   <stop
                     offset="5%"
                     stopColor="hsl(var(--primary))"
-                    stopOpacity={0.3}
+                    stopOpacity={0.1}
                   />
                   <stop
                     offset="95%"

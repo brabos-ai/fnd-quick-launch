@@ -45,7 +45,7 @@ export function StatsCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      whileHover={{ scale: 1.02 }}
+      
       whileTap={{ scale: 0.98 }}
     >
       <Card
@@ -68,14 +68,14 @@ export function StatsCard({
             {trend && (
               <div className="flex items-center gap-1">
                 {trend.positive ? (
-                  <TrendingUp className="h-4 w-4 text-green-500" />
+                  <TrendingUp className="h-4 w-4 text-success" />
                 ) : (
-                  <TrendingDown className="h-4 w-4 text-red-500" />
+                  <TrendingDown className="h-4 w-4 text-destructive" />
                 )}
                 <span
                   className={cn(
                     "text-sm font-medium",
-                    trend.positive ? "text-green-500" : "text-red-500"
+                    trend.positive ? "text-success" : "text-destructive"
                   )}
                 >
                   {trend.value}

@@ -113,7 +113,7 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
         <CardContent className="space-y-4">
           {/* Leave Workspace */}
           {canLeave && (
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 border border-orange-500/20 rounded-lg bg-orange-500/5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 border border-warning-action/20 rounded-lg bg-warning-action/5">
               <div className="space-y-1">
                 <h4 className="font-medium">Sair do Workspace</h4>
                 <p className="text-sm text-muted-foreground">
@@ -122,7 +122,7 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
               </div>
               <Button
                 variant="outline"
-                className="gap-2 border-orange-500/50 text-orange-600 hover:bg-orange-500/10 hover:text-orange-700 shrink-0"
+                className="gap-2 border-warning-action/50 text-warning-action hover:bg-warning-action/10 hover:text-warning-action shrink-0"
                 onClick={() => setShowLeaveDialog(true)}
               >
                 <LogOut className="h-4 w-4" />
@@ -175,7 +175,7 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
             <AlertDialogAction
               onClick={handleLeave}
               disabled={isLeaving}
-              className="bg-orange-600 hover:bg-orange-700"
+              className="bg-warning-action hover:bg-warning-action/90"
             >
               {isLeaving ? "Saindo..." : "Sair do Workspace"}
             </AlertDialogAction>

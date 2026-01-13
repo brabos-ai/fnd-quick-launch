@@ -94,11 +94,10 @@ export function Sidebar() {
                 to={item.href!}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                    'hover:bg-accent hover:text-accent-foreground',
+                    'relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all',
                     isActive
-                      ? 'bg-accent text-accent-foreground'
-                      : 'text-muted-foreground hover:text-foreground',
+                      ? 'bg-primary/[0.08] text-foreground before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-[3px] before:rounded-full before:bg-primary'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                     sidebarCollapsed && 'justify-center'
                   )
                 }

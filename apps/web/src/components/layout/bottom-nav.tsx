@@ -94,8 +94,8 @@ export function BottomNav({ currentPath = "/", className }: BottomNavProps) {
                           className={cn(
                             "flex h-11 items-center gap-3 rounded-lg px-4 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
                             {
-                              "bg-accent text-accent-foreground border-l-2 border-primary": isLinkActive,
-                              "text-muted-foreground": !isLinkActive,
+                              "bg-primary/[0.08] text-foreground before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-[3px] before:rounded-full before:bg-primary": isLinkActive,
+                              "text-muted-foreground hover:bg-muted hover:text-foreground": !isLinkActive,
                             }
                           )}
                         >

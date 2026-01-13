@@ -9,6 +9,33 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Added
 
+#### [2026-01-13] F0004-professional-ux-redesign
+
+**Resumo:** Redesign completo da UX com nova paleta de cores desaturada (#2563EB), seleção de menu sutil com barra lateral de 3px, remoção de bordas em cards, e padronização de tokens semânticos. Toast system refatorizado para light/dark themes.
+
+**Principais Entregas:**
+
+| Componente | Descrição |
+|------------|-----------|
+| **Color Palette** | Nova paleta light/dark com primary #2563EB desaturado, tokens semânticos para backgrounds, text, borders, shadows com tint primária. |
+| **Card Design** | Sem bordas visíveis em light theme (shadow-sm), subtle border em dark (border/50). Aplicado em 23 componentes. |
+| **Menu Selection** | Background 8% opacidade + barra lateral 3px em sidebar e bottom-nav. Implementado em desktop e mobile. |
+| **Toast System** | Refatorizado com custom content components (error/success/info/warning), icons semânticos, suporte light/dark, backdrop blur. |
+| **Semantic Tokens** | Padronização em todos os 87 arquivos TSX, eliminação cores hardcoded, feedback tokens (destructive, success, warning, info). |
+| **Admin Dashboard** | Aplicação do redesign paralelo em apps/admin com consistência total. |
+
+**Estatísticas:**
+- Business: 8 (design system, components, toast)
+- Support: 4 (config, tailwind)
+- Fora do Escopo: 0 (100% alinhado com requisitos)
+
+**Notas:**
+- Mantém compatibilidade WCAG AA em ambos os temas
+- Zero regressões visuais em componentes existentes
+- Padrão Linear/Vercel/Notion aplicado com sucesso
+
+---
+
 #### [2026-01-13] F0003-api-response-pattern
 
 **Resumo:** Implementado padrão de resposta unificado para toda a API usando envelope `{ data, meta }`. Criada biblioteca compartilhada `@fnd/shared` com tipos TypeScript. ResponseInterceptor global envelopa automaticamente respostas de sucesso, eliminando boilerplate e garantindo consistência.
