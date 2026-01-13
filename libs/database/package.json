@@ -1,0 +1,28 @@
+{
+  "name": "@fnd/database",
+  "version": "1.0.0",
+  "description": "Database layer with Kysely",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "migrate:make": "knex migrate:make",
+    "seed": "knex seed:run",
+    "seed:make": "knex seed:make"
+  },
+  "dependencies": {
+    "@fnd/domain": "*",
+    "dotenv": "^16.4.5",
+    "knex": "^3.0.0",
+    "kysely": "^0.27.0",
+    "pg": "^8.11.0",
+    "pg-connection-string": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.10.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "fnd-quicklaunch",
+  "version": "0.9.0",
+  "description": "Template SaaS completo com autenticação, multi-tenancy, pagamentos e infraestrutura pronta para produção",
+  "keywords": [
+    "saas",
+    "template",
+    "nestjs",
+    "react",
+    "typescript",
+    "stripe",
+    "multi-tenancy",
+    "authentication",
+    "monorepo",
+    "turborepo"
+  ],
+  "homepage": "https://github.com/xmaiconx/fnd-quick-launch#readme",
+  "bugs": {
+    "url": "https://github.com/xmaiconx/fnd-quick-launch/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmaiconx/fnd-quick-launch.git"
+  },
+  "license": "MIT",
+  "author": "Maicon Matsubara",
+  "private": true,
+  "packageManager": "npm@9.0.0",
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev --parallel",
+    "dev:api": "cd apps/server && npm run dev:api",
+    "dev:workers": "cd apps/server && npm run dev:workers",
+    "dev:site": "cd apps/site && npm run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "migrate": "cd libs/database && npx knex migrate:latest",
+    "migrate:rollback": "cd libs/database && npx knex migrate:rollback",
+    "seed": "cd libs/database && npx knex seed:run"
+  },
+  "devDependencies": {
+    "@orangeopensource/hurl": "^7.1.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/passport-local": "^1.0.38",
+    "httpyac": "^6.16.7",
+    "rimraf": "^5.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,47 @@
+version: 2
+
+updates:
+  # npm dependencies
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '03:00'
+      timezone: 'America/Sao_Paulo'
+    open-pull-requests-limit: 5
+    rebase-strategy: 'auto'
+    commit-message:
+      prefix: 'chore(deps)'
+      include: 'scope'
+    allow:
+      - dependency-type: 'production'
+      - dependency-type: 'development'
+    reviewers:
+      - 'xmaiconx'
+    assignees:
+      - 'xmaiconx'
+    labels:
+      - 'dependencies'
+      - 'chore'
+    ignore:
+      # Adicione aqui pacotes que não devem ser auto-atualizados
+      # Exemplo:
+      # - dependency-name: 'major-breaking-package'
+
+  # GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '04:00'
+      timezone: 'America/Sao_Paulo'
+    reviewers:
+      - 'xmaiconx'
+    assignees:
+      - 'xmaiconx'
+    labels:
+      - 'dependencies'
+      - 'github-actions'
+      - 'chore'

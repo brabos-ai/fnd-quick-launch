@@ -1,0 +1,124 @@
+name: ✨ Feature Request
+description: Sugerir uma nova funcionalidade ou melhoria
+title: "[FEATURE] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por contribuir com ideias! Por favor, descreva a funcionalidade que você gostaria de ver no FND SaaS QuickLaunch.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Por favor, confirme que você verificou os itens abaixo.
+      options:
+        - label: Pesquisei nas [issues existentes](https://github.com/xmaiconx/fnd-quick-launch/issues) e não encontrei nada similar
+          required: true
+        - label: Li a [documentação](https://github.com/xmaiconx/fnd-quick-launch#readme) e a funcionalidade não existe
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema ou Necessidade
+      description: Qual problema você está tentando resolver? Por que essa funcionalidade é importante?
+      placeholder: |
+        Descreva o problema ou a necessidade que motivou esta sugestão.
+        Ex: "É frustrante quando..." ou "Seria útil poder..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solução Proposta
+      description: Como você imagina que esta funcionalidade deveria funcionar?
+      placeholder: |
+        Descreva claramente a solução que você propõe.
+        Ex: "Adicionar um botão que..." ou "Criar um endpoint para..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas Consideradas
+      description: Você pensou em outras formas de resolver este problema?
+      placeholder: |
+        Descreva quaisquer soluções alternativas que você considerou.
+        Ex: "Pensei em fazer X, mas..." ou "Atualmente faço Y como workaround..."
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área do Sistema
+      description: Qual parte do sistema seria afetada?
+      options:
+        - Backend (NestJS/API)
+        - Frontend (React/Web)
+        - Admin Dashboard
+        - Database/Migrations
+        - Autenticação
+        - Pagamentos (Stripe)
+        - Workers/Jobs
+        - Observabilidade/Logs
+        - Deploy/Infraestrutura
+        - Documentação
+        - FND Skills/Metodologia
+        - Outro
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridade Sugerida
+      description: Quão importante é esta funcionalidade para você?
+      options:
+        - Crítica (bloqueio para uso do template)
+        - Alta (funcionalidade muito importante)
+        - Média (seria útil ter)
+        - Baixa (nice to have)
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Exemplos ou Referências
+      description: Existem exemplos de produtos/projetos que implementam algo similar?
+      placeholder: |
+        Links para documentação, repositórios ou produtos que implementam funcionalidades similares.
+        Screenshots também são bem-vindos!
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementação (Opcional)
+      description: Se você é desenvolvedor e tem ideias sobre como implementar, compartilhe aqui.
+      placeholder: |
+        Ideias sobre arquitetura, dependências, pontos de integração, etc.
+        Não é necessário ser detalhado - qualquer insight é útil!
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Disposição para Contribuir
+      description: Você estaria disposto a ajudar na implementação desta funcionalidade?
+      options:
+        - label: Sim, posso implementar essa funcionalidade (com orientação)
+        - label: Sim, posso ajudar com testes
+        - label: Sim, posso ajudar com documentação
+        - label: Não, apenas sugerindo
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto Adicional
+      description: Qualquer outra informação relevante sobre esta solicitação
+      placeholder: |
+        - Casos de uso específicos
+        - Impacto esperado
+        - Considerações de compatibilidade

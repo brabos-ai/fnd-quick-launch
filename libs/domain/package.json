@@ -1,0 +1,14 @@
+{
+  "name": "@fnd/domain",
+  "version": "1.0.0",
+  "description": "Pure domain models and enums",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rimraf dist tsconfig.tsbuildinfo"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

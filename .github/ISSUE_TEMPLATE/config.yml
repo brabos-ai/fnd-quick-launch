@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Comunidade WhatsApp
+    url: https://chat.whatsapp.com/FGvSsWQlMV6DGBL17IWfQr
+    about: Tire dúvidas e converse com a comunidade FND
+  - name: 🔒 Reportar Vulnerabilidade de Segurança
+    url: https://github.com/xmaiconx/fnd-quick-launch/security/advisories/new
+    about: Por favor, reporte vulnerabilidades de segurança de forma privada
+  - name: 📚 Documentação
+    url: https://github.com/xmaiconx/fnd-quick-launch#readme
+    about: Consulte a documentação completa do FND SaaS QuickLaunch

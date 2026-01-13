@@ -1,0 +1,17 @@
+{
+  "name": "@fnd/shared",
+  "version": "1.0.0",
+  "description": "Shared types and utilities for frontend and backend",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rimraf dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "@fnd/domain": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

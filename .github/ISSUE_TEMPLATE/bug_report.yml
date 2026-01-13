@@ -1,0 +1,132 @@
+name: 🐛 Bug Report
+description: Reportar um problema ou comportamento inesperado
+title: "[BUG] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar um bug! Por favor, preencha o formulário abaixo para nos ajudar a entender e resolver o problema.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Por favor, confirme que você verificou os itens abaixo antes de abrir este issue.
+      options:
+        - label: Pesquisei nas [issues existentes](https://github.com/xmaiconx/fnd-quick-launch/issues) e não encontrei nada similar
+          required: true
+        - label: Li a [documentação](https://github.com/xmaiconx/fnd-quick-launch#readme)
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição do Bug
+      description: Uma descrição clara e concisa do que está acontecendo.
+      placeholder: Descreva o bug aqui...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para Reproduzir
+      description: Passos claros para reproduzir o comportamento.
+      placeholder: |
+        1. Vá para '...'
+        2. Clique em '...'
+        3. Execute o comando '...'
+        4. Veja o erro
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento Esperado
+      description: O que você esperava que acontecesse?
+      placeholder: Descreva o comportamento esperado...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamento Atual
+      description: O que está acontecendo de fato?
+      placeholder: Descreva o comportamento atual...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área Afetada
+      description: Qual parte do sistema está afetada?
+      options:
+        - Backend (NestJS/API)
+        - Frontend (React/Web)
+        - Admin Dashboard
+        - Database/Migrations
+        - Autenticação
+        - Pagamentos (Stripe)
+        - Workers/Jobs
+        - Observabilidade/Logs
+        - Deploy/Infraestrutura
+        - Documentação
+        - Outro
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidade
+      description: Quão grave é este bug?
+      options:
+        - Crítico (sistema não funciona)
+        - Alto (funcionalidade importante quebrada)
+        - Médio (funcionalidade menos importante afetada)
+        - Baixo (problema cosmético ou pequeno)
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Ambiente
+      description: Informações sobre o seu ambiente
+      placeholder: |
+        - SO: [ex: Windows 11, macOS 14, Ubuntu 22.04]
+        - Node.js: [ex: 18.17.0]
+        - npm: [ex: 9.8.0]
+        - Navegador (se aplicável): [ex: Chrome 120, Firefox 121]
+        - Versão do QuickLaunch: [ex: 0.9.0]
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs ou Mensagens de Erro
+      description: Cole aqui quaisquer logs, stack traces ou mensagens de erro relevantes
+      placeholder: |
+        Cole os logs aqui...
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Se aplicável, adicione screenshots para ajudar a explicar o problema
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto Adicional
+      description: Qualquer outra informação que possa ser útil para resolver o problema
+      placeholder: |
+        - Isso começou depois de uma atualização específica?
+        - O problema ocorre consistentemente ou intermitentemente?
+        - Você fez alguma modificação no código?

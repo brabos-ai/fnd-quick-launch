@@ -1,0 +1,38 @@
+# Código Owners para FND SaaS QuickLaunch
+#
+# Sintaxe: pattern @owner1 @owner2
+# Será requerido review destes usuários em PRs que alterem esses arquivos
+# Veja: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Mantainer principal
+* @xmaiconx
+
+# Backend - NestJS API
+apps/server/ @xmaiconx
+libs/database/ @xmaiconx
+libs/domain/ @xmaiconx
+libs/contracts/ @xmaiconx
+
+# Frontend - React Web App
+apps/web/ @xmaiconx
+
+# Admin Dashboard
+apps/admin/ @xmaiconx
+
+# Landing Page & Marketing
+apps/site/ @xmaiconx
+
+# Configuração e CI/CD
+.github/ @xmaiconx
+turbo.json @xmaiconx
+package.json @xmaiconx
+package-lock.json @xmaiconx
+tsconfig.json @xmaiconx
+tsconfig.base.json @xmaiconx
+
+# Documentação Crítica
+SECURITY.md @xmaiconx
+CONTRIBUTING.md @xmaiconx
+CODE_OF_CONDUCT.md @xmaiconx
+GOVERNANCE.md @xmaiconx
+VISION.md @xmaiconx
