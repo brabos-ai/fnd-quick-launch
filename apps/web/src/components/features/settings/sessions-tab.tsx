@@ -21,8 +21,17 @@ import {
 import { EmptyState } from "@/components/ui/empty-state"
 import { api } from "@/lib/api"
 import { cn } from "@/lib/utils"
-import type { Session } from "@/types"
+import type { Session, AxiosErrorWithResponse } from "@/types"
 import { toast } from "@/lib/toast"
+
+/** Backend session response type (maps to frontend Session) */
+interface BackendSession {
+  id: string
+  deviceName: string
+  ipAddress: string
+  lastActivityAt: string
+  createdAt: string
+}
 
 const iconMap = {
   smartphone: Smartphone,
@@ -172,12 +181,12 @@ export function SessionsTab() {
   const { data: sessions, isLoading, error, refetch } = useQuery({
     queryKey: ['my-sessions'],
     queryFn: async () => {
-      const response = await api.get<{ sessions: any[] }>('/auth/sessions')
-      // Backend retorna { sessions: [...] }, não um array direto
+      // API returns sessions array directly (ResponseInterceptor unwraps envelope)
+      const response = await api.get<BackendSession[]>('/auth/sessions')
       // Mapear campos do backend para os esperados pelo frontend
-      return response.data.sessions.map((session: any) => ({
+      return response.data.map((session: BackendSession): Session => ({
         id: session.id,
-        userId: session.userId || '',
+        userId: '',
         device: session.deviceName || 'Dispositivo Desconhecido',
         browser: 'Navegador', // TODO: Extrair do userAgent quando backend fornecer
         location: 'Localização não disponível', // TODO: Implementar geolocalização
@@ -197,8 +206,8 @@ export function SessionsTab() {
       queryClient.invalidateQueries({ queryKey: ['my-sessions'] })
       toast.success('Sessão revogada com sucesso')
     },
-    onError: (error: any) => {
-      const message = error.message || 'Erro ao revogar sessão'
+    onError: (error: AxiosErrorWithResponse) => {
+      const message = error.response?.data?.message || error.message || 'Erro ao revogar sessão'
       toast.error(message)
     },
   })

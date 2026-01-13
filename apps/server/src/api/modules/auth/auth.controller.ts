@@ -116,59 +116,52 @@ export class AuthController {
 
   @Post('logout')
   @UseGuards(JwtAuthGuard)
-  @HttpCode(HttpStatus.OK)
-  async logout(@Req() req: any) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async logout(@Req() req: any): Promise<void> {
     // Get current session from refresh token if provided
     // For simplicity, revoke all sessions for the user
     await this.sessionRepository.revokeAllByUserId(req.user.id);
-    return { message: 'Logged out successfully' };
   }
 
   @Post('forgot-password')
   @UseGuards(RateLimitGuard)
   @RateLimit({ limit: 3, windowSeconds: 60 })
-  @HttpCode(HttpStatus.OK)
-  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
     await this.commandBus.execute(new ForgotPasswordCommand(dto.email));
-    return { message: 'If the email exists, a password reset link has been sent.' };
   }
 
   @Post('reset-password')
-  @HttpCode(HttpStatus.OK)
-  async resetPassword(@Body() dto: ResetPasswordDto) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async resetPassword(@Body() dto: ResetPasswordDto): Promise<void> {
     await this.commandBus.execute(new ResetPasswordCommand(dto.token, dto.newPassword));
-    return { message: 'Password reset successfully.' };
   }
 
   @Post('verify-email')
-  @HttpCode(HttpStatus.OK)
-  async verifyEmail(@Body() dto: VerifyEmailDto) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async verifyEmail(@Body() dto: VerifyEmailDto): Promise<void> {
     await this.commandBus.execute(new VerifyEmailCommand(dto.token));
-    return { message: 'Email verified successfully.' };
   }
 
   @Post('resend-verification')
   @UseGuards(RateLimitGuard)
   @RateLimit({ limit: 3, windowSeconds: 60 })
-  @HttpCode(HttpStatus.OK)
-  async resendVerification(@Body() dto: ResendVerificationDto) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async resendVerification(@Body() dto: ResendVerificationDto): Promise<void> {
     await this.commandBus.execute(new ResendVerificationCommand(dto.email));
-    return { message: 'If the email exists and is not verified, a verification link has been sent.' };
   }
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
   async getMe(@Req() req: any) {
     return {
-      user: {
-        id: req.user.id,
-        email: req.user.email,
-        fullName: req.user.fullName,
-        emailVerified: req.user.emailVerified,
-        accountId: req.user.accountId,
-        role: req.user.role,
-        createdAt: req.user.createdAt,
-      },
+      id: req.user.id,
+      email: req.user.email,
+      fullName: req.user.fullName,
+      emailVerified: req.user.emailVerified,
+      accountId: req.user.accountId,
+      role: req.user.role,
+      createdAt: req.user.createdAt,
     };
   }
 
@@ -187,15 +180,13 @@ export class AuthController {
     }
 
     return {
-      user: {
-        id: updatedUser.id,
-        email: updatedUser.email,
-        fullName: updatedUser.fullName,
-        emailVerified: updatedUser.emailVerified,
-        accountId: updatedUser.accountId,
-        role: req.user.role, // Role comes from JWT
-        createdAt: updatedUser.createdAt,
-      },
+      id: updatedUser.id,
+      email: updatedUser.email,
+      fullName: updatedUser.fullName,
+      emailVerified: updatedUser.emailVerified,
+      accountId: updatedUser.accountId,
+      role: req.user.role, // Role comes from JWT
+      createdAt: updatedUser.createdAt,
     };
   }
 
@@ -203,21 +194,19 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async getSessions(@Req() req: any) {
     const sessions = await this.sessionRepository.findByUserId(req.user.id);
-    return {
-      sessions: sessions.map((session) => ({
-        id: session.id,
-        deviceName: session.deviceName,
-        ipAddress: session.ipAddress,
-        lastActivityAt: session.lastActivityAt,
-        createdAt: session.createdAt,
-      })),
-    };
+    return sessions.map((session) => ({
+      id: session.id,
+      deviceName: session.deviceName,
+      ipAddress: session.ipAddress,
+      lastActivityAt: session.lastActivityAt,
+      createdAt: session.createdAt,
+    }));
   }
 
   @Delete('sessions/:id')
   @UseGuards(JwtAuthGuard)
-  @HttpCode(HttpStatus.OK)
-  async revokeSession(@Req() req: any, @Param('id') sessionId: string) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async revokeSession(@Req() req: any, @Param('id') sessionId: string): Promise<void> {
     // Verify session exists
     const session = await this.sessionRepository.findById(sessionId);
     if (!session) {
@@ -230,25 +219,22 @@ export class AuthController {
     }
 
     await this.sessionRepository.revokeById(sessionId);
-    return { message: 'Session revoked successfully' };
   }
 
   @Post('request-email-change')
   @UseGuards(JwtAuthGuard, RateLimitGuard)
   @RateLimit({ limit: 3, windowSeconds: 3600 })
-  @HttpCode(HttpStatus.OK)
-  async requestEmailChange(@Req() req: any, @Body() dto: RequestEmailChangeDto) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async requestEmailChange(@Req() req: any, @Body() dto: RequestEmailChangeDto): Promise<void> {
     await this.commandBus.execute(
       new RequestEmailChangeCommand(req.user.id, dto.newEmail, dto.currentPassword)
     );
-    return { message: 'Link de verificação enviado para o novo endereço de e-mail.' };
   }
 
   @Post('confirm-email-change')
-  @HttpCode(HttpStatus.OK)
-  async confirmEmailChange(@Body() dto: ConfirmEmailChangeDto, @Req() req?: any) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async confirmEmailChange(@Body() dto: ConfirmEmailChangeDto, @Req() req?: any): Promise<void> {
     const sessionId = req?.user?.sessionId || null;
     await this.commandBus.execute(new ConfirmEmailChangeCommand(dto.token, sessionId));
-    return { message: 'E-mail atualizado com sucesso.' };
   }
 }

@@ -1,13 +1,9 @@
-// Mirror from backend ErrorResponse
-export type DisplayType = 'toast' | 'modal' | 'page' | 'inline'
+// Re-export from @fnd/shared to maintain backward compatibility
+// Note: ApiResponse and PaginatedResponse available from '@fnd/shared' but not re-exported here
+// to avoid conflicts with local types. Import directly from '@fnd/shared' if needed.
+import type { DisplayType, ErrorResponse } from '@fnd/shared'
 
-export interface ErrorResponse {
-  statusCode: number
-  message: string
-  errorCode: string
-  displayType: DisplayType
-  details?: Record<string, unknown>
-}
+export type { DisplayType, ErrorResponse }
 
 /**
  * Type for Axios errors that contain an API ErrorResponse.

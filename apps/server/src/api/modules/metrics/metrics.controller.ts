@@ -1,6 +1,7 @@
 import { Controller, Get, Res, Inject } from '@nestjs/common';
 import { Response } from 'express';
 import { IMetricsService } from '@fnd/contracts';
+import { SkipInterceptor } from '../../interceptors/response.interceptor';
 
 /**
  * Metrics controller for exposing Prometheus-compatible metrics.
@@ -17,8 +18,10 @@ export class MetricsController {
    * GET /metrics
    * Returns metrics in Prometheus text format.
    * Public endpoint - no authentication required.
+   * Skips ResponseInterceptor to preserve Prometheus format.
    */
   @Get()
+  @SkipInterceptor()
   async getMetrics(@Res() res: Response): Promise<void> {
     const metrics = await this.metricsService.getMetrics();
     const contentType = this.metricsService.getContentType();

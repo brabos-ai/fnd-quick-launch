@@ -5,7 +5,7 @@ import { AppRoutes } from './routes'
 import { Toaster } from 'sonner'
 import { ErrorModal } from '@/components/ui/error-modal'
 import { api } from '@/lib/api'
-import type { Workspace } from '@/types'
+import type { User, Workspace } from '@/types'
 
 function App() {
   const theme = useUIStore((state) => state.theme)
@@ -36,8 +36,9 @@ function App() {
     const loadUserData = async () => {
       try {
         // Fetch updated user data including role
-        const userResponse = await api.get<{ user: any }>('/auth/me')
-        setUser(userResponse.data.user)
+        // API returns user directly (ResponseInterceptor unwraps envelope)
+        const userResponse = await api.get<User>('/auth/me')
+        setUser(userResponse.data)
 
         // Fetch workspaces
         const workspacesResponse = await api.get<Workspace[]>('/workspaces')

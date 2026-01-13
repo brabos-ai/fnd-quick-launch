@@ -8,6 +8,9 @@ export type UserRole = 'owner' | 'admin' | 'member'
 // Error types
 export type { DisplayType, ErrorResponse, AxiosErrorWithResponse } from './errors'
 
+// API Response types from @fnd/shared
+export type { PaginatedResponse, PaginationMeta, ApiResponse } from '@fnd/shared'
+
 // Auth DTOs
 export interface LoginDto {
   email: string

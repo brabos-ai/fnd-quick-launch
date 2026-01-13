@@ -11,6 +11,7 @@
     { "path": "./libs/backend" },
     { "path": "./libs/contracts" },
     { "path": "./libs/database" },
+    { "path": "./libs/shared" },
     { "path": "./apps/admin" },
     { "path": "./apps/server" },
     { "path": "./apps/site" },

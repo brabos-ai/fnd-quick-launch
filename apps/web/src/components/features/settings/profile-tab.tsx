@@ -11,7 +11,7 @@ import { useAuthStore } from "@/stores/auth-store"
 import { toast } from "@/lib/toast"
 import { api } from "@/lib/api"
 import { EmailChangeDialog } from "./email-change-dialog"
-import type { AxiosErrorWithResponse } from "@/types"
+import type { AxiosErrorWithResponse, User as UserType } from "@/types"
 
 const roleTranslation: Record<string, string> = {
   'super-admin': 'Super Administrador',
@@ -51,12 +51,13 @@ export function ProfileTab() {
 
     try {
       // Call backend endpoint to update profile
-      const response = await api.patch<{ user: any }>('/auth/me', {
+      // API returns user directly (ResponseInterceptor unwraps envelope)
+      const response = await api.patch<UserType>('/auth/me', {
         fullName: newFullName,
       })
 
       // Update local state with response from backend
-      setUser(response.data.user)
+      setUser(response.data)
       setIsEditingName(false)
       toast.success('Nome atualizado com sucesso!')
     } catch (error: unknown) {

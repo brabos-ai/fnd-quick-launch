@@ -251,13 +251,8 @@ export interface AuditLogFilters {
   userId?: string
 }
 
-export interface PaginatedResponse<T> {
-  data: T[]
-  total: number
-  page: number
-  limit: number
-  totalPages: number
-}
+// Re-export from @fnd/shared for pagination support
+export type { PaginatedResponse, PaginationMeta, ApiResponse } from '@fnd/shared'
 
 // Account Admin types
 export type UserRole = 'owner' | 'admin' | 'member'

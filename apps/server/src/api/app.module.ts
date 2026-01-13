@@ -9,6 +9,8 @@ import { MetricsModule } from './modules/metrics/metrics.module';
 import { SharedModule } from '../shared/shared.module';
 import { WorkersModule } from '../workers/workers.module';
 import { AppController } from './app.controller';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
 
 /**
  * App Module - Main Application Module
@@ -53,5 +55,11 @@ if (shouldLoadWorkers) {
 @Module({
   imports,
   controllers: [AppController],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
+  ],
 })
 export class AppModule {}

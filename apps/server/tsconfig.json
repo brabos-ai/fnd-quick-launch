@@ -10,6 +10,7 @@
   "references": [
     { "path": "../../libs/domain" },
     { "path": "../../libs/contracts" },
-    { "path": "../../libs/database" }
+    { "path": "../../libs/database" },
+    { "path": "../../libs/shared" }
   ]
 }

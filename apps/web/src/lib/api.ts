@@ -92,7 +92,20 @@ const processQueue = (error: Error | null) => {
 }
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Auto-extract data from ApiResponse envelope { data: T, meta: { timestamp } } → T
+    // BUT preserve PaginatedResponse { data: T[], meta: { total, page, ... } } intact
+    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
+      const meta = response.data.meta
+      // If meta has pagination fields, it's a PaginatedResponse - keep intact for pagination access
+      if (meta && ('total' in meta || 'page' in meta || 'limit' in meta)) {
+        return response
+      }
+      // Otherwise, it's an ApiResponse - unwrap to simplify hook access
+      return { ...response, data: response.data.data }
+    }
+    return response
+  },
   async (error) => {
     const originalRequest = error.config
 
@@ -184,7 +197,8 @@ api.interceptors.response.use(
 
       // Use refreshApi (without interceptors) to avoid recursion
       const response = await refreshApi.post('/auth/refresh', { refreshToken })
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data
+      // refreshApi doesn't have interceptors, so manually extract from envelope
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data.data || response.data
 
 
       // Update tokens in localStorage
