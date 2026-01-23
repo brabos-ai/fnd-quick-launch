@@ -18,9 +18,9 @@
     "type": "commonjs",
     "strict": false,
     "strictMode": true,
-    "lazy": false,
+    "lazy": true,
     "noInterop": false
   },
-  "sourceMaps": true,
+  "sourceMaps": "inline",
   "minify": false
 }

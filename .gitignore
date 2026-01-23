@@ -164,5 +164,4 @@ docs/*
 .vscode/*
 .fnd/*
 .claude/*
-CLAUDE.md
 tmpclaude*

@@ -16,5 +16,5 @@ if (!process.env.NODE_MODE) {
   console.log('📝 NODE_MODE not set, defaulting to "hybrid" for local development');
 }
 
-// Import and run main dispatcher
-import('./main');
+// Import and run main dispatcher (require is sync and works better with SWC)
+require('./main');
