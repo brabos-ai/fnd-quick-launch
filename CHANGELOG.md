@@ -9,6 +9,49 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Added
 
+#### [2026-01-23] F0006-database-auto-setup
+
+**Resumo:** Setup automático de banco PostgreSQL com script Node que detecta conexão, cria database se necessário, copia .env de template, executa migrations. Suporta PostgreSQL local (Docker) e remoto (Railway). Mensagens de erro claras em português. Totalmente idempotente.
+
+**Principais Entregas:**
+
+| Componente | Descrição |
+|------------|-----------|
+| **setup-database.js** | Script Node que verifica/cria database com suporte SSL automático e tratamento de erros em português |
+| **npm run setup (root)** | Comando one-shot que cria .env, database, executa migrations e seeds |
+| **npm run migrate (hook)** | Modificado para executar db:setup automaticamente antes de migrations |
+| **Documentação** | README completo, TESTE.md com 8 casos de teste, changelog detalhado |
+
+**Funcionalidades:**
+- ✅ Verifica conexão com PostgreSQL (local ou remoto)
+- ✅ Cria database automaticamente se não existir
+- ✅ Copia `.env.example` para `.env` se necessário
+- ✅ Mensagens de erro claras e acionáveis em português
+- ✅ Suporte a SSL automático (Railway, render, etc.)
+- ✅ Idempotente: pode executar múltiplas vezes sem erro
+
+**Impacto:**
+- 🎯 Aluno novo: um comando `npm run setup` pronto para usar
+- ⚡ Desenvolvedores: `npm run migrate` agora auto-cria DB
+- 🌍 Suporte remoto: Funciona com Railway, render, Vercel Postgres
+
+**Estatísticas:**
+- Arquivos criados: 3 (setup-database.js, README.md, TESTE.md)
+- Arquivos modificados: 2 (libs/database/package.json, package.json root)
+- Total de linhas: ~600 (código + docs)
+- Cobertura de testes: 8 cenários manuais documentados
+
+**Critérios de Aceite:** ✅ 7/7
+- [x] `npm run setup` no root cria DB e roda migrations
+- [x] `npm run migrate` cria DB automaticamente se não existir
+- [x] `.env` copiado de `.env.example` se não existir
+- [x] Erro claro quando Postgres não acessível
+- [x] Funciona com DATABASE_URL local (localhost)
+- [x] Funciona com DATABASE_URL remoto (Railway)
+- [x] Idempotente: múltiplas execuções sem erro
+
+---
+
 #### [2026-01-23] Optimize dev startup performance
 
 **Resumo:** Otimizações de configuração para acelerar o tempo de inicialização do servidor em desenvolvimento. Habilitado lazy compilation no SWC, inline sourcemaps, reduzido delay do nodemon, e expandidos ignore patterns.
