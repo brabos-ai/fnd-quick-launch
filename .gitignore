@@ -161,9 +161,7 @@ build-matrix.json
 nul
 
 # Documentation - local only, not tracked
-docs/*
-!docs/code-quality-review.md
-docs/features/
+docs/
 
 .vscode/*
 .fnd/*
