@@ -57,6 +57,7 @@ if (shouldLoadWorkers) {
   imports,
   controllers: [AppController],
   providers: [
+    TenantContextInterceptor,
     {
       provide: APP_INTERCEPTOR,
       useClass: TenantContextInterceptor,

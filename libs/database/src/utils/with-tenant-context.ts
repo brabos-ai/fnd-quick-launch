@@ -47,14 +47,20 @@ export async function withTenantContext<T>(
     throw new Error('accountId is required for tenant context');
   }
 
+  // Validate UUID format to prevent SQL injection (SET LOCAL doesn't support bind parameters)
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(accountId)) {
+    throw new Error('accountId must be a valid UUID');
+  }
+
   return db.transaction().execute(async (trx) => {
     // Set the tenant context using SET LOCAL (scoped to transaction only)
-    // Using sql template tag for parameterized execution
-    await sql`SET LOCAL app.current_account_id = ${accountId}`.execute(trx);
+    // Note: SET LOCAL doesn't support bind parameters, so we use sql.raw() after validation
+    await sql.raw(`SET LOCAL app.current_account_id = '${accountId}'`).execute(trx);
 
     // Set admin bypass flag if requested
     if (options?.isAdmin) {
-      await sql`SET LOCAL app.is_admin = 'true'`.execute(trx);
+      await sql.raw(`SET LOCAL app.is_admin = true`).execute(trx);
     }
 
     // Execute the callback with the tenant-scoped transaction
