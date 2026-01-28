@@ -2,6 +2,9 @@
 // Date -> string (JSON serialization)
 // Enum -> union type (no backend import)
 
+// RLS types
+export type { RlsStatus } from './rls'
+
 export type EntityStatus = 'active' | 'inactive' | 'deleted'
 export type UserRole = 'owner' | 'admin' | 'member'
 

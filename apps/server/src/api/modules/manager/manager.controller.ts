@@ -11,6 +11,8 @@ import {
   Request,
   HttpCode,
   HttpStatus,
+  Inject,
+  BadRequestException,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { SuperAdminGuard } from '../../guards/super-admin.guard';
@@ -50,7 +52,10 @@ import {
   StripeProductDto,
   SearchAccountsDto,
   AccountSearchItemDto,
+  ToggleRlsDto,
+  RlsStatusResponseDto,
 } from './dtos';
+import { RlsManager } from '@fnd/database';
 import {
   ImpersonateCommand,
   EndImpersonateCommand,
@@ -81,6 +86,7 @@ export class ManagerController {
     private readonly subscriptionService: ManagerSubscriptionService,
     private readonly stripeService: StripeService,
     private readonly commandBus: CommandBus,
+    @Inject('IRlsManager') private readonly rlsManager: RlsManager,
   ) {}
 
   /**
@@ -460,5 +466,51 @@ export class ManagerController {
       currency: price.currency,
       interval: price.recurring?.interval || 'month',
     }));
+  }
+
+  // ========================================
+  // Row Level Security Management
+  // ========================================
+
+  /**
+   * POST /api/v1/manager/rls/toggle
+   * Toggle RLS on/off globally (emergency use only)
+   */
+  @Post('rls/toggle')
+  async toggleRls(
+    @Body() dto: ToggleRlsDto,
+    @Request() req: any,
+  ): Promise<RlsStatusResponseDto> {
+    const userEmail = req.user?.email || 'unknown';
+
+    // setEnabled now validates internally when enabling RLS
+    try {
+      await this.rlsManager.setEnabled(dto.enabled, userEmail);
+    } catch (error) {
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Failed to toggle RLS'
+      );
+    }
+
+    const status = this.rlsManager.getStatus();
+    return {
+      enabled: status.enabled,
+      updatedAt: status.updatedAt.toISOString(),
+      updatedBy: status.updatedBy,
+    };
+  }
+
+  /**
+   * GET /api/v1/manager/rls/status
+   * Get current RLS status
+   */
+  @Get('rls/status')
+  async getRlsStatus(): Promise<RlsStatusResponseDto> {
+    const status = this.rlsManager.getStatus();
+    return {
+      enabled: status.enabled,
+      updatedAt: status.updatedAt.toISOString(),
+      updatedBy: status.updatedBy,
+    };
   }
 }

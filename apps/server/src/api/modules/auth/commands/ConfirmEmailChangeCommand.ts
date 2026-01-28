@@ -58,8 +58,8 @@ export class ConfirmEmailChangeCommandHandler implements ICommandHandler<any> {
       throw new NotFoundException('Usuário não encontrado.');
     }
 
-    // Check if new email is still available (could have been taken between request and confirmation)
-    const existingUser = await this.userRepository.findByEmail(emailChangeRequest.newEmail);
+    // Check if new email is still available within the same account (could have been taken between request and confirmation)
+    const existingUser = await this.userRepository.findByEmail(emailChangeRequest.newEmail, user.accountId);
     if (existingUser && existingUser.id !== user.id) {
       throw new BadRequestException('Este e-mail já está em uso.');
     }

@@ -1,9 +1,9 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Inject } from '@nestjs/common';
 import { Job } from 'bullmq';
+import { Kysely, Transaction } from 'kysely';
 import { ILoggerService } from '@fnd/contracts';
-import { IAuditLogRepository } from '@fnd/database';
-import { AuditLog } from '@fnd/domain';
+import { Database, withTenantContext } from '@fnd/database';
 
 /**
  * Job metadata interface for requestId tracking
@@ -14,6 +14,7 @@ interface JobMetadata {
 
 /**
  * Audit job data interface
+ * Note: accountId is required for RLS context
  */
 interface AuditJobData {
   eventName: string;
@@ -21,7 +22,7 @@ interface AuditJobData {
   occurredAt: string;
   payload: {
     aggregateId: string;
-    accountId?: string;
+    accountId: string; // Required for RLS
     workspaceId?: string;
     userId?: string;
     [key: string]: any;
@@ -44,12 +45,13 @@ function extractRequestId(job: Job<AuditJobData>): string | undefined {
  * - Persist domain and integration events to audit_logs table
  * - Extract metadata from event payload (accountId, workspaceId, userId)
  * - Store full event payload for audit trail
+ * - Execute DB operations within tenant RLS context
  */
 @Processor('audit')
 export class AuditWorker extends WorkerHost {
   constructor(
-    @Inject('IAuditLogRepository')
-    private readonly auditLogRepository: IAuditLogRepository,
+    @Inject('DATABASE')
+    private readonly db: Kysely<Database>,
     @Inject('ILoggerService')
     private readonly logger: ILoggerService,
   ) {
@@ -64,14 +66,33 @@ export class AuditWorker extends WorkerHost {
    * Called by BullMQ for each job in the queue
    */
   async process(job: Job<AuditJobData>): Promise<void> {
-    const { eventName, eventType } = job.data;
+    const { eventName, eventType, payload } = job.data;
     const requestId = extractRequestId(job);
+    const accountId = payload.accountId;
+
+    // Validate accountId is present (required for RLS)
+    if (!accountId) {
+      const error = new Error('accountId is required in job payload for RLS context');
+      this.logger.error(
+        'Audit job missing accountId',
+        error,
+        {
+          operation: 'worker.audit.process.validation-error',
+          jobId: job.id,
+          eventName,
+          eventType,
+          requestId,
+        }
+      );
+      throw error;
+    }
 
     this.logger.info('Processing audit job', {
       operation: 'worker.audit.process',
       jobId: job.id,
       eventName,
       eventType,
+      accountId,
       requestId,
     });
 
@@ -83,6 +104,7 @@ export class AuditWorker extends WorkerHost {
         jobId: job.id,
         eventName,
         eventType,
+        accountId,
         requestId,
       });
     } catch (error) {
@@ -94,6 +116,7 @@ export class AuditWorker extends WorkerHost {
           jobId: job.id,
           eventName,
           eventType,
+          accountId,
           requestId,
         }
       );
@@ -102,34 +125,39 @@ export class AuditWorker extends WorkerHost {
   }
 
   /**
-   * Persist audit log to database
+   * Persist audit log to database within tenant RLS context
    */
   private async persistAuditLog(data: AuditJobData, requestId?: string): Promise<void> {
     const { eventName, eventType, occurredAt, payload } = data;
 
     // Extract metadata from payload
-    const accountId = payload.accountId || null;
+    const accountId = payload.accountId;
     const workspaceId = payload.workspaceId || null;
     const userId = payload.userId || null;
+    const now = new Date();
 
-    // Create audit log entry
-    const auditLogData: Omit<AuditLog, 'id' | 'createdAt'> = {
-      eventName,
-      eventType,
-      accountId,
-      workspaceId,
-      userId,
-      payload,
-      occurredAt: new Date(occurredAt),
-    };
-
-    await this.auditLogRepository.create(auditLogData);
+    // Wrap DB operation with tenant context for RLS
+    await withTenantContext(this.db, accountId, async (trx: Transaction<Database>) => {
+      await trx
+        .insertInto('audit_logs')
+        .values({
+          workspace_id: workspaceId,
+          account_id: accountId,
+          user_id: userId,
+          event_name: eventName,
+          event_type: eventType,
+          payload: payload,
+          occurred_at: new Date(occurredAt),
+          created_at: now,
+        })
+        .execute();
+    });
 
     this.logger.info('Audit log persisted', {
       operation: 'worker.audit.persist',
       eventName,
       eventType,
-      accountId: accountId || undefined,
+      accountId,
       workspaceId: workspaceId || undefined,
       userId: userId || undefined,
       requestId,

@@ -36,3 +36,7 @@ export * from './stripe/StripeProductDto';
 // Accounts
 export * from './accounts/SearchAccountsDto';
 export * from './accounts/AccountSearchItemDto';
+
+// RLS
+export * from './rls/ToggleRlsDto';
+export * from './rls/RlsStatusResponseDto';

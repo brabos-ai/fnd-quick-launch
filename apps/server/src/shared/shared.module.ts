@@ -36,7 +36,8 @@ import {
   ImpersonateSessionRepository,
   InviteRepository,
   EmailChangeRequestRepository,
-  createDatabase
+  createDatabase,
+  RlsManager,
 } from '@fnd/database';
 import { ResendEmailService } from './services/resend-email.service';
 import { WinstonLoggerService } from './services/winston-logger.service';
@@ -76,6 +77,7 @@ const REDIS_CONNECTION_TOKEN = 'REDIS_CONNECTION';
 const AUTHORIZATION_SERVICE_TOKEN = 'IAuthorizationService';
 const ASYNC_CONTEXT_SERVICE_TOKEN = 'IAsyncContextService';
 const METRICS_SERVICE_TOKEN = 'IMetricsService';
+const RLS_MANAGER_TOKEN = 'IRlsManager';
 
 @Module({
   imports: [ConfigModule, CqrsModule],
@@ -203,6 +205,11 @@ const METRICS_SERVICE_TOKEN = 'IMetricsService';
       provide: METRICS_SERVICE_TOKEN,
       useClass: MetricsService,
     },
+    {
+      provide: RLS_MANAGER_TOKEN,
+      useFactory: (db) => new RlsManager(db),
+      inject: [DATABASE_TOKEN],
+    },
     StartupLoggerService,
   ],
   exports: [
@@ -232,6 +239,7 @@ const METRICS_SERVICE_TOKEN = 'IMetricsService';
     AUTHORIZATION_SERVICE_TOKEN,
     ASYNC_CONTEXT_SERVICE_TOKEN,
     METRICS_SERVICE_TOKEN,
+    RLS_MANAGER_TOKEN,
     StartupLoggerService,
   ],
 })

@@ -9,6 +9,46 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Added
 
+#### [2026-01-27] F0005-row-level-security-multi-tenant
+
+**Resumo:** Implementação completa de Row Level Security (RLS) no PostgreSQL com isolamento automático de dados por tenant. Policies filtram via `current_setting('app.current_account_id')`, interceptor global aplica contexto em requisições autenticadas com suporte a bypass administrativo.
+
+**Principais Entregas:**
+
+| Componente | Descrição |
+|------------|-----------|
+| **RLS Policies** | 6 policies PostgreSQL (workspaces, users, audit_logs, subscriptions, workspace_users, invites) com suporte a admin bypass |
+| **withTenantContext()** | Wrapper transacional com validação UUID e SET LOCAL para isolamento |
+| **TenantContextInterceptor** | Interceptor automático aplica contexto tenant em requisições com detecção super-admin |
+| **RlsManager Service** | Gerenciador global RLS com toggle de emergência para situações críticas |
+| **Admin UI** | Settings page com RlsToggleCard, hooks useRlsStatus/useToggleRls para gerenciar RLS |
+| **Worker Integration** | Audit, stripe-webhook respeitam isolamento tenant via withTenantContext |
+
+**Bug Fixes:**
+
+| Item | Solução |
+|------|---------|
+| SET LOCAL syntax error | PostgreSQL `SET LOCAL` não aceita bind parameters; validação UUID + sql.raw() após validação |
+
+**Estatísticas:**
+- Business: 16 (interceptor, utilities, repositories, controllers, DTOs, workers)
+- Support: 10 (migrations, types, hooks, components)
+- UI/UX: 5 (admin components, pages)
+- Infrastructure: 3 (module setup, exports)
+- Total: 34 arquivos alterados
+
+**Critérios de Aceite:** ✅ 8/8
+- [x] RLS policies criadas e testadas em 6 tabelas
+- [x] withTenantContext wrapper funcional com validação
+- [x] TenantContextInterceptor aplicado automaticamente
+- [x] Super-admin bypass funcional para impersonation
+- [x] Workers adaptados para contexto tenant
+- [x] Admin UI gerencia RLS toggle
+- [x] API endpoints /manager/rls/toggle e /status funcionais
+- [x] Build 100% compiling
+
+---
+
 #### [2026-01-23] F0006-database-auto-setup
 
 **Resumo:** Setup automático de banco PostgreSQL com script Node que detecta conexão, cria database se necessário, copia .env de template, executa migrations. Suporta PostgreSQL local (Docker) e remoto (Railway). Mensagens de erro claras em português. Totalmente idempotente.
@@ -51,7 +91,6 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - [x] Idempotente: múltiplas execuções sem erro
 
 ---
-
 #### [2026-01-23] Optimize dev startup performance
 
 **Resumo:** Otimizações de configuração para acelerar o tempo de inicialização do servidor em desenvolvimento. Habilitado lazy compilation no SWC, inline sourcemaps, reduzido delay do nodemon, e expandidos ignore patterns.

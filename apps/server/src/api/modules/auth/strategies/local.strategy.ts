@@ -32,8 +32,8 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
       );
     }
 
-    // Find user
-    const user = await this.userRepository.findByEmail(email);
+    // Find user (global lookup for pre-auth - will be updated when tenant selection is added)
+    const user = await this.userRepository.findByEmailGlobal(email);
     if (!user || !user.passwordHash) {
       // Record failed attempt
       await this.loginAttemptRepository.create({

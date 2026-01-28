@@ -1,8 +1,9 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Inject } from '@nestjs/common';
 import { Job } from 'bullmq';
+import { Kysely } from 'kysely';
 import { ILoggerService } from '@fnd/contracts';
-import { IWebhookEventRepository } from '@fnd/database';
+import { Database, IWebhookEventRepository, withTenantContext } from '@fnd/database';
 import { WebhookStatus } from '@fnd/domain';
 
 /**
@@ -40,13 +41,21 @@ function extractRequestId(job: Job<StripeWebhookJobData>): string | undefined {
  *
  * Responsibilities:
  * - Process Stripe webhook events asynchronously
- * - Persist webhook events to webhook_events table
+ * - Persist webhook events to webhook_events table (not RLS protected)
  * - Handle different Stripe event types (checkout.session.completed, customer.subscription.*, etc.)
  * - Update webhook status based on processing result
+ * - Use withTenantContext for any tenant-scoped DB operations (subscriptions, etc.)
+ *
+ * @remarks
+ * webhook_events table is NOT protected by RLS (admin-only table).
+ * However, when implementing subscription updates, use withTenantContext
+ * since subscriptions table IS protected by RLS.
  */
 @Processor('stripe-webhook')
 export class StripeWebhookWorker extends WorkerHost {
   constructor(
+    @Inject('DATABASE')
+    private readonly db: Kysely<Database>,
     @Inject('IWebhookEventRepository')
     private readonly webhookEventRepository: IWebhookEventRepository,
     @Inject('ILoggerService')
@@ -243,10 +252,22 @@ export class StripeWebhookWorker extends WorkerHost {
       requestId,
     });
 
-    // TODO: Implement checkout completion logic
-    // - Create subscription record
-    // - Link to account/workspace
-    // - Update account subscription status
+    const accountId = this.extractAccountId(session);
+    if (!accountId) {
+      this.logger.warn('No accountId found in checkout session metadata', {
+        operation: 'worker.stripe-webhook.checkout-completed.no-account',
+        sessionId: session.id,
+        webhookEventId,
+        requestId,
+      });
+      return;
+    }
+
+    // TODO: Implement checkout completion logic using withTenantContext
+    // Example:
+    // await withTenantContext(this.db, accountId, async (trx) => {
+    //   await trx.insertInto('subscriptions').values({...}).execute();
+    // });
   }
 
   /**
@@ -260,7 +281,21 @@ export class StripeWebhookWorker extends WorkerHost {
       requestId,
     });
 
-    // TODO: Implement subscription creation logic
+    const accountId = this.extractAccountId(subscription);
+    if (!accountId) {
+      this.logger.warn('No accountId found in subscription metadata', {
+        operation: 'worker.stripe-webhook.subscription-created.no-account',
+        subscriptionId: subscription.id,
+        webhookEventId,
+        requestId,
+      });
+      return;
+    }
+
+    // TODO: Implement subscription creation logic using withTenantContext
+    // await withTenantContext(this.db, accountId, async (trx) => {
+    //   await trx.insertInto('subscriptions').values({...}).execute();
+    // });
   }
 
   /**
@@ -275,7 +310,24 @@ export class StripeWebhookWorker extends WorkerHost {
       requestId,
     });
 
-    // TODO: Implement subscription update logic
+    const accountId = this.extractAccountId(subscription);
+    if (!accountId) {
+      this.logger.warn('No accountId found in subscription metadata', {
+        operation: 'worker.stripe-webhook.subscription-updated.no-account',
+        subscriptionId: subscription.id,
+        webhookEventId,
+        requestId,
+      });
+      return;
+    }
+
+    // TODO: Implement subscription update logic using withTenantContext
+    // await withTenantContext(this.db, accountId, async (trx) => {
+    //   await trx.updateTable('subscriptions')
+    //     .set({ status: subscription.status })
+    //     .where('stripe_subscription_id', '=', subscription.id)
+    //     .execute();
+    // });
   }
 
   /**
@@ -289,7 +341,24 @@ export class StripeWebhookWorker extends WorkerHost {
       requestId,
     });
 
-    // TODO: Implement subscription deletion logic
+    const accountId = this.extractAccountId(subscription);
+    if (!accountId) {
+      this.logger.warn('No accountId found in subscription metadata', {
+        operation: 'worker.stripe-webhook.subscription-deleted.no-account',
+        subscriptionId: subscription.id,
+        webhookEventId,
+        requestId,
+      });
+      return;
+    }
+
+    // TODO: Implement subscription deletion logic using withTenantContext
+    // await withTenantContext(this.db, accountId, async (trx) => {
+    //   await trx.updateTable('subscriptions')
+    //     .set({ status: 'canceled', canceled_at: new Date() })
+    //     .where('stripe_subscription_id', '=', subscription.id)
+    //     .execute();
+    // });
   }
 
   /**
@@ -303,7 +372,21 @@ export class StripeWebhookWorker extends WorkerHost {
       requestId,
     });
 
-    // TODO: Implement payment success logic
+    const accountId = this.extractAccountId(invoice);
+    if (!accountId) {
+      this.logger.warn('No accountId found in invoice metadata', {
+        operation: 'worker.stripe-webhook.payment-succeeded.no-account',
+        invoiceId: invoice.id,
+        webhookEventId,
+        requestId,
+      });
+      return;
+    }
+
+    // TODO: Implement payment success logic using withTenantContext
+    // await withTenantContext(this.db, accountId, async (trx) => {
+    //   // Update subscription payment status, record payment, etc.
+    // });
   }
 
   /**
@@ -317,6 +400,20 @@ export class StripeWebhookWorker extends WorkerHost {
       requestId,
     });
 
-    // TODO: Implement payment failure logic
+    const accountId = this.extractAccountId(invoice);
+    if (!accountId) {
+      this.logger.warn('No accountId found in invoice metadata', {
+        operation: 'worker.stripe-webhook.payment-failed.no-account',
+        invoiceId: invoice.id,
+        webhookEventId,
+        requestId,
+      });
+      return;
+    }
+
+    // TODO: Implement payment failure logic using withTenantContext
+    // await withTenantContext(this.db, accountId, async (trx) => {
+    //   // Update subscription status, send notification, etc.
+    // });
   }
 }

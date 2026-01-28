@@ -22,8 +22,8 @@ export class ForgotPasswordCommandHandler implements ICommandHandler<any> {
   ) {}
 
   async execute(command: ForgotPasswordCommand): Promise<void> {
-    // Find user
-    const user = await this.userRepository.findByEmail(command.email);
+    // Find user (global lookup for pre-auth - will be updated when tenant selection is added)
+    const user = await this.userRepository.findByEmailGlobal(command.email);
 
     // Don't reveal if user exists or not (security best practice)
     if (!user) {

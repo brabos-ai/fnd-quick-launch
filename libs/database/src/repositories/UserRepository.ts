@@ -28,7 +28,26 @@ export class UserRepository implements IUserRepository {
     return results.map(this.mapToUser);
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string, accountId: string): Promise<User | null> {
+    const result = await this.db
+      .selectFrom('users')
+      .selectAll()
+      .where('email', '=', email)
+      .where('account_id', '=', accountId)
+      .executeTakeFirst();
+
+    return result ? this.mapToUser(result) : null;
+  }
+
+  /**
+   * Find user by email globally (without tenant filter).
+   * Use ONLY for pre-authentication flows (sign-in, forgot-password, resend-verification)
+   * where accountId is not yet available.
+   *
+   * @deprecated For new code, prefer findByEmail with accountId for proper tenant isolation.
+   * This method will be removed once pre-auth flows support tenant selection.
+   */
+  async findByEmailGlobal(email: string): Promise<User | null> {
     const result = await this.db
       .selectFrom('users')
       .selectAll()

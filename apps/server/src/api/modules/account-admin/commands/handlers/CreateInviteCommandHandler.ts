@@ -58,8 +58,8 @@ export class CreateInviteCommandHandler implements ICommandHandler<CreateInviteC
       throw new BadRequestException('Admin cannot invite users with Owner role');
     }
 
-    // Check if user already exists with this email
-    const existingUser = await this.userRepository.findByEmail(email);
+    // Check if user already exists with this email in this account
+    const existingUser = await this.userRepository.findByEmail(email, accountId);
     if (existingUser) {
       throw new ConflictException('User with this email already exists');
     }

@@ -127,8 +127,8 @@ export class SignUpCommandHandler implements ICommandHandler<any> {
       workspaceIds = [workspace.id];
     }
 
-    // Check if user already exists (using trusted email)
-    const existingUser = await this.userRepository.findByEmail(userEmail);
+    // Check if user already exists within the same account (using trusted email)
+    const existingUser = await this.userRepository.findByEmail(userEmail, account.id);
     if (existingUser) {
       throw new ConflictException('User already exists');
     }

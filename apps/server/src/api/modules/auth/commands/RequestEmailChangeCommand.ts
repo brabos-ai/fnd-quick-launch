@@ -54,8 +54,8 @@ export class RequestEmailChangeCommandHandler implements ICommandHandler<any> {
       throw new BadRequestException('O novo e-mail deve ser diferente do atual.');
     }
 
-    // Check if new email is already in use
-    const existingUser = await this.userRepository.findByEmail(command.newEmail);
+    // Check if new email is already in use within the same account
+    const existingUser = await this.userRepository.findByEmail(command.newEmail, user.accountId);
     if (existingUser) {
       throw new BadRequestException('Este e-mail já está em uso.');
     }
