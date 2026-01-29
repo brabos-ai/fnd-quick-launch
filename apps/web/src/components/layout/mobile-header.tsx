@@ -1,6 +1,7 @@
 "use client"
 
-import { Menu, Bell } from "lucide-react"
+import { useState } from "react"
+import { Menu, Bell, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
 import { useAuthStore } from "@/stores/auth-store"
+import { WorkspaceSwitcherModal } from "@/components/features/workspace/workspace-switcher-modal"
 
 interface MobileHeaderProps {
   onMenuClick?: () => void
@@ -20,6 +22,8 @@ interface MobileHeaderProps {
 
 export function MobileHeader({ onMenuClick, className }: MobileHeaderProps) {
   const isImpersonating = useAuthStore((state) => state.isImpersonating)
+  const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
+  const [switcherOpen, setSwitcherOpen] = useState(false)
 
   return (
     <header
@@ -41,12 +45,18 @@ export function MobileHeader({ onMenuClick, className }: MobileHeaderProps) {
           <Menu className="h-5 w-5" />
         </Button>
 
-        {/* Logo */}
-        <div className="flex-1 text-center">
-          <span className="font-display text-lg font-bold text-primary">
-            FND SaaS QuickLaunch
+        {/* Workspace Indicator */}
+        <Button
+          variant="ghost"
+          className="gap-1 h-10 max-w-[180px] flex-1 justify-center"
+          onClick={() => setSwitcherOpen(true)}
+        >
+          <span className="truncate text-sm font-medium">
+            {currentWorkspace?.name || "Workspace"}
           </span>
-        </div>
+          <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+        <WorkspaceSwitcherModal open={switcherOpen} onOpenChange={setSwitcherOpen} />
 
         {/* Notifications */}
         <DropdownMenu>

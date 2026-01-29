@@ -1,13 +1,7 @@
 import { motion } from "framer-motion"
-import { Home, Building2, Settings, ChevronDown, PanelLeftClose, PanelLeft, Check, Loader2, Users, Mail, Shield, FileText, CreditCard } from "lucide-react"
+import { Home, Building2, Settings, PanelLeftClose, PanelLeft, Users, Mail, Shield, FileText, CreditCard } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
@@ -54,9 +48,6 @@ export function Sidebar({
   currentPath = "/",
   onToggleCollapse,
 }: SidebarProps) {
-  const workspaceList = useAuthStore((state) => state.workspaceList)
-  const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
-  const switchWorkspace = useAuthStore((state) => state.switchWorkspace)
   const user = useAuthStore((state) => state.user)
   const isImpersonating = useAuthStore((state) => state.isImpersonating)
 
@@ -120,49 +111,6 @@ export function Sidebar({
           </Button>
         )}
       </div>
-
-      {/* Workspace Switcher */}
-      {!isCollapsed && (
-        <div className="p-3 border-b">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full justify-between h-10 px-3"
-                disabled={workspaceList.length === 0}
-              >
-                {workspaceList.length === 0 ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="truncate text-sm text-muted-foreground">Carregando...</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="truncate text-sm font-medium">
-                      {currentWorkspace?.name || "Selecionar workspace"}
-                    </span>
-                    <ChevronDown className="h-4 w-4 flex-shrink-0 opacity-50" />
-                  </>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[232px]" align="start">
-              {workspaceList.map((workspace) => (
-                <DropdownMenuItem
-                  key={workspace.id}
-                  onClick={() => switchWorkspace(workspace)}
-                  className="flex items-center justify-between"
-                >
-                  <span className="truncate">{workspace.name}</span>
-                  {currentWorkspace?.id === workspace.id && (
-                    <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                  )}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )}
 
       {/* Navigation */}
       <ScrollArea className="flex-1 px-3 py-4">

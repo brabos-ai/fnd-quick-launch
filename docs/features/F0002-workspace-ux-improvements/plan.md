@@ -66,10 +66,18 @@ Reference: `libs/database/src/repositories/PlanRepository.ts` (lines 52-79: `fin
 | onOpenChange | `(open: boolean) => void` | Handle open/close |
 | trigger | `ReactNode` | Optional trigger element |
 
+**Visibilidade do botão "criar workspace":**
+```typescript
+// Internamente no modal:
+const { user } = useAuthStore()
+const canCreateWorkspace = user?.role && ['super-admin', 'owner', 'admin'].includes(user.role)
+// Renderizar botão apenas se canCreateWorkspace === true
+```
+
 ### State & Hooks
 | Hook/Store | Purpose |
 |------------|---------|
-| `useAuthStore` | Access workspaceList, currentWorkspace, switchWorkspace |
+| `useAuthStore` | Access workspaceList, currentWorkspace, switchWorkspace, **user.role** |
 | `useQuery["workspaces"]` | Fetch workspace list with memberCount |
 | `useState` (local) | Search filter, modal open state |
 
@@ -92,6 +100,7 @@ Reference: `apps/web/src/stores/auth-store.ts`, `apps/web/src/components/feature
 | RN01 | Workspace ativo não exibe "Selecionar" | ✅ | Frontend | WorkspaceListTable dropdown |
 | RN02 | Só owner pode excluir | ✅ | Frontend | WorkspaceListTable dropdown |
 | RN04 | Modal mesmo em desktop e mobile | ✅ | Frontend | WorkspaceSwitcherModal |
+| RN05 | Botão "criar" só para role ≥ admin | ✅ | Frontend | WorkspaceSwitcherModal (canCreateWorkspace check) |
 
 **Status:** ✅ 100% coberto
 
@@ -110,22 +119,22 @@ Reference: `apps/web/src/stores/auth-store.ts`, `apps/web/src/components/feature
 ## Implementation Order
 
 1. **Backend**
-   - [ ] Fix WorkspaceUserRepository.findByWorkspaceId com leftJoin
-   - [ ] Update IWorkspaceUserRepository interface
+   - [x] Fix WorkspaceUserRepository.findByWorkspaceId com leftJoin
+   - [x] Update IWorkspaceUserRepository interface
 
 2. **Frontend - Componentes**
-   - [ ] Criar WorkspaceListTable (mobile cards + desktop table)
-   - [ ] Criar WorkspaceSwitcherModal (dialog + search + list)
+   - [x] Criar WorkspaceListTable (mobile cards + desktop table)
+   - [x] Criar WorkspaceSwitcherModal (dialog + search + list)
 
 3. **Frontend - Layout**
-   - [ ] Integrar switcher no Header
-   - [ ] Integrar indicador no MobileHeader
-   - [ ] Remover switcher da Sidebar
+   - [x] Integrar switcher no Header
+   - [x] Integrar indicador no MobileHeader
+   - [x] Remover switcher da Sidebar
 
 4. **Frontend - Cleanup**
-   - [ ] Remover "Sair" do workspace-card.tsx
-   - [ ] Remover "Sair" do workspace-danger-zone.tsx
-   - [ ] Atualizar workspaces.tsx para usar nova tabela
+   - [x] Remover "Sair" do workspace-card.tsx
+   - [x] Remover "Sair" do workspace-danger-zone.tsx
+   - [x] Atualizar workspaces.tsx para usar nova tabela
 
 ---
 
@@ -143,5 +152,5 @@ Reference: `apps/web/src/stores/auth-store.ts`, `apps/web/src/components/feature
 
 ## Metadata
 ```json
-{"updated":"2026-01-29","feature":"F0002-workspace-ux-improvements","type":"plan","by":"fnd-plan"}
+{"updated":"2026-01-29","feature":"F0002-workspace-ux-improvements","type":"plan","by":"fnd-plan","revision":"added RN05 role-based visibility"}
 ```

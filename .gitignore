@@ -163,7 +163,7 @@ nul
 # Documentation - local only, not tracked
 docs/
 
-.vscode/*
-.fnd/*
-.claude/*
+.vscode/
+.fnd/
+.claude/
 tmpclaude*

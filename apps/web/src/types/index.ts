@@ -279,7 +279,7 @@ export interface Activity {
   id: string
   action: string
   timestamp: string
-  details: Record<string, any>
+  details: Record<string, unknown>
   userName?: string
   userEmail?: string
 }

@@ -1,16 +1,16 @@
 import { useNavigate, useLocation } from "react-router-dom"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { motion } from "framer-motion"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { Building2 } from "lucide-react"
 import { AppShell } from "@/components/layout/app-shell"
 import { PageHeader } from "@/components/layout/page-header"
-import { WorkspaceCard } from "@/components/features/workspace/workspace-card"
+import { WorkspaceListTable } from "@/components/features/workspace/workspace-list-table"
 import { CreateWorkspaceDialog } from "@/components/features/workspace/create-workspace-dialog"
 import { EmptyState } from "@/components/ui/empty-state"
 import { Skeleton } from "@/components/ui/skeleton"
 import { api } from "@/lib/api"
+import { toast } from "@/lib/toast"
 import { useAuthStore } from "@/stores/auth-store"
-import type { Workspace } from "@/types"
+import type { Workspace, AxiosErrorWithResponse } from "@/types"
 
 // Mock data for development
 const mockWorkspaces: (Workspace & { description?: string; memberCount?: number })[] = [
@@ -45,23 +45,15 @@ const mockWorkspaces: (Workspace & { description?: string; memberCount?: number 
   },
 ]
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
-
 export function WorkspacesPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const queryClient = useQueryClient()
-  const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
-  const switchWorkspace = useAuthStore((state) => state.switchWorkspace)
   const setWorkspaceList = useAuthStore((state) => state.setWorkspaceList)
+  const removeWorkspace = useAuthStore((state) => state.removeWorkspace)
+  const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
+  const workspaceList = useAuthStore((state) => state.workspaceList)
+  const setCurrentWorkspace = useAuthStore((state) => state.setCurrentWorkspace)
 
   // Fetch workspaces from API
   const { data: workspaces, isLoading } = useQuery({
@@ -70,9 +62,8 @@ export function WorkspacesPage() {
       try {
         const response = await api.get<Workspace[]>("/workspaces")
         return response.data
-      } catch (_error) {
+      } catch {
         // Fallback to mock data in development
-        console.warn("Using mock workspaces data")
         return mockWorkspaces
       }
     },
@@ -81,14 +72,41 @@ export function WorkspacesPage() {
     },
   })
 
+  // Delete workspace mutation
+  const deleteWorkspaceMutation = useMutation({
+    mutationFn: async (workspaceId: string) => {
+      await api.delete(`/workspaces/${workspaceId}`)
+      return workspaceId
+    },
+    onSuccess: (deletedId) => {
+      // Remove from store
+      removeWorkspace(deletedId)
+
+      // If deleted workspace was the current one, switch to another
+      if (currentWorkspace?.id === deletedId) {
+        const otherWorkspace = workspaceList.find((w) => w.id !== deletedId)
+        if (otherWorkspace) {
+          setCurrentWorkspace(otherWorkspace)
+        }
+      }
+
+      // Invalidate query to refetch
+      queryClient.invalidateQueries({ queryKey: ["workspaces"] })
+      toast.success("Workspace excluído com sucesso")
+    },
+    onError: (error: AxiosErrorWithResponse) => {
+      const message = error.response?.data?.message || "Erro ao excluir workspace"
+      toast.error(message)
+    },
+  })
+
   const handleSettings = (workspace: Workspace) => {
     // Navigate to workspace settings with ID in route
     navigate(`/admin/workspace/${workspace.id}`)
   }
 
-  const handleLeave = (workspace: Workspace) => {
-    // Navigate to settings danger zone with ID in route
-    navigate(`/admin/workspace/${workspace.id}`)
+  const handleDelete = (workspace: Workspace) => {
+    deleteWorkspaceMutation.mutate(workspace.id)
   }
 
   const handleCreateSuccess = () => {
@@ -105,11 +123,12 @@ export function WorkspacesPage() {
             description="Gerencie seus workspaces"
             action={<Skeleton className="h-10 w-40" />}
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-48 w-full" />
-            ))}
-          </div>
+          <WorkspaceListTable
+            workspaces={[]}
+            isLoading={true}
+            onEdit={handleSettings}
+            onDelete={handleDelete}
+          />
         </div>
       </AppShell>
     )
@@ -124,25 +143,14 @@ export function WorkspacesPage() {
           action={<CreateWorkspaceDialog onSuccess={handleCreateSuccess} />}
         />
 
-        {/* Workspaces Grid */}
+        {/* Workspaces Table */}
         {workspaces && workspaces.length > 0 ? (
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-          >
-            {workspaces.map((workspace) => (
-              <WorkspaceCard
-                key={workspace.id}
-                workspace={workspace}
-                isCurrentWorkspace={workspace.id === currentWorkspace?.id}
-                onSwitch={switchWorkspace}
-                onSettings={handleSettings}
-                onLeave={handleLeave}
-              />
-            ))}
-          </motion.div>
+          <WorkspaceListTable
+            workspaces={workspaces}
+            isLoading={false}
+            onEdit={handleSettings}
+            onDelete={handleDelete}
+          />
         ) : (
           <EmptyState
             icon={Building2}

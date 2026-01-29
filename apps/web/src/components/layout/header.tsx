@@ -1,5 +1,5 @@
-import { Fragment } from "react"
-import { Sun, Moon, LogOut, User } from "lucide-react"
+import { Fragment, useState } from "react"
+import { Sun, Moon, LogOut, User, Building2, ChevronDown } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -13,6 +13,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { useAuthStore } from "@/stores/auth-store"
 import { useUIStore } from "@/stores/ui-store"
+import { WorkspaceSwitcherModal } from "@/components/features/workspace/workspace-switcher-modal"
 
 interface HeaderProps {
   breadcrumb?: string[]
@@ -21,8 +22,9 @@ interface HeaderProps {
 
 export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
   const navigate = useNavigate()
-  const { user, logout, isImpersonating } = useAuthStore()
+  const { user, logout, isImpersonating, currentWorkspace } = useAuthStore()
   const { theme, setTheme } = useUIStore()
+  const [switcherOpen, setSwitcherOpen] = useState(false)
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light")
@@ -52,6 +54,19 @@ export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
       )}
     >
       <div className="flex flex-1 items-center gap-4 px-6">
+        {/* Workspace Switcher */}
+        <Button
+          variant="ghost"
+          className="gap-2 max-w-[200px] h-10"
+          onClick={() => setSwitcherOpen(true)}
+        >
+          <Building2 className="h-4 w-4 shrink-0" />
+          <span className="truncate">{currentWorkspace?.name || "Workspace"}</span>
+          <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+        <WorkspaceSwitcherModal open={switcherOpen} onOpenChange={setSwitcherOpen} />
+        <Separator orientation="vertical" className="h-6" />
+
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm">
           {breadcrumb.map((item, index) => (

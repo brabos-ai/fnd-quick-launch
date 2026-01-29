@@ -51,7 +51,7 @@ export class WorkspaceRepository implements IWorkspaceRepository {
   }
 
   async update(id: string, data: Partial<Omit<Workspace, 'id' | 'createdAt'>>): Promise<Workspace> {
-    const updateData: any = {
+    const updateData: Record<string, Date | string | object | undefined> = {
       updated_at: new Date(),
     };
 
@@ -71,7 +71,7 @@ export class WorkspaceRepository implements IWorkspaceRepository {
   }
 
   async archive(id: string, reason?: string): Promise<Workspace> {
-    const updateData: any = {
+    const updateData: Record<string, string | Date | object | null> = {
       status: 'archived',
       archived_at: new Date(),
       updated_at: new Date(),
@@ -119,15 +119,25 @@ export class WorkspaceRepository implements IWorkspaceRepository {
       .execute();
   }
 
-  private mapToEntity(row: any): Workspace {
+  private mapToEntity(row: {
+    id: string;
+    account_id: string;
+    name: string;
+    settings: object | null;
+    status: string;
+    onboarding_status: string;
+    archived_at: Date | null;
+    created_at: Date;
+    updated_at: Date;
+  }): Workspace {
     return {
       id: row.id,
       accountId: row.account_id,
       name: row.name,
-      settings: row.settings,
-      status: row.status,
-      onboardingStatus: row.onboarding_status,
-      archivedAt: row.archived_at,
+      settings: row.settings ?? undefined,
+      status: row.status as EntityStatus,
+      onboardingStatus: row.onboarding_status as OnboardingStatus,
+      archivedAt: row.archived_at ?? undefined,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };

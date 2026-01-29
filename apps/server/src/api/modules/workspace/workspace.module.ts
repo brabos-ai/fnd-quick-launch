@@ -6,12 +6,18 @@ import { WorkspaceFeatureGuard } from '../../guards/workspace-feature.guard';
 import { SharedModule } from '../../../shared/shared.module';
 import { AuthModule } from '../auth/auth.module';
 import {
+  WorkspaceCreatedHandler,
+  WorkspaceUpdatedHandler,
+  WorkspaceDeletedHandler,
   UserAddedToWorkspaceHandler,
   UserRoleUpdatedInWorkspaceHandler,
   UserRemovedFromWorkspaceHandler,
 } from './events/handlers';
 
 const EventHandlers = [
+  WorkspaceCreatedHandler,
+  WorkspaceUpdatedHandler,
+  WorkspaceDeletedHandler,
   UserAddedToWorkspaceHandler,
   UserRoleUpdatedInWorkspaceHandler,
   UserRemovedFromWorkspaceHandler,

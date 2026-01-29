@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useNavigate, useParams, useLocation } from "react-router-dom"
+import { useNavigate, useParams, useLocation, useSearchParams } from "react-router-dom"
 import { AlertCircle, Loader2 } from "lucide-react"
 import { AppShell } from "@/components/layout/app-shell"
 import { PageHeader } from "@/components/layout/page-header"
@@ -10,14 +10,26 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { WorkspaceGeneralForm } from "@/components/features/workspace/workspace-general-form"
 import { WorkspaceMembersList } from "@/components/features/workspace/workspace-members-list"
-import { WorkspaceDangerZone } from "@/components/features/workspace/workspace-danger-zone"
 import { useAuthStore } from "@/stores/auth-store"
+
+const VALID_TABS = ["general", "members"] as const
+type TabValue = typeof VALID_TABS[number]
 
 export function WorkspaceSettingsPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { id } = useParams<{ id: string }>()
   const workspaceList = useAuthStore((state) => state.workspaceList)
+
+  // Get tab from URL or default to "general"
+  const tabFromUrl = searchParams.get("tab") as TabValue | null
+  const currentTab = tabFromUrl && VALID_TABS.includes(tabFromUrl) ? tabFromUrl : "general"
+
+  // Handle tab change - update URL
+  const handleTabChange = (value: string) => {
+    setSearchParams({ tab: value }, { replace: true })
+  }
 
   // Find workspace by ID from the route
   const workspace = React.useMemo(() => {
@@ -76,11 +88,10 @@ export function WorkspaceSettingsPage() {
           description={workspace.name}
         />
 
-        <Tabs defaultValue="general" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 md:w-auto md:inline-grid">
+        <Tabs value={currentTab} onValueChange={handleTabChange} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2 md:w-auto md:inline-grid">
             <TabsTrigger value="general">Geral</TabsTrigger>
             <TabsTrigger value="members">Membros</TabsTrigger>
-            <TabsTrigger value="danger">Zona de Perigo</TabsTrigger>
           </TabsList>
 
           {/* General Tab */}
@@ -91,11 +102,6 @@ export function WorkspaceSettingsPage() {
           {/* Members Tab */}
           <TabsContent value="members" className="space-y-6">
             <WorkspaceMembersList workspaceId={workspace.id} />
-          </TabsContent>
-
-          {/* Danger Zone Tab */}
-          <TabsContent value="danger" className="space-y-6">
-            <WorkspaceDangerZone workspace={workspace} />
           </TabsContent>
         </Tabs>
       </div>

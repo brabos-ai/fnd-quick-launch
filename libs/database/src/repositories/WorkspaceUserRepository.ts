@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Kysely } from 'kysely';
 import { WorkspaceUser } from '@fnd/domain';
 import { Database } from '../types';
-import { IWorkspaceUserRepository } from '../interfaces';
+import { IWorkspaceUserRepository, WorkspaceUserWithUser } from '../interfaces';
 
 @Injectable()
 export class WorkspaceUserRepository implements IWorkspaceUserRepository {
@@ -24,15 +24,32 @@ export class WorkspaceUserRepository implements IWorkspaceUserRepository {
     return this.mapToEntity(result);
   }
 
-  async findByWorkspaceId(workspaceId: string): Promise<WorkspaceUser[]> {
+  async findByWorkspaceId(workspaceId: string): Promise<WorkspaceUserWithUser[]> {
     const results = await this.db
       .selectFrom('workspace_users')
-      .selectAll()
-      .where('workspace_id', '=', workspaceId)
-      .orderBy('created_at', 'asc')
+      .leftJoin('users', 'users.id', 'workspace_users.user_id')
+      .select([
+        'workspace_users.workspace_id',
+        'workspace_users.user_id',
+        'workspace_users.role',
+        'workspace_users.created_at',
+        'users.full_name',
+        'users.email',
+      ])
+      .where('workspace_users.workspace_id', '=', workspaceId)
+      .orderBy('workspace_users.created_at', 'asc')
       .execute();
 
-    return results.map(this.mapToEntity);
+    return results.map((row) => ({
+      workspaceId: row.workspace_id,
+      userId: row.user_id,
+      role: row.role,
+      createdAt: row.created_at,
+      user: {
+        fullName: row.full_name || '',
+        email: row.email || '',
+      },
+    }));
   }
 
   async findByUserId(userId: string): Promise<WorkspaceUser[]> {
@@ -77,7 +94,12 @@ export class WorkspaceUserRepository implements IWorkspaceUserRepository {
       .execute();
   }
 
-  private mapToEntity(row: any): WorkspaceUser {
+  private mapToEntity(row: {
+    workspace_id: string;
+    user_id: string;
+    role: string;
+    created_at: Date;
+  }): WorkspaceUser {
     return {
       workspaceId: row.workspace_id,
       userId: row.user_id,

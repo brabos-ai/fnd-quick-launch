@@ -32,10 +32,25 @@ type CreateWorkspaceFormData = z.infer<typeof createWorkspaceSchema>
 
 interface CreateWorkspaceDialogProps {
   onSuccess?: () => void
+  /** External control - when provided, the dialog is controlled externally */
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  /** When true, hides the default trigger button */
+  hideDefaultTrigger?: boolean
 }
 
-export function CreateWorkspaceDialog({ onSuccess }: CreateWorkspaceDialogProps) {
-  const [open, setOpen] = useState(false)
+export function CreateWorkspaceDialog({
+  onSuccess,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+  hideDefaultTrigger = false,
+}: CreateWorkspaceDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+
+  // Use controlled state if provided, otherwise use internal state
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
+  const setOpen = isControlled ? (controlledOnOpenChange || (() => {})) : setInternalOpen
   const addWorkspace = useAuthStore((state) => state.addWorkspace)
 
   const {
@@ -74,7 +89,6 @@ export function CreateWorkspaceDialog({ onSuccess }: CreateWorkspaceDialogProps)
       // Call success callback
       onSuccess?.()
     } catch (error: unknown) {
-      console.error("Create workspace error:", error)
       const apiError = error as AxiosErrorWithResponse
       const message =
         apiError.response?.data?.message ||
@@ -93,12 +107,14 @@ export function CreateWorkspaceDialog({ onSuccess }: CreateWorkspaceDialogProps)
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Novo Workspace
-        </Button>
-      </DialogTrigger>
+      {!hideDefaultTrigger && (
+        <DialogTrigger asChild>
+          <Button className="gap-2">
+            <Plus className="h-4 w-4" />
+            Novo Workspace
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Criar Workspace</DialogTitle>

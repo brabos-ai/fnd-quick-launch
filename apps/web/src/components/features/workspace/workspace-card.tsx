@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Building2, Users, MoreVertical, Settings, LogOut, CheckCircle } from "lucide-react"
+import { Building2, Users, MoreVertical, Settings, CheckCircle } from "lucide-react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -25,7 +25,6 @@ interface WorkspaceCardProps {
   isCurrentWorkspace: boolean
   onSwitch: (workspace: Workspace) => void
   onSettings: (workspace: Workspace) => void
-  onLeave: (workspace: Workspace) => void
 }
 
 export function WorkspaceCard({
@@ -33,7 +32,6 @@ export function WorkspaceCard({
   isCurrentWorkspace,
   onSwitch,
   onSettings,
-  onLeave,
 }: WorkspaceCardProps) {
   const getRoleBadgeVariant = (role: string) => {
     switch (role) {
@@ -61,8 +59,6 @@ export function WorkspaceCard({
     addSuffix: true,
     locale: ptBR,
   })
-
-  const canLeave = workspace.role !== "owner"
 
   return (
     <motion.div
@@ -126,18 +122,6 @@ export function WorkspaceCard({
                   <Settings className="mr-2 h-4 w-4" />
                   Configurações
                 </DropdownMenuItem>
-                {canLeave && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => onLeave(workspace)}
-                      className="text-destructive focus:text-destructive"
-                    >
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Sair do workspace
-                    </DropdownMenuItem>
-                  </>
-                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

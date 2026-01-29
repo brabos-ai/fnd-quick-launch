@@ -9,6 +9,53 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Added
 
+#### [2026-01-29] F0002-workspace-ux-improvements
+
+**Resumo:** Implementação completa de melhorias na UX de gestão de workspaces com fix crítico no endpoint de membros, modernização da listagem em tabela e novo workspace switcher modal no header com busca em tempo real.
+
+**Principais Entregas:**
+
+| Componente | Descrição |
+|------------|-----------|
+| **Repository Fix** | `WorkspaceUserRepository.findByWorkspaceId()` agora retorna fullName e email via leftJoin com users |
+| **WorkspaceListTable** | Tabela responsiva (mobile cards/desktop table) com dropdown actions, workspace ativo destacado |
+| **WorkspaceSwitcherModal** | Modal moderno com search (nome/número), lista scrollável, botão criar workspace (role-based) |
+| **Header Integration** | Novo workspace switcher button no header com trigger para modal |
+| **Mobile Indicator** | Mobile header exibe nome do workspace ativo e clicável |
+| **Cleanup** | Removido "Sair do workspace" de workspace-card e danger-zone |
+
+**Entregas Adicionais:**
+
+| Item | Justificativa |
+|------|---------------|
+| 6 novos DTOs (add-user, archive, create, update, update-role) | Padrão contratual para APIs workspace |
+| 3 novos eventos + handlers (created, updated, deleted) | Event-driven architecture para audit trail |
+| Activity card/log integração | Rastreamento de lifecycle de workspaces |
+
+**Estatísticas:**
+- Business: 11 (repositories, services, controllers, componentes core)
+- Support: 5 (DTOs, events, handlers)
+- Infrastructure: 19 (types, config, layout, pages)
+- Total: 35 arquivos
+
+**Cobertura de Requisitos:** ✅ 12/12 requisitos funcionais e regras de negócio
+
+**Critérios de Aceite:**
+- [x] Aba "Membros" carrega com dados do usuário (fullName, email)
+- [x] Página /admin/workspaces exibe tabela ao invés de grid
+- [x] Workspace ativo com check visual e highlight
+- [x] Workspace switcher no header abre modal com busca
+- [x] Busca filtra por nome e número em tempo real
+- [x] Botão "criar workspace" visível apenas para role ≥ admin
+- [x] Mobile header exibe workspace ativo
+- [x] "Sair do workspace" removido de todos os lugares
+- [x] Dropdown de ações funciona: Selecionar, Editar, Excluir
+- [x] Só owner pode excluir workspace
+- [x] Workspace ativo não exibe "Selecionar"
+- [x] Modal funciona igual em desktop e mobile
+
+---
+
 #### [2026-01-27] F0005-row-level-security-multi-tenant
 
 **Resumo:** Implementação completa de Row Level Security (RLS) no PostgreSQL com isolamento automático de dados por tenant. Policies filtram via `current_setting('app.current_account_id')`, interceptor global aplica contexto em requisições autenticadas com suporte a bypass administrativo.

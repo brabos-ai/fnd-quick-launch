@@ -1,7 +1,7 @@
 export { IAccountRepository } from './IAccountRepository';
 export { IUserRepository } from './IUserRepository';
 export { IWorkspaceRepository } from './IWorkspaceRepository';
-export { IWorkspaceUserRepository } from './IWorkspaceUserRepository';
+export { IWorkspaceUserRepository, WorkspaceUserWithUser } from './IWorkspaceUserRepository';
 export { IAuditLogRepository } from './IAuditLogRepository';
 export {
   IWebhookEventRepository,

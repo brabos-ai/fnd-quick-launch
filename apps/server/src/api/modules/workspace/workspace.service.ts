@@ -3,6 +3,8 @@ import { EventBus } from '@nestjs/cqrs';
 import { Workspace, WorkspaceUser, EntityStatus, OnboardingStatus } from '@fnd/domain';
 import {
   WorkspaceCreatedEvent,
+  WorkspaceUpdatedEvent,
+  WorkspaceDeletedEvent,
   UserAddedToWorkspaceEvent,
   UserRoleUpdatedInWorkspaceEvent,
   UserRemovedFromWorkspaceEvent,
@@ -74,7 +76,11 @@ export class WorkspaceService {
     return await this.workspaceRepository.findByAccountId(accountId);
   }
 
-  async updateWorkspace(id: string, data: Partial<Pick<Workspace, 'name' | 'settings' | 'status' | 'onboardingStatus'>>): Promise<Workspace> {
+  async updateWorkspace(
+    id: string,
+    data: Partial<Pick<Workspace, 'name' | 'settings' | 'status' | 'onboardingStatus'>>,
+    updatedBy?: string,
+  ): Promise<Workspace> {
     this.logger.info('Updating workspace', {
       operation: 'workspace.update.start',
       module: 'WorkspaceService',
@@ -82,6 +88,19 @@ export class WorkspaceService {
     });
 
     const workspace = await this.workspaceRepository.update(id, data);
+
+    // Publish event if updatedBy is provided
+    if (updatedBy) {
+      const event = new WorkspaceUpdatedEvent(workspace.id, {
+        workspaceId: workspace.id,
+        accountId: workspace.accountId,
+        workspaceName: workspace.name,
+        updateType: 'updated',
+        updatedBy,
+        changes: data,
+      });
+      this.eventBus.publish(event);
+    }
 
     this.logger.info('Workspace updated successfully', {
       operation: 'workspace.update.success',
@@ -92,7 +111,7 @@ export class WorkspaceService {
     return workspace;
   }
 
-  async archiveWorkspace(id: string, reason?: string): Promise<Workspace> {
+  async archiveWorkspace(id: string, reason?: string, archivedBy?: string): Promise<Workspace> {
     this.logger.info('Archiving workspace', {
       operation: 'workspace.archive.start',
       module: 'WorkspaceService',
@@ -101,6 +120,19 @@ export class WorkspaceService {
     });
 
     const workspace = await this.workspaceRepository.archive(id, reason);
+
+    // Publish event if archivedBy is provided
+    if (archivedBy) {
+      const event = new WorkspaceUpdatedEvent(workspace.id, {
+        workspaceId: workspace.id,
+        accountId: workspace.accountId,
+        workspaceName: workspace.name,
+        updateType: 'archived',
+        updatedBy: archivedBy,
+        changes: { reason },
+      });
+      this.eventBus.publish(event);
+    }
 
     this.logger.info('Workspace archived successfully', {
       operation: 'workspace.archive.success',
@@ -111,7 +143,7 @@ export class WorkspaceService {
     return workspace;
   }
 
-  async restoreWorkspace(id: string): Promise<Workspace> {
+  async restoreWorkspace(id: string, restoredBy?: string): Promise<Workspace> {
     this.logger.info('Restoring workspace', {
       operation: 'workspace.restore.start',
       module: 'WorkspaceService',
@@ -119,6 +151,18 @@ export class WorkspaceService {
     });
 
     const workspace = await this.workspaceRepository.restore(id);
+
+    // Publish event if restoredBy is provided
+    if (restoredBy) {
+      const event = new WorkspaceUpdatedEvent(workspace.id, {
+        workspaceId: workspace.id,
+        accountId: workspace.accountId,
+        workspaceName: workspace.name,
+        updateType: 'restored',
+        updatedBy: restoredBy,
+      });
+      this.eventBus.publish(event);
+    }
 
     this.logger.info('Workspace restored successfully', {
       operation: 'workspace.restore.success',
@@ -129,14 +173,34 @@ export class WorkspaceService {
     return workspace;
   }
 
-  async deleteWorkspace(id: string): Promise<void> {
+  async deleteWorkspace(id: string, deletedBy?: string): Promise<void> {
     this.logger.info('Deleting workspace', {
       operation: 'workspace.delete.start',
       module: 'WorkspaceService',
       workspaceId: id,
     });
 
+    // Get workspace info before deletion for audit event
+    let workspaceInfo: { accountId: string; name: string } | null = null;
+    if (deletedBy) {
+      const workspace = await this.workspaceRepository.findById(id);
+      if (workspace) {
+        workspaceInfo = { accountId: workspace.accountId, name: workspace.name };
+      }
+    }
+
     await this.workspaceRepository.delete(id);
+
+    // Publish event if deletedBy is provided and workspace info was found
+    if (deletedBy && workspaceInfo) {
+      const event = new WorkspaceDeletedEvent(id, {
+        workspaceId: id,
+        accountId: workspaceInfo.accountId,
+        workspaceName: workspaceInfo.name,
+        deletedBy,
+      });
+      this.eventBus.publish(event);
+    }
 
     this.logger.info('Workspace deleted successfully', {
       operation: 'workspace.delete.success',

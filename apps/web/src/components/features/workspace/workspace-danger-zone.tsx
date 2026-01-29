@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { AlertTriangle, LogOut, Trash2 } from "lucide-react"
+import { AlertTriangle, Trash2 } from "lucide-react"
 import { toast } from "@/lib/toast"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -27,9 +27,7 @@ interface WorkspaceDangerZoneProps {
 
 export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
   const navigate = useNavigate()
-  const [showLeaveDialog, setShowLeaveDialog] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [isLeaving, setIsLeaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
 
   const removeWorkspace = useAuthStore((state) => state.removeWorkspace)
@@ -37,37 +35,7 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
   const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
   const workspaceList = useAuthStore((state) => state.workspaceList)
 
-  const canLeave = workspace.role !== "owner"
   const canDelete = workspace.role === "owner"
-
-  const handleLeave = async () => {
-    try {
-      setIsLeaving(true)
-      await api.post(`/workspaces/${workspace.id}/leave`)
-
-      // Remove from store
-      removeWorkspace(workspace.id)
-
-      // If this was the current workspace, switch to another
-      if (currentWorkspace?.id === workspace.id) {
-        const otherWorkspace = workspaceList.find((w) => w.id !== workspace.id)
-        if (otherWorkspace) {
-          setCurrentWorkspace(otherWorkspace)
-        }
-      }
-
-      toast.success("Você saiu do workspace")
-      navigate("/settings/workspaces")
-    } catch (error: unknown) {
-      console.error("Leave workspace error:", error)
-      const apiError = error as AxiosErrorWithResponse
-      const message = apiError.response?.data?.message || "Erro ao sair do workspace"
-      toast.error(message)
-    } finally {
-      setIsLeaving(false)
-      setShowLeaveDialog(false)
-    }
-  }
 
   const handleDelete = async () => {
     try {
@@ -88,7 +56,6 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
       toast.success("Workspace excluído com sucesso")
       navigate("/settings/workspaces")
     } catch (error: unknown) {
-      console.error("Delete workspace error:", error)
       const apiError = error as AxiosErrorWithResponse
       const message = apiError.response?.data?.message || "Erro ao excluir workspace"
       toast.error(message)
@@ -111,26 +78,6 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Leave Workspace */}
-          {canLeave && (
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 border border-warning-action/20 rounded-lg bg-warning-action/5">
-              <div className="space-y-1">
-                <h4 className="font-medium">Sair do Workspace</h4>
-                <p className="text-sm text-muted-foreground">
-                  Você não terá mais acesso a este workspace. Esta ação não pode ser desfeita.
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                className="gap-2 border-warning-action/50 text-warning-action hover:bg-warning-action/10 hover:text-warning-action shrink-0"
-                onClick={() => setShowLeaveDialog(true)}
-              >
-                <LogOut className="h-4 w-4" />
-                Sair do Workspace
-              </Button>
-            </div>
-          )}
-
           {/* Delete Workspace */}
           {canDelete && (
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 border border-destructive/20 rounded-lg bg-destructive/5">
@@ -151,37 +98,13 @@ export function WorkspaceDangerZone({ workspace }: WorkspaceDangerZoneProps) {
             </div>
           )}
 
-          {!canLeave && !canDelete && (
+          {!canDelete && (
             <p className="text-sm text-muted-foreground text-center py-4">
               Nenhuma ação disponível para este workspace.
             </p>
           )}
         </CardContent>
       </Card>
-
-      {/* Leave Confirmation Dialog */}
-      <AlertDialog open={showLeaveDialog} onOpenChange={setShowLeaveDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Sair do Workspace</AlertDialogTitle>
-            <AlertDialogDescription>
-              Tem certeza que deseja sair de <strong>{workspace.name}</strong>?
-              Você perderá acesso a todos os recursos deste workspace.
-              Um proprietário ou administrador precisará convidá-lo novamente.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={isLeaving}>Cancelar</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleLeave}
-              disabled={isLeaving}
-              className="bg-warning-action hover:bg-warning-action/90"
-            >
-              {isLeaving ? "Saindo..." : "Sair do Workspace"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>

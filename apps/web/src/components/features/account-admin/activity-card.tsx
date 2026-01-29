@@ -15,6 +15,7 @@ interface ActivityCardProps {
 export function ActivityCard({ activity, className }: ActivityCardProps) {
   const formatActionLabel = (action: string) => {
     const labels: Record<string, string> = {
+      // User actions
       'audit.user_status_updated': 'Status de usuário alterado',
       'audit.user_role_updated': 'Permissão de usuário alterada',
       'audit.invite_created': 'Convite criado',
@@ -23,8 +24,57 @@ export function ActivityCard({ activity, className }: ActivityCardProps) {
       'user.created': 'Usuário criado',
       'user.login': 'Login realizado',
       'user.logout': 'Logout realizado',
+      // Workspace actions
+      'audit.workspace_created': 'Workspace criada',
+      'audit.workspace_updated': 'Workspace atualizada',
+      'audit.workspace_archived': 'Workspace arquivada',
+      'audit.workspace_restored': 'Workspace restaurada',
+      'audit.workspace_deleted': 'Workspace excluída',
+      'audit.workspace_member_added': 'Membro adicionado à workspace',
+      'audit.workspace_member_removed': 'Membro removido da workspace',
+      'audit.workspace_member_role_updated': 'Permissão de membro alterada',
     }
     return labels[action] || action
+  }
+
+  const formatTimestamp = (timestamp: string) => {
+    if (!timestamp) return 'Data não disponível'
+    const date = new Date(timestamp)
+    if (isNaN(date.getTime())) return 'Data inválida'
+    return formatDistanceToNow(date, { addSuffix: true, locale: ptBR })
+  }
+
+  // Format details for display - filter technical fields and format values
+  const getDisplayDetails = (details: Record<string, unknown>) => {
+    // Fields to exclude from display (technical/internal fields)
+    const excludeFields = [
+      'action', 'userId', 'accountId', 'metadata', 'aggregateId',
+      'workspaceId', 'targetUserId', 'module'
+    ]
+
+    // Labels for known fields
+    const fieldLabels: Record<string, string> = {
+      workspaceName: 'Workspace',
+      reason: 'Motivo',
+      oldRole: 'Permissão anterior',
+      newRole: 'Nova permissão',
+      role: 'Permissão',
+      email: 'Email',
+      expiresAt: 'Expira em',
+      changes: 'Alterações',
+    }
+
+    const entries = Object.entries(details)
+      .filter(([key]) => !excludeFields.includes(key))
+      .filter(([_, value]) => value !== null && value !== undefined)
+      .filter(([_, value]) => typeof value !== 'object') // Exclude nested objects
+      .slice(0, 3)
+      .map(([key, value]) => ({
+        label: fieldLabels[key] || key,
+        value: String(value),
+      }))
+
+    return entries
   }
 
   return (
@@ -50,19 +100,16 @@ export function ActivityCard({ activity, className }: ActivityCardProps) {
 
             {activity.details && Object.keys(activity.details).length > 0 && (
               <div className="text-xs text-muted-foreground">
-                {Object.entries(activity.details).slice(0, 3).map(([key, value]) => (
-                  <div key={key} className="truncate">
-                    <span className="font-medium">{key}:</span> {String(value)}
+                {getDisplayDetails(activity.details).map(({ label, value }) => (
+                  <div key={label} className="truncate">
+                    <span className="font-medium">{label}:</span> {value}
                   </div>
                 ))}
               </div>
             )}
 
             <p className="text-xs text-muted-foreground">
-              {formatDistanceToNow(new Date(activity.timestamp), {
-                addSuffix: true,
-                locale: ptBR,
-              })}
+              {formatTimestamp(activity.timestamp)}
             </p>
           </div>
         </div>
