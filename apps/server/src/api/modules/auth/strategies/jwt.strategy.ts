@@ -10,6 +10,7 @@ interface JwtPayload {
   accountId: string;
   email: string;
   sessionId: string;
+  impersonateSessionId?: string;
 }
 
 @Injectable()
@@ -31,7 +32,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<User & { sessionId?: string }> {
+  async validate(payload: JwtPayload): Promise<User & { sessionId?: string; impersonateSessionId?: string }> {
     // Verify session exists and is not revoked
     if (payload.sessionId) {
       const session = await this.sessionRepository.findById(payload.sessionId);
@@ -53,10 +54,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       throw new UnauthorizedException('User account is inactive');
     }
 
-    // Attach sessionId to user object for use in controllers
+    // Attach sessionId and impersonateSessionId to user object for use in controllers/guards
     return {
       ...user,
       sessionId: payload.sessionId,
+      impersonateSessionId: payload.impersonateSessionId,
     };
   }
 }

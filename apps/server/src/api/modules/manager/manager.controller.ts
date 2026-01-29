@@ -148,14 +148,13 @@ export class ManagerController {
   }
 
   /**
-   * DELETE /api/v1/manager/impersonate
+   * DELETE /api/v1/manager/impersonate/:sessionId
    * End impersonation session
-   * Note: Session ID should come from request context or body
    */
-  @Delete('impersonate')
+  @Delete('impersonate/:sessionId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async endImpersonate(@Body() body: { sessionId: string }): Promise<void> {
-    await this.commandBus.execute(new EndImpersonateCommand(body.sessionId));
+  async endImpersonate(@Param('sessionId') sessionId: string): Promise<void> {
+    await this.commandBus.execute(new EndImpersonateCommand(sessionId));
   }
 
   /**

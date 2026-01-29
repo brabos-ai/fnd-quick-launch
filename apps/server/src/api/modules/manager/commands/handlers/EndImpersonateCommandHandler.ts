@@ -3,6 +3,7 @@ import { Inject, NotFoundException } from '@nestjs/common';
 import { EndImpersonateCommand } from '../EndImpersonateCommand';
 import { ImpersonateEndedEvent } from '../../events/ImpersonateEndedEvent';
 import { ILoggerService } from '@fnd/contracts';
+import { ImpersonateSessionRepository } from '@fnd/database';
 
 /**
  * EndImpersonateCommandHandler
@@ -17,7 +18,7 @@ import { ILoggerService } from '@fnd/contracts';
 @CommandHandler(EndImpersonateCommand)
 export class EndImpersonateCommandHandler implements ICommandHandler<EndImpersonateCommand, void> {
   constructor(
-    @Inject('IImpersonateSessionRepository') private readonly impersonateSessionRepository: any,
+    @Inject('IImpersonateSessionRepository') private readonly impersonateSessionRepository: ImpersonateSessionRepository,
     @Inject('ILoggerService') private readonly logger: ILoggerService,
     private readonly eventBus: EventBus,
   ) {}

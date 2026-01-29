@@ -6,6 +6,7 @@ import { Toaster } from 'sonner'
 import { ErrorModal } from '@/components/ui/error-modal'
 import { api } from '@/lib/api'
 import type { User, Workspace } from '@/types'
+import { useImpersonateDetection } from '@/hooks/use-impersonate-detection'
 
 function App() {
   const theme = useUIStore((state) => state.theme)
@@ -14,6 +15,9 @@ function App() {
   const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
   const setCurrentWorkspace = useAuthStore((state) => state.setCurrentWorkspace)
   const setUser = useAuthStore((state) => state.setUser)
+
+  // Detect impersonate tokens in URL (from admin panel)
+  useImpersonateDetection()
 
   useEffect(() => {
     const root = document.documentElement
@@ -52,8 +56,9 @@ function App() {
             setCurrentWorkspace(workspaces[0])
           }
         }
-      } catch (error) {
-        console.error('Failed to load user data:', error)
+      } catch (_error) {
+        // Error is already handled by API interceptor
+        // No need to console.error
       }
     }
 

@@ -6,6 +6,8 @@ import { Sidebar } from "./sidebar"
 import { Header } from "./header"
 import { MobileHeader } from "./mobile-header"
 import { BottomNav } from "./bottom-nav"
+import { ImpersonateBanner } from "@/components/features/impersonate"
+import { useAuthStore } from "@/stores/auth-store"
 
 interface AppShellProps {
   children: React.ReactNode
@@ -22,9 +24,13 @@ export function AppShell({
 }: AppShellProps) {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false)
+  const isImpersonating = useAuthStore((state) => state.isImpersonating)
 
   return (
-    <div className={cn("min-h-screen bg-background", className)}>
+    <div className={cn("min-h-screen bg-background", isImpersonating && "pt-11", className)}>
+      {/* Impersonate Banner - fixed at top when impersonating */}
+      <ImpersonateBanner />
+
       {/* Mobile Header */}
       <MobileHeader onMenuClick={() => setIsSidebarOpen(true)} />
 

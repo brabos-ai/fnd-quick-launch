@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { useImpersonate } from '@/hooks/use-impersonate'
-import type { UserDetails } from '@/types'
 
 const schema = z.object({
   reason: z.string().min(10, 'Motivo deve ter pelo menos 10 caracteres'),
@@ -21,8 +20,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
+interface ImpersonateUser {
+  id: string
+  name: string
+  email: string
+}
+
 interface ImpersonateDialogProps {
-  user: UserDetails | null
+  user: ImpersonateUser | null
   open: boolean
   onOpenChange: (open: boolean) => void
 }
@@ -73,7 +78,7 @@ export function ImpersonateDialog({ user, open, onOpenChange }: ImpersonateDialo
                 id="reason"
                 placeholder="Ex: Investigar problema reportado pelo usuário"
                 {...register('reason')}
-                className="h-11"
+                className="h-11 text-base"
               />
               {errors.reason && (
                 <p className="text-sm text-destructive">{errors.reason.message}</p>

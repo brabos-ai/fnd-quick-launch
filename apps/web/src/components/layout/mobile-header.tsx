@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
+import { useAuthStore } from "@/stores/auth-store"
 
 interface MobileHeaderProps {
   onMenuClick?: () => void
@@ -18,10 +19,13 @@ interface MobileHeaderProps {
 }
 
 export function MobileHeader({ onMenuClick, className }: MobileHeaderProps) {
+  const isImpersonating = useAuthStore((state) => state.isImpersonating)
+
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 flex h-16 items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:hidden",
+        "sticky z-50 flex h-16 items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:hidden",
+        isImpersonating ? "top-11" : "top-0",
         className
       )}
     >

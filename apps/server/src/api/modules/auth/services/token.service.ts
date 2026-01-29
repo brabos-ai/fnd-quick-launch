@@ -8,6 +8,7 @@ interface JwtPayload {
   accountId: string;
   email: string;
   sessionId: string;
+  impersonateSessionId?: string;
 }
 
 @Injectable()
@@ -23,14 +24,22 @@ export class TokenService {
    * @param accountId - The account ID
    * @param email - The user email
    * @param sessionId - The session ID for revocation check
+   * @param impersonateSessionId - Optional impersonation session ID (when admin is impersonating user)
    * @returns The signed JWT token
    */
-  generateAccessToken(userId: string, accountId: string, email: string, sessionId: string): string {
+  generateAccessToken(
+    userId: string,
+    accountId: string,
+    email: string,
+    sessionId: string,
+    impersonateSessionId?: string,
+  ): string {
     const payload: JwtPayload = {
       userId,
       accountId,
       email,
       sessionId,
+      ...(impersonateSessionId && { impersonateSessionId }),
     };
 
     return jwt.sign(payload, this.configService.getJwtSecret(), {

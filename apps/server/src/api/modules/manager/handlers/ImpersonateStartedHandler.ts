@@ -16,22 +16,25 @@ export class ImpersonateStartedHandler implements IEventHandler<ImpersonateStart
   ) {}
 
   async handle(event: ImpersonateStartedEvent): Promise<void> {
-    const { adminUserId, targetUserId, reason, expiresAt } = event;
+    const { adminUserId, targetUserId, reason, expiresAt, accountId } = event;
 
     this.logger.info('Handling ImpersonateStartedEvent', {
       operation: 'manager.impersonate_started.handle',
       module: 'ImpersonateStartedHandler',
       adminUserId,
       targetUserId,
+      accountId,
     });
 
     // Publish audit log event via event publisher (BullMQ queue)
+    // accountId is required for RLS context in audit worker
     await this.eventPublisher.publish({
       type: 'audit.impersonate_started',
       aggregateId: adminUserId,
       occurredAt: new Date(),
       data: {
         action: 'impersonate_started',
+        accountId, // Required for RLS
         userId: adminUserId,
         targetUserId,
         reason,
@@ -47,6 +50,7 @@ export class ImpersonateStartedHandler implements IEventHandler<ImpersonateStart
       module: 'ImpersonateStartedHandler',
       adminUserId,
       targetUserId,
+      accountId,
     });
   }
 }

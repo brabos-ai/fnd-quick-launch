@@ -1,20 +1,19 @@
 import { useMutation } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import type { ImpersonateRequest, ImpersonateResponse, AxiosErrorWithResponse } from '@/types'
-import { useManagerStore } from '@/stores/manager-store'
 import { toast } from 'sonner'
 
 export function useImpersonate() {
-  const setImpersonation = useManagerStore((state) => state.setImpersonation)
-
   return useMutation({
     mutationFn: async (data: ImpersonateRequest) => {
       const response = await api.post<ImpersonateResponse>('/manager/impersonate', data)
       return response.data
     },
     onSuccess: (data) => {
-      setImpersonation(data)
-      toast.success(`Impersonando ${data.targetUser.name}`)
+      const frontendUrl = import.meta.env.VITE_FRONTEND_URL || 'http://localhost:3000'
+      const url = `${frontendUrl}?impersonate_token=${data.accessToken}&session_id=${data.sessionId}`
+      window.open(url, '_blank')
+      toast.success(`Abrindo sessão de impersonate para ${data.targetUser.name}`)
     },
     onError: (error: AxiosErrorWithResponse) => {
       const message = error.response?.data?.message || error.message || 'Erro ao impersonar usuário'
@@ -23,20 +22,3 @@ export function useImpersonate() {
   })
 }
 
-export function useEndImpersonate() {
-  const setImpersonation = useManagerStore((state) => state.setImpersonation)
-
-  return useMutation({
-    mutationFn: async (sessionId: string) => {
-      await api.delete(`/manager/impersonate/${sessionId}`)
-    },
-    onSuccess: () => {
-      setImpersonation(null)
-      toast.success('Impersonação encerrada')
-    },
-    onError: (error: AxiosErrorWithResponse) => {
-      const message = error.response?.data?.message || error.message || 'Erro ao encerrar impersonação'
-      toast.error(message)
-    },
-  })
-}

@@ -1,21 +1,33 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search } from 'lucide-react'
+import { Search, MoreHorizontal, UserCheck } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useUsers } from '@/hooks/use-users'
 import { UserStatusBadge } from '@/components/features/manager/user-status-badge'
+import { ImpersonateDialog } from '@/components/features/manager/impersonate-dialog'
 import { useManagerStore } from '@/stores/manager-store'
 import { format } from 'date-fns'
+import type { UserListItem } from '@/types'
 
 export function UsersPage() {
   const navigate = useNavigate()
   const { usersSearchQuery, usersStatusFilter, setUsersSearchQuery, setUsersStatusFilter } = useManagerStore()
-  const { data: users, isLoading } = useUsers(usersSearchQuery, usersStatusFilter)
+  const { data: users, isLoading, error } = useUsers(usersSearchQuery, usersStatusFilter)
+  const [impersonateDialogOpen, setImpersonateDialogOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<UserListItem | null>(null)
 
   const handleRowClick = (userId: string) => {
     navigate(`/users/${userId}`)
+  }
+
+  const handleImpersonate = (user: UserListItem) => {
+    setSelectedUser(user)
+    setImpersonateDialogOpen(true)
   }
 
   return (
@@ -34,7 +46,7 @@ export function UsersPage() {
             placeholder="Buscar por nome ou email..."
             value={usersSearchQuery}
             onChange={(e) => setUsersSearchQuery(e.target.value)}
-            className="pl-9 h-11"
+            className="pl-9 h-11 text-base"
           />
         </div>
 
@@ -62,10 +74,17 @@ export function UsersPage() {
               <TableHead className="hidden md:table-cell">Email Verificado</TableHead>
               <TableHead className="hidden lg:table-cell">Criado em</TableHead>
               <TableHead className="hidden lg:table-cell">Último Login</TableHead>
+              <TableHead className="w-[70px]">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading ? (
+            {error ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-8 text-destructive">
+                  Erro ao carregar usuários. Tente novamente.
+                </TableCell>
+              </TableRow>
+            ) : isLoading ? (
               Array.from({ length: 5 }).map((_, index) => (
                 <TableRow key={index}>
                   <TableCell><Skeleton className="h-4 w-32" /></TableCell>
@@ -74,6 +93,7 @@ export function UsersPage() {
                   <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-12" /></TableCell>
                   <TableCell className="hidden lg:table-cell"><Skeleton className="h-4 w-24" /></TableCell>
                   <TableCell className="hidden lg:table-cell"><Skeleton className="h-4 w-24" /></TableCell>
+                  <TableCell><Skeleton className="h-8 w-8" /></TableCell>
                 </TableRow>
               ))
             ) : users && users.length > 0 ? (
@@ -97,11 +117,26 @@ export function UsersPage() {
                   <TableCell className="hidden lg:table-cell">
                     {user.lastLoginAt ? format(new Date(user.lastLoginAt), 'dd/MM/yyyy HH:mm') : 'Nunca'}
                   </TableCell>
+                  <TableCell onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => handleImpersonate(user)}>
+                          <UserCheck className="mr-2 h-4 w-4" />
+                          Impersonar
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                   Nenhum usuário encontrado
                 </TableCell>
               </TableRow>
@@ -109,6 +144,14 @@ export function UsersPage() {
           </TableBody>
         </Table>
       </div>
+
+      {selectedUser && (
+        <ImpersonateDialog
+          open={impersonateDialogOpen}
+          onOpenChange={setImpersonateDialogOpen}
+          user={selectedUser}
+        />
+      )}
     </div>
   )
 }

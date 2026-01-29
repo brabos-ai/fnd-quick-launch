@@ -9,7 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { useAuthStore } from "@/stores/auth-store"
 
 // Section Label Component
@@ -57,6 +58,7 @@ export function Sidebar({
   const currentWorkspace = useAuthStore((state) => state.currentWorkspace)
   const switchWorkspace = useAuthStore((state) => state.switchWorkspace)
   const user = useAuthStore((state) => state.user)
+  const isImpersonating = useAuthStore((state) => state.isImpersonating)
 
   // Compute admin access: super-admin OR owner/admin at user level
   const isAdmin =
@@ -209,10 +211,20 @@ export function Sidebar({
   )
 
   // Mobile: Render as Sheet
+  // When impersonating, offset the sheet below the banner (h-11 = 2.75rem = 44px)
   if (isMobile) {
     return (
       <Sheet open={isOpen} onOpenChange={(open) => !open && onClose?.()}>
-        <SheetContent side="left" className="w-[280px] p-0">
+        <SheetContent
+          side="left"
+          className={cn(
+            "w-[280px] p-0",
+            isImpersonating && "!top-11 !h-[calc(100%-2.75rem)]"
+          )}
+        >
+          <VisuallyHidden>
+            <SheetTitle>Menu de navegação</SheetTitle>
+          </VisuallyHidden>
           {sidebarContent}
         </SheetContent>
       </Sheet>
@@ -223,10 +235,12 @@ export function Sidebar({
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-40 hidden transition-all duration-300 lg:block",
+        "fixed left-0 bottom-0 z-40 hidden transition-all duration-300 lg:block",
         {
           "w-[280px]": !isCollapsed,
           "w-[80px]": isCollapsed,
+          "top-11": isImpersonating,
+          "top-0": !isImpersonating,
         }
       )}
     >

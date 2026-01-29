@@ -4,6 +4,7 @@ import { ImpersonateCommand } from '../ImpersonateCommand';
 import { ImpersonateStartedEvent } from '../../events/ImpersonateStartedEvent';
 import { ImpersonateResponseDto } from '../../dtos/ImpersonateResponseDto';
 import { ILoggerService } from '@fnd/contracts';
+import { UserRepository, ImpersonateSessionRepository, SessionRepository } from '@fnd/database';
 import { TokenService } from '../../../auth/services/token.service';
 import * as crypto from 'crypto';
 
@@ -23,9 +24,9 @@ import * as crypto from 'crypto';
 @CommandHandler(ImpersonateCommand)
 export class ImpersonateCommandHandler implements ICommandHandler<ImpersonateCommand, ImpersonateResponseDto> {
   constructor(
-    @Inject('IUserRepository') private readonly userRepository: any,
-    @Inject('IImpersonateSessionRepository') private readonly impersonateSessionRepository: any,
-    @Inject('ISessionRepository') private readonly sessionRepository: any,
+    @Inject('IUserRepository') private readonly userRepository: UserRepository,
+    @Inject('IImpersonateSessionRepository') private readonly impersonateSessionRepository: ImpersonateSessionRepository,
+    @Inject('ISessionRepository') private readonly sessionRepository: SessionRepository,
     @Inject('ILoggerService') private readonly logger: ILoggerService,
     private readonly tokenService: TokenService,
     private readonly eventBus: EventBus,
@@ -91,20 +92,22 @@ export class ImpersonateCommandHandler implements ICommandHandler<ImpersonateCom
       targetUserId,
     });
 
-    // Generate JWT access token for target user
+    // Generate JWT access token for target user with impersonation session ID
     const accessToken = this.tokenService.generateAccessToken(
       targetUser.id,
       targetUser.accountId,
       targetUser.email,
       authSession.id,
+      impersonateSession.id, // Include impersonateSessionId for session validation
     );
 
-    // Emit event for audit logging
+    // Emit event for audit logging (include accountId for RLS context)
     const event = new ImpersonateStartedEvent(
       adminUserId,
       targetUserId,
       reason,
       expiresAt,
+      targetUser.accountId,
     );
     this.eventBus.publish(event);
 

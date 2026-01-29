@@ -4,5 +4,6 @@ export class ImpersonateStartedEvent {
     public readonly targetUserId: string,
     public readonly reason: string,
     public readonly expiresAt: Date,
+    public readonly accountId: string,
   ) {}
 }

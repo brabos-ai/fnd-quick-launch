@@ -146,10 +146,12 @@ VITE_API_URL=https://seu-projeto.railway.app
 4. Configure o build:
 
 ```yaml
-Build command: npm run build
+Build command: npx turbo run build --filter=@fnd/web
 Build output directory: apps/web/dist
 Root directory: /
 ```
+
+> **Nota:** O comando `--filter=@fnd/web` builda apenas o app web e suas dependências, evitando compilar todo o monorepo.
 
 ### Passo 3: Variáveis de Ambiente
 
@@ -171,11 +173,13 @@ Cloudflare vai fazer deploy automaticamente. Cada push na branch `main` dispara 
 
 Mesmos passos do Frontend, mas usando `apps/admin`:
 
-```bash
-Build command: npm run build
+```yaml
+Build command: npx turbo run build --filter=@fnd/admin
 Build output directory: apps/admin/dist
 Root directory: /
 ```
+
+> **Nota:** O comando `--filter=@fnd/admin` builda apenas o app admin e suas dependências, evitando compilar todo o monorepo.
 
 **Variável de ambiente:**
 ```bash

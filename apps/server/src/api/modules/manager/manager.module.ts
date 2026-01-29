@@ -5,6 +5,7 @@ import { ManagerPlanService } from './manager-plan.service';
 import { ManagerSubscriptionService } from './manager-subscription.service';
 import { ManagerController } from './manager.controller';
 import { SuperAdminGuard } from '../../guards/super-admin.guard';
+import { ImpersonateSessionGuard } from '../../guards/impersonate-session.guard';
 import { SharedModule } from '../../../shared/shared.module';
 import { AuthModule } from '../auth/auth.module';
 import { BillingModule } from '../billing/billing.module';
@@ -24,6 +25,7 @@ import { EventHandlers } from './handlers';
     ManagerPlanService,
     ManagerSubscriptionService,
     SuperAdminGuard,
+    ImpersonateSessionGuard,
     ...CommandHandlers,
     ...EventHandlers,
   ],

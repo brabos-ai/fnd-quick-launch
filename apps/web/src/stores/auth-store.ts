@@ -11,6 +11,11 @@ interface AuthState {
   isAuthenticated: boolean
   currentWorkspace: Workspace | null
   workspaceList: Workspace[]
+  // Impersonation state
+  isImpersonating: boolean
+  impersonateSessionId: string | null
+  impersonateExpiresAt: Date | null
+  impersonatedUserName: string | null
   setAuth: (user: User, accessToken: string, refreshToken: string) => void
   clearAuth: () => void
   login: (data: LoginDto) => Promise<void>
@@ -24,6 +29,9 @@ interface AuthState {
   addWorkspace: (workspace: Workspace) => void
   updateWorkspace: (id: string, workspace: Workspace) => void
   removeWorkspace: (id: string) => void
+  // Impersonation actions
+  setImpersonation: (sessionId: string, expiresAt: Date, userName: string, accessToken: string) => void
+  clearImpersonation: () => void
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -35,6 +43,11 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       currentWorkspace: null,
       workspaceList: [],
+      // Impersonation initial state
+      isImpersonating: false,
+      impersonateSessionId: null,
+      impersonateExpiresAt: null,
+      impersonatedUserName: null,
 
       setAuth: (user, accessToken, refreshToken) =>
         set({
@@ -68,7 +81,6 @@ export const useAuthStore = create<AuthState>()(
 
           // Toast é mostrado pelo componente (login-form.tsx)
         } catch (error: unknown) {
-          console.error('Login error:', error)
           const apiError = error as AxiosErrorWithResponse
 
           // Check if it's an email not verified error
@@ -108,7 +120,6 @@ export const useAuthStore = create<AuthState>()(
 
           return result
         } catch (error: unknown) {
-          console.error('Signup error:', error)
           const apiError = error as AxiosErrorWithResponse
           const message = apiError.response?.data?.message || apiError.message || 'Erro ao criar conta'
           toast.error(message)
@@ -119,9 +130,11 @@ export const useAuthStore = create<AuthState>()(
       logout: () => {
         // Call logout endpoint (optional - backend might track sessions)
         try {
-          api.post('/auth/logout').catch(console.error)
-        } catch (error) {
-          console.error('Logout error:', error)
+          api.post('/auth/logout').catch(() => {
+            // Logout error - silent fail, clear state anyway
+          })
+        } catch {
+          // Logout error - silent fail
         }
 
         // Clear state
@@ -174,6 +187,31 @@ export const useAuthStore = create<AuthState>()(
           workspaceList: state.workspaceList.filter((w) => w.id !== id),
           currentWorkspace: state.currentWorkspace?.id === id ? null : state.currentWorkspace,
         })),
+
+      // Impersonation actions
+      setImpersonation: (sessionId, expiresAt, userName, accessToken) =>
+        set({
+          isImpersonating: true,
+          impersonateSessionId: sessionId,
+          impersonateExpiresAt: expiresAt,
+          impersonatedUserName: userName,
+          accessToken: accessToken,
+          isAuthenticated: true,
+        }),
+
+      clearImpersonation: () =>
+        set({
+          isImpersonating: false,
+          impersonateSessionId: null,
+          impersonateExpiresAt: null,
+          impersonatedUserName: null,
+          accessToken: null,
+          refreshToken: null,
+          isAuthenticated: false,
+          user: null,
+          currentWorkspace: null,
+          workspaceList: [],
+        }),
     }),
     {
       name: 'fnd-quicklaunch-auth-v2',
@@ -185,6 +223,11 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: state.isAuthenticated,
         currentWorkspace: state.currentWorkspace,
         workspaceList: state.workspaceList,
+        // Impersonation state
+        isImpersonating: state.isImpersonating,
+        impersonateSessionId: state.impersonateSessionId,
+        impersonateExpiresAt: state.impersonateExpiresAt,
+        impersonatedUserName: state.impersonatedUserName,
       }),
     }
   )

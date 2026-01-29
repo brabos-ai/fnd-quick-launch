@@ -21,7 +21,7 @@ interface HeaderProps {
 
 export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
   const navigate = useNavigate()
-  const { user, logout } = useAuthStore()
+  const { user, logout, isImpersonating } = useAuthStore()
   const { theme, setTheme } = useUIStore()
 
   const toggleTheme = () => {
@@ -46,7 +46,8 @@ export function Header({ breadcrumb = ["Dashboard"], className }: HeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 hidden h-16 items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:flex",
+        "sticky z-50 hidden h-16 items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:flex",
+        isImpersonating ? "top-11" : "top-0",
         className
       )}
     >
