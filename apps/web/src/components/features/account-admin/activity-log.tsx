@@ -38,15 +38,14 @@ export function ActivityLog({ userId, limit = 50 }: ActivityLogProps) {
     )
   }
 
-  // Backend returns ActivityDto which matches Activity interface
-  // Fields: id, action, timestamp, details, userName, userEmail
-  const activities = auditLogs.map((log: Activity) => ({
+  // Convert AuditLog to Activity format
+  const activities = auditLogs.map((log) => ({
     id: log.id,
     action: log.action,
-    timestamp: log.timestamp,
-    details: log.details ?? {},
-    userName: log.userName,
-    userEmail: log.userEmail,
+    timestamp: log.createdAt,
+    details: log.metadata ?? {},
+    userName: log.user?.fullName,
+    userEmail: log.user?.email,
   }))
 
   return (

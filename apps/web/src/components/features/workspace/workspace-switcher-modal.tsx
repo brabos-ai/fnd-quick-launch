@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Building2, Check, Plus, Search } from "lucide-react"
+import { Check, Plus, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   Dialog,

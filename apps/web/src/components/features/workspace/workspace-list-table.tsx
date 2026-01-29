@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { formatDistanceToNow, format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Check, MoreVertical, MousePointer, Settings, Trash2, Users } from "lucide-react"
+import { Check, MoreVertical, MousePointer, Settings, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   Table,
