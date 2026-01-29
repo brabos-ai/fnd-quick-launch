@@ -26,6 +26,8 @@ import { LoginSuccessEventHandler } from './events/handlers/LoginSuccessEventHan
 import { LoginFailureEventHandler } from './events/handlers/LoginFailureEventHandler';
 import { PasswordResetRequestedEventHandler } from './events/handlers/PasswordResetRequestedEventHandler';
 import { PasswordChangedEventHandler } from './events/handlers/PasswordChangedEventHandler';
+import { EmailChangeRequestedEventHandler } from './events/handlers/EmailChangeRequestedEventHandler';
+import { EmailChangeConfirmedEventHandler } from './events/handlers/EmailChangeConfirmedEventHandler';
 import { VerificationEmailResentEventHandler } from './events/handlers/VerificationEmailResentEventHandler';
 
 @Module({
@@ -73,6 +75,8 @@ import { VerificationEmailResentEventHandler } from './events/handlers/Verificat
     LoginFailureEventHandler,
     PasswordResetRequestedEventHandler,
     PasswordChangedEventHandler,
+    EmailChangeRequestedEventHandler,
+    EmailChangeConfirmedEventHandler,
     VerificationEmailResentEventHandler,
   ],
   exports: [

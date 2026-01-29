@@ -1,9 +1,10 @@
 import { ICommand, ICommandHandler } from '@fnd/contracts';
-import { CommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventBus } from '@nestjs/cqrs';
 import { Inject, BadRequestException, NotFoundException } from '@nestjs/common';
 import { UserRepository, AuthTokenRepository, EmailChangeRequestRepository, SessionRepository } from '@fnd/database';
 import { EmailChangeStatus } from '@fnd/domain';
 import { PasswordService } from '../services/password.service';
+import { EmailChangeConfirmedEvent } from '../events/EmailChangeConfirmedEvent';
 
 export class ConfirmEmailChangeCommand {
   constructor(
@@ -24,6 +25,7 @@ export class ConfirmEmailChangeCommandHandler implements ICommandHandler<any> {
     @Inject('ISessionRepository')
     private readonly sessionRepository: SessionRepository,
     private readonly passwordService: PasswordService,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute(command: ConfirmEmailChangeCommand): Promise<void> {
@@ -58,6 +60,9 @@ export class ConfirmEmailChangeCommandHandler implements ICommandHandler<any> {
       throw new NotFoundException('Usuário não encontrado.');
     }
 
+    // Store old email before updating
+    const oldEmail = user.email;
+
     // Check if new email is still available within the same account (could have been taken between request and confirmation)
     const existingUser = await this.userRepository.findByEmail(emailChangeRequest.newEmail, user.accountId);
     if (existingUser && existingUser.id !== user.id) {
@@ -85,5 +90,15 @@ export class ConfirmEmailChangeCommandHandler implements ICommandHandler<any> {
       // If no session ID provided (e.g., user is not logged in), revoke all sessions
       await this.sessionRepository.revokeAllByUserId(user.id);
     }
+
+    // Emit EmailChangeConfirmedEvent
+    this.eventBus.publish(
+      new EmailChangeConfirmedEvent(user.id, {
+        userId: user.id,
+        accountId: user.accountId,
+        oldEmail: oldEmail,
+        newEmail: emailChangeRequest.newEmail,
+      })
+    );
   }
 }

@@ -9,6 +9,48 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Added
 
+#### [2026-01-29] F0003-auth-audit-logging
+
+**Resumo:** Implementação completa de auditoria para eventos de autenticação. Os handlers de auth agora publicam eventos de auditoria na fila BullMQ, seguindo padrão existente. Adicionada conta "system" para eventos sem contexto de usuário. Todos os 8 requisitos funcionais implementados.
+
+**Principais Entregas:**
+
+| Componente | Descrição |
+|------------|-----------|
+| **LoginSuccessEventHandler** | Publica audit.login_success com userId, email, ipAddress, userAgent |
+| **LoginFailureEventHandler** | Audita falha login com SYSTEM_ACCOUNT_ID para eventos sem user autenticado |
+| **AccountCreatedEventHandler** | Enqueue email verificação + publica audit.account_created |
+| **PasswordChangedEventHandler** | Publica audit.password_changed com userId, accountId |
+| **PasswordResetRequestedEventHandler** | Publica audit.password_reset_requested com email |
+| **EmailChangeRequestedEventHandler** | Publica audit.email_change_requested com oldEmail, newEmail |
+| **EmailChangeConfirmedEventHandler** | **[NEW]** Publica audit.email_change_confirmed |
+| **SYSTEM_ACCOUNT_ID Constant** | **[NEW]** Account "system" UUID para eventos sem contexto de user |
+| **System Account Migration** | **[NEW]** Migration para criar account "system" no banco |
+
+**Estatísticas:**
+- Business: 13 (handlers + events + commands + strategies)
+- Support: 5 (domain constants, indexes)
+- Infrastructure: 10 (migrations, module config)
+- Total: 28 arquivos, +447 insertions, -56 deletions
+
+**Requisitos Implementados:** ✅ 8/8 (RF01-RF08)
+- ✅ Login bem-sucedido auditado com contexto completo
+- ✅ Login falho auditado com SYSTEM_ACCOUNT_ID
+- ✅ Criação de conta (signup) auditada
+- ✅ Solicitação de reset de senha auditada
+- ✅ Alteração de senha auditada
+- ✅ Solicitação de mudança de email auditada
+- ✅ Confirmação de mudança de email auditada
+- ✅ Logout/revogação de sessão preparado para extensão
+
+**Regras de Negócio:** ✅ 4/4 (RN01-RN04)
+- ✅ Login failures usam SYSTEM_ACCOUNT_ID para manter RLS funcional
+- ✅ Payload auditoria padronizado (userId, ipAddress, userAgent, email, metadata.module)
+- ✅ Tabela login_attempts mantida separada (rate limiting)
+- ✅ AccountId obrigatório em eventos autenticados
+
+---
+
 #### [2026-01-29] F0002-workspace-ux-improvements
 
 **Resumo:** Implementação completa de melhorias na UX de gestão de workspaces com fix crítico no endpoint de membros, modernização da listagem em tabela e novo workspace switcher modal no header com busca em tempo real.

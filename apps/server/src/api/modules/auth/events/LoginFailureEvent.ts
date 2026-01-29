@@ -3,6 +3,7 @@ import { BaseEvent } from '../../../../shared/base';
 export interface LoginFailureEventData {
   email: string;
   ipAddress: string;
+  userAgent: string;
   reason: string;
 }
 
@@ -17,6 +18,10 @@ export class LoginFailureEvent extends BaseEvent {
 
   get ipAddress(): string {
     return this.data.ipAddress;
+  }
+
+  get userAgent(): string {
+    return this.data.userAgent;
   }
 
   get reason(): string {

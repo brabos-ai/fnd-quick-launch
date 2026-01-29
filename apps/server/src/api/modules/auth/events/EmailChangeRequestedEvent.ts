@@ -2,6 +2,7 @@ import { BaseEvent } from '../../../../shared/base';
 
 export interface EmailChangeRequestedEventData {
   userId: string;
+  accountId: string;
   email: string;
   confirmationToken: string;
   currentEmail: string;
@@ -14,6 +15,10 @@ export class EmailChangeRequestedEvent extends BaseEvent {
 
   get userId(): string {
     return this.data.userId;
+  }
+
+  get accountId(): string {
+    return this.data.accountId;
   }
 
   get email(): string {

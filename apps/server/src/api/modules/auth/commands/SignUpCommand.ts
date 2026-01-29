@@ -210,8 +210,11 @@ export class SignUpCommandHandler implements ICommandHandler<any> {
     this.eventBus.publish(
       new AccountCreatedEvent(user.id, {
         userId: user.id,
+        accountId: account.id,
         email: user.email,
         verificationToken,
+        ipAddress: command.ipAddress,
+        userAgent: command.userAgent,
       })
     );
 

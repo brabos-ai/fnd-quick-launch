@@ -2,6 +2,7 @@ import { BaseEvent } from '../../../../shared/base';
 
 export interface PasswordResetRequestedEventData {
   userId: string;
+  accountId: string;
   email: string;
   resetToken: string;
 }
@@ -13,6 +14,10 @@ export class PasswordResetRequestedEvent extends BaseEvent {
 
   get userId(): string {
     return this.data.userId;
+  }
+
+  get accountId(): string {
+    return this.data.accountId;
   }
 
   get email(): string {

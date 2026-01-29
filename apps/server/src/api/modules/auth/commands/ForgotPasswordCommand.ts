@@ -47,6 +47,7 @@ export class ForgotPasswordCommandHandler implements ICommandHandler<any> {
     this.eventBus.publish(
       new PasswordResetRequestedEvent(user.id, {
         userId: user.id,
+        accountId: user.accountId,
         email: user.email,
         resetToken,
       })

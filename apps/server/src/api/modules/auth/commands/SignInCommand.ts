@@ -67,6 +67,8 @@ export class SignInCommandHandler implements ICommandHandler<any> {
     this.eventBus.publish(
       new LoginSuccessEvent(user.id, {
         userId: user.id,
+        accountId: user.accountId,
+        email: user.email,
         ipAddress,
         userAgent,
       })

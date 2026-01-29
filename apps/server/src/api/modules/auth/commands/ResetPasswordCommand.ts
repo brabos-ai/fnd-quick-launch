@@ -58,6 +58,8 @@ export class ResetPasswordCommandHandler implements ICommandHandler<any> {
     this.eventBus.publish(
       new PasswordChangedEvent(user.id, {
         userId: user.id,
+        accountId: user.accountId,
+        email: user.email,
       })
     );
   }

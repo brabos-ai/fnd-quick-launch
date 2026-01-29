@@ -87,6 +87,7 @@ export class RequestEmailChangeCommandHandler implements ICommandHandler<any> {
     this.eventBus.publish(
       new EmailChangeRequestedEvent(user.id, {
         userId: user.id,
+        accountId: user.accountId,
         email: command.newEmail,
         confirmationToken,
         currentEmail: user.email,
