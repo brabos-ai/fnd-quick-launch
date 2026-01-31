@@ -27,13 +27,18 @@ import { StripeWebhookWorker } from './stripe-webhook.worker';
     BullModule.forRootAsync({
       imports: [SharedModule],
       inject: ['IConfigurationService'],
-      useFactory: (config: IConfigurationService) => ({
-        connection: {
-          host: new URL(config.getRedisUrl()).hostname,
-          port: parseInt(new URL(config.getRedisUrl()).port || '6379', 10),
-          maxRetriesPerRequest: null, // Required for BullMQ
-        },
-      }),
+      useFactory: (config: IConfigurationService) => {
+        const redisUrl = new URL(config.getRedisUrl());
+        return {
+          connection: {
+            host: redisUrl.hostname,
+            port: parseInt(redisUrl.port || '6379', 10),
+            password: redisUrl.password || undefined,
+            username: redisUrl.username || undefined,
+            maxRetriesPerRequest: null, // Required for BullMQ
+          },
+        };
+      },
     }),
     // Register queues (connection inherited from forRoot)
     BullModule.registerQueue(
