@@ -2,7 +2,7 @@
   "name": "@fnd/server",
   "version": "1.0.0",
   "description": "Backend API para FND SaaS QuickLaunch",
-  "main": "dist/index.js",
+  "main": "dist/local.js",
   "scripts": {
     "build": "tsc --build",
     "clean": "rimraf dist tsconfig.tsbuildinfo",

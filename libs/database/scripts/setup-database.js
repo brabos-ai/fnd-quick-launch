@@ -31,21 +31,48 @@ function log(message, color = 'reset') {
 }
 
 /**
- * Copies .env.example to .env if .env doesn't exist
+ * Loads DATABASE_URL with the following priority:
+ * 1. Environment variable (Railway, Docker, etc.)
+ * 2. .env file
+ * 3. .env.example (copies to .env first)
+ *
+ * @returns {string} DATABASE_URL
  */
-function ensureEnvFile() {
+function loadDatabaseUrl() {
   const envPath = resolve(__dirname, '../.env');
   const examplePath = resolve(__dirname, '../.env.example');
 
-  if (!existsSync(envPath)) {
-    if (!existsSync(examplePath)) {
-      log('❌ .env.example not found. Please create it first.', 'red');
-      process.exit(1);
-    }
-
-    copyFileSync(examplePath, envPath);
-    log('✅ Copied .env.example to .env', 'green');
+  // Priority 1: Already in environment (Railway, Docker, CI, etc.)
+  if (process.env.DATABASE_URL) {
+    log('✅ DATABASE_URL found in environment', 'green');
+    return process.env.DATABASE_URL;
   }
+
+  // Priority 2: Load from .env file
+  if (existsSync(envPath)) {
+    require('dotenv').config({ path: envPath });
+    if (process.env.DATABASE_URL) {
+      log('✅ DATABASE_URL loaded from .env', 'green');
+      return process.env.DATABASE_URL;
+    }
+  }
+
+  // Priority 3: Copy .env.example to .env and load
+  if (existsSync(examplePath)) {
+    log('📋 Copying .env.example to .env...', 'yellow');
+    copyFileSync(examplePath, envPath);
+    require('dotenv').config({ path: envPath });
+    if (process.env.DATABASE_URL) {
+      log('✅ DATABASE_URL loaded from .env.example', 'green');
+      return process.env.DATABASE_URL;
+    }
+  }
+
+  // No DATABASE_URL found anywhere
+  log('❌ DATABASE_URL not found', 'red');
+  log('   Set DATABASE_URL environment variable or create .env file', 'yellow');
+  log('   Expected format: postgresql://user:pass@host:port/dbname', 'yellow');
+  process.exit(1);
 }
 
 /**
@@ -175,14 +202,10 @@ async function createDatabase(config, dbName) {
 async function setupDatabase() {
   log('\n🔧 Database Auto-Setup\n', 'blue');
 
-  // Step 1: Ensure .env file exists
-  ensureEnvFile();
+  // Step 1: Load DATABASE_URL (env > .env > .env.example)
+  const databaseUrl = loadDatabaseUrl();
 
-  // Step 2: Load environment variables
-  require('dotenv').config({ path: resolve(__dirname, '../.env') });
-  const databaseUrl = process.env.DATABASE_URL;
-
-  // Step 3: Parse DATABASE_URL
+  // Step 2: Parse DATABASE_URL
   const targetConfig = parseDatabaseUrl(databaseUrl);
   const targetDbName = targetConfig.database;
 
