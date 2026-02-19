@@ -243,34 +243,34 @@ Reference: `apps/admin/src/hooks/use-stripe.ts` (query pattern), `apps/admin/src
 **Objetivo:** Criar toda infraestrutura de abstração e refatorar StripeService como adapter, sem quebrar funcionalidade existente.
 
 **Critérios de Aceite:**
-- [ ] `PaymentGatewayFactory.create(STRIPE)` retorna StripeAdapter funcional
-- [ ] Tabela `payment_provider_mappings` criada com constraints e indexes
-- [ ] Colunas `stripe_*` removidas de entidades e tabelas
-- [ ] `IPaymentGateway` expandida com 10 métodos
-- [ ] `IConfigurationService` sem métodos Stripe-specific
-- [ ] Enum `PaymentProvider` inclui `PAGARME`
+- [x] `PaymentGatewayFactory.create(STRIPE)` retorna StripeAdapter funcional
+- [x] Tabela `payment_provider_mappings` criada com constraints e indexes
+- [x] Colunas `stripe_*` removidas de entidades e tabelas
+- [x] `IPaymentGateway` expandida com 10 métodos
+- [x] `IConfigurationService` sem métodos Stripe-specific
+- [x] Enum `PaymentProvider` inclui `PAGARME`
 
 **Tasks:**
 
 #### Database
-- [ ] 1.1 Migration: create `payment_provider_mappings` table
-- [ ] 1.2 Migration: drop `stripe_*` columns (accounts, subscriptions, plans, plan_prices, payment_history)
-- [ ] 1.3 Create entity `PaymentProviderMapping`
-- [ ] 1.4 Create table type `PaymentProviderMappingTable`
-- [ ] 1.5 Create repository `PaymentProviderMappingRepository` + interface
-- [ ] 1.6 Modify entities: remove stripe fields (Account, Subscription, Plan, PlanPrice)
-- [ ] 1.7 Add `PAGARME` to `PaymentProvider` enum
+- [x] 1.1 Migration: create `payment_provider_mappings` table
+- [x] 1.2 Migration: drop `stripe_*` columns (accounts, subscriptions, plans, plan_prices, payment_history)
+- [x] 1.3 Create entity `PaymentProviderMapping`
+- [x] 1.4 Create table type `PaymentProviderMappingTable`
+- [x] 1.5 Create repository `PaymentProviderMappingRepository` + interface
+- [x] 1.6 Modify entities: remove stripe fields (Account, Subscription, Plan, PlanPrice)
+- [x] 1.7 Add `PAGARME` to `PaymentProvider` enum
 
 #### Backend
-- [ ] 1.8 Expand `IPaymentGateway` interface (10 methods)
-- [ ] 1.9 Create `IPaymentGatewayFactory` interface
-- [ ] 1.10 Create `IWebhookNormalizer` interface + `WebhookEventType` enum
-- [ ] 1.11 Expand generic types in `payment/types.ts`
-- [ ] 1.12 Modify `IConfigurationService` (remove Stripe methods, add generic)
-- [ ] 1.13 Refactor `StripeService` → `StripeAdapter` implementing `IPaymentGateway`
-- [ ] 1.14 Create `PaymentGatewayFactory` implementation
-- [ ] 1.15 Update `billing.module.ts` (register factory, adapter, mapping repo)
-- [ ] 1.16 Update `configuration.service.ts` (add `BILLING_SCOPE`, `getGatewayConfig()`)
+- [x] 1.8 Expand `IPaymentGateway` interface (10 methods)
+- [x] 1.9 Create `IPaymentGatewayFactory` interface
+- [x] 1.10 Create `IWebhookNormalizer` interface + `WebhookEventType` enum
+- [x] 1.11 Expand generic types in `payment/types.ts`
+- [x] 1.12 Modify `IConfigurationService` (remove Stripe methods, add generic)
+- [x] 1.13 Refactor `StripeService` → `StripeAdapter` implementing `IPaymentGateway`
+- [x] 1.14 Create `PaymentGatewayFactory` implementation
+- [x] 1.15 Update `billing.module.ts` (register factory, adapter, mapping repo)
+- [x] 1.16 Update `configuration.service.ts` (add `BILLING_SCOPE`, `getGatewayConfig()`)
 
 **Dependências:** Nenhuma (primeira feature)
 
@@ -281,22 +281,22 @@ Reference: `apps/admin/src/hooks/use-stripe.ts` (query pattern), `apps/admin/src
 **Objetivo:** Migrar BillingService para usar abstração — checkout e portal funcionam via mapping table e factory.
 
 **Critérios de Aceite:**
-- [ ] `BillingService` injeta `IPaymentGateway` via factory (não `IStripeService`)
-- [ ] Checkout busca `priceId` via `payment_provider_mappings` (não hardcoded)
-- [ ] Portal resolve `customerId` via mapping table
-- [ ] `BILLING_SCOPE=account` → customer ID mapeado ao Account
-- [ ] `BILLING_SCOPE=workspace` → customer ID mapeado ao Workspace
+- [x] `BillingService` injeta `IPaymentGateway` via factory (não `IStripeService`)
+- [x] Checkout busca `priceId` via `payment_provider_mappings` (não hardcoded)
+- [x] Portal resolve `customerId` via mapping table
+- [x] `BILLING_SCOPE=account` → customer ID mapeado ao Account
+- [x] `BILLING_SCOPE=workspace` → customer ID mapeado ao Workspace
 
 **Tasks:**
 
 #### Backend
-- [ ] 2.1 Modify `BillingService` — injetar factory, resolver gateway por provider
-- [ ] 2.2 Fix `priceId = 'price_xxx'` hardcoded — buscar via mapping table
-- [ ] 2.3 Modify checkout flow — resolver customerId via mapping (account ou workspace)
-- [ ] 2.4 Modify portal flow — resolver customerId via mapping
-- [ ] 2.5 Modify `PlanService` — usar mapping table em vez de `stripe_product_id`
-- [ ] 2.6 Modify `CreateCheckoutDto` — adicionar campo `provider?` opcional
-- [ ] 2.7 Modify events payload (SubscriptionCreated, Canceled) — provider + providerSubscriptionId
+- [x] 2.1 Modify `BillingService` — injetar factory, resolver gateway por provider
+- [x] 2.2 Fix `priceId = 'price_xxx'` hardcoded — buscar via mapping table
+- [x] 2.3 Modify checkout flow — resolver customerId via mapping (account ou workspace)
+- [x] 2.4 Modify portal flow — resolver customerId via mapping
+- [x] 2.5 Modify `PlanService` — usar mapping table em vez de `stripe_product_id`
+- [x] 2.6 Modify `CreateCheckoutDto` — adicionar campo `provider?` opcional
+- [x] 2.7 Modify events payload (SubscriptionCreated, Canceled) — provider + providerSubscriptionId
 
 **Dependências:** Feature 1 completa
 
@@ -307,26 +307,26 @@ Reference: `apps/admin/src/hooks/use-stripe.ts` (query pattern), `apps/admin/src
 **Objetivo:** Webhooks de qualquer gateway são normalizados para eventos internos. Falha de pagamento dispara notificação + suspensão.
 
 **Critérios de Aceite:**
-- [ ] Endpoint `/billing/webhook/:provider` funcional com verificação de assinatura
-- [ ] Stripe events mapeados para `WebhookEventType` enum
-- [ ] Processamento idempotente (reprocessar não duplica subscription)
-- [ ] Falha de pagamento gera notificação ao usuário
-- [ ] Suspensão após período configurável
-- [ ] TODOs do webhook handler completados
+- [x] Endpoint `/billing/webhook/:provider` funcional com verificação de assinatura
+- [x] Stripe events mapeados para `WebhookEventType` enum
+- [x] Processamento idempotente (reprocessar não duplica subscription)
+- [x] Falha de pagamento gera notificação ao usuário
+- [x] Suspensão após período configurável
+- [x] TODOs do webhook handler completados
 
 **Tasks:**
 
 #### Backend
-- [ ] 3.1 Create `WebhookNormalizerService` — Stripe events → WebhookEventType
-- [ ] 3.2 Create `ProcessWebhookCommand` + handler
-- [ ] 3.3 New endpoint `POST /billing/webhook/:provider` no controller
-- [ ] 3.4 Refactor `payment-webhook.worker.ts` (replaces stripe-webhook) — usar normalizer
-- [ ] 3.5 Complete TODOs no webhook handler (subscription creation, payment failure, etc.)
-- [ ] 3.6 Create `DunningService` — track failures, grace period, suspend
-- [ ] 3.7 Create `HandlePaymentFailedCommand` + `SuspendSubscriptionCommand`
-- [ ] 3.8 Create `PaymentFailedEvent`, `PaymentRecoveredEvent`
-- [ ] 3.9 Create `payment-dunning.worker.ts` — grace period checks
-- [ ] 3.10 Integrate with email worker — payment failure notification
+- [x] 3.1 Create `WebhookNormalizerService` — Stripe events → WebhookEventType
+- [x] 3.2 Create `ProcessWebhookCommand` + handler
+- [x] 3.3 New endpoint `POST /billing/webhook/:provider` no controller
+- [x] 3.4 Refactor `payment-webhook.worker.ts` (replaces stripe-webhook) — usar normalizer
+- [x] 3.5 Complete TODOs no webhook handler (subscription creation, payment failure, etc.)
+- [x] 3.6 Create `DunningService` — track failures, grace period, suspend
+- [x] 3.7 Create `HandlePaymentFailedCommand` + `SuspendSubscriptionCommand`
+- [x] 3.8 Create `PaymentFailedEvent`, `PaymentRecoveredEvent`
+- [x] 3.9 Create `payment-dunning.worker.ts` — grace period checks
+- [x] 3.10 Integrate with email worker — payment failure notification
 
 **Dependências:** Feature 1 completa (contracts, adapter)
 
@@ -337,32 +337,32 @@ Reference: `apps/admin/src/hooks/use-stripe.ts` (query pattern), `apps/admin/src
 **Objetivo:** Admin pode gerenciar gateways e linkar planos a qualquer provider ativo, com health check.
 
 **Critérios de Aceite:**
-- [ ] Admin pode listar produtos/preços de qualquer gateway
-- [ ] Admin pode linkar plano a produto de qualquer gateway (não só Stripe)
-- [ ] Health check valida credenciais ao integrar novo gateway
-- [ ] UI não tem referências a Stripe (genérica)
+- [x] Admin pode listar produtos/preços de qualquer gateway
+- [x] Admin pode linkar plano a produto de qualquer gateway (não só Stripe)
+- [x] Health check valida credenciais ao integrar novo gateway
+- [x] UI não tem referências a Stripe (genérica)
 
 **Tasks:**
 
 #### Backend
-- [ ] 4.1 Modify `manager.controller.ts` — `/stripe/*` → `/gateway/:provider/*`
-- [ ] 4.2 Modify `ManagerPlanService` — `linkStripePlan()` → `linkGatewayPlan()`
-- [ ] 4.3 Create `LinkGatewayPlanCommand` (replace LinkStripePlan)
-- [ ] 4.4 Create DTOs: `LinkGatewayDto`, `GatewayProductResponseDto`, `GatewayPriceResponseDto`, `GatewayHealthResponseDto`
-- [ ] 4.5 Add health check endpoint: `POST /manager/gateway/:provider/health`
-- [ ] 4.6 Create `GatewayLinkedEvent`
+- [x] 4.1 Modify `manager.controller.ts` — `/stripe/*` → `/gateway/:provider/*`
+- [x] 4.2 Modify `ManagerPlanService` — `linkStripePlan()` → `linkGatewayPlan()`
+- [x] 4.3 Create `LinkGatewayPlanCommand` (replace LinkStripePlan)
+- [x] 4.4 Create DTOs: `LinkGatewayDto`, `GatewayProductResponseDto`, `GatewayPriceResponseDto`, `GatewayHealthResponseDto`
+- [x] 4.5 Add health check endpoint: `POST /manager/gateway/:provider/health`
+- [x] 4.6 Create `GatewayLinkedEvent`
 
 #### Frontend (Admin)
-- [ ] 4.7 Create `use-gateways.ts` hook (products, prices, health, linkGateway)
-- [ ] 4.8 Create `LinkGatewayModal` component (select provider, browse products, link)
-- [ ] 4.9 Modify `PlansPage` — replace linkStripe handlers with linkGateway
-- [ ] 4.10 Modify `PlanCard` — show provider mappings, `onLinkGateway`
-- [ ] 4.11 Modify `PlanPriceForm` — remove `stripePriceId`
-- [ ] 4.12 Remove `use-stripe.ts` and `LinkStripeModal`
-- [ ] 4.13 Update admin types — GatewayProduct, GatewayPrice, etc.
+- [x] 4.7 Create `use-gateways.ts` hook (products, prices, health, linkGateway)
+- [x] 4.8 Create `LinkGatewayModal` component (select provider, browse products, link)
+- [x] 4.9 Modify `PlansPage` — replace linkStripe handlers with linkGateway
+- [x] 4.10 Modify `PlanCard` — show provider mappings, `onLinkGateway`
+- [x] 4.11 Modify `PlanPriceForm` — remove `stripePriceId`
+- [x] 4.12 Remove `use-stripe.ts` and `LinkStripeModal`
+- [x] 4.13 Update admin types — GatewayProduct, GatewayPrice, etc.
 
 #### Frontend (Web)
-- [ ] 4.14 Remove `PlanPrice.stripeId` from `types/index.ts`
+- [x] 4.14 Remove `PlanPrice.stripeId` from `types/index.ts`
 
 **Dependências:** Feature 2 completa (billing abstrato), Feature 3 parcialmente (webhook endpoint)
 

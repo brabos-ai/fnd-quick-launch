@@ -1,9 +1,10 @@
 import { Injectable, Inject, ConflictException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { Kysely } from 'kysely';
-import { Database } from '@fnd/database';
-import { Plan, PlanPrice } from '@fnd/domain';
-import { ILoggerService } from '@fnd/contracts';
+import { Database, IPaymentProviderMappingRepository } from '@fnd/database';
+import { Plan, PlanPrice, PaymentProvider } from '@fnd/domain';
+import { ILoggerService, IPaymentGatewayFactory } from '@fnd/contracts';
 import { PlanResponseDto, PlanPriceResponseDto, CreatePlanDto, UpdatePlanDto, CreatePlanPriceDto, UpdatePlanPriceDto } from './dtos';
+import { LinkPriceMappingInput } from './commands/LinkGatewayPlanCommand';
 
 /**
  * ManagerPlanService
@@ -16,6 +17,9 @@ export class ManagerPlanService {
   constructor(
     @Inject('DATABASE') private readonly db: Kysely<Database>,
     @Inject('ILoggerService') private readonly logger: ILoggerService,
+    @Inject('IPaymentGatewayFactory') private readonly gatewayFactory: IPaymentGatewayFactory,
+    @Inject('IPaymentProviderMappingRepository')
+    private readonly mappingRepo: IPaymentProviderMappingRepository,
   ) {}
 
   /**
@@ -202,6 +206,76 @@ export class ManagerPlanService {
       module: 'ManagerPlanService',
       planId: id,
       stripeProductId,
+    });
+  }
+
+  /**
+   * Link a gateway product to a plan using payment_provider_mappings table.
+   * Creates entries for the plan and each plan_price mapping provided.
+   */
+  async linkGatewayPlan(
+    planId: string,
+    provider: PaymentProvider,
+    providerProductId: string,
+    providerPriceIds: LinkPriceMappingInput[],
+  ): Promise<void> {
+    const plan = await this.db
+      .selectFrom('plans')
+      .select(['id'])
+      .where('id', '=', planId)
+      .executeTakeFirst();
+
+    if (!plan) {
+      throw new NotFoundException(`Plan not found: ${planId}`);
+    }
+
+    // Create or replace plan mapping
+    const existingPlanMapping = await this.mappingRepo.findByEntityAndProvider(
+      'plan',
+      planId,
+      provider,
+    );
+
+    if (existingPlanMapping) {
+      await this.mappingRepo.deactivateByEntity('plan', planId);
+    }
+
+    await this.mappingRepo.create({
+      entityType: 'plan',
+      entityId: planId,
+      provider,
+      providerId: providerProductId,
+      isActive: true,
+    });
+
+    // Create or replace plan_price mappings
+    for (const priceMapping of providerPriceIds) {
+      const existingPriceMapping = await this.mappingRepo.findByEntityAndProvider(
+        'plan_price',
+        priceMapping.planPriceId,
+        provider,
+      );
+
+      if (existingPriceMapping) {
+        await this.mappingRepo.deactivateByEntity('plan_price', priceMapping.planPriceId);
+      }
+
+      await this.mappingRepo.create({
+        entityType: 'plan_price',
+        entityId: priceMapping.planPriceId,
+        provider,
+        providerId: priceMapping.providerPriceId,
+        isActive: true,
+      });
+    }
+
+    this.logger.info('Gateway plan linked via service', {
+      operation: 'manager.link_gateway_plan',
+      module: 'ManagerPlanService',
+      planId,
+      provider,
+      providerProductId,
+      priceCount: providerPriceIds.length,
     });
   }
 

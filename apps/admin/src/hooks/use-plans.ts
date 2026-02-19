@@ -128,21 +128,3 @@ export function useCreatePlanPrice() {
   })
 }
 
-export function useLinkStripe() {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: async ({ planId, stripeProductId }: { planId: string; stripeProductId: string }) => {
-      await api.post(`/manager/plans/${planId}/link-stripe`, { stripeProductId })
-    },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['manager', 'plans'] })
-      queryClient.invalidateQueries({ queryKey: ['manager', 'plans', variables.planId] })
-      toast.success('Stripe vinculado com sucesso!')
-    },
-    onError: (error: AxiosErrorWithResponse) => {
-      const message = error.response?.data?.message || error.message || 'Erro ao vincular Stripe'
-      toast.error(message)
-    },
-  })
-}

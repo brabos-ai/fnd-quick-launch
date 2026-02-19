@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Param, UseGuards, Req, RawBodyRequest, Headers, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Req, RawBodyRequest, Headers, HttpCode, HttpStatus, NotFoundException, BadRequestException } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { BillingService } from './billing.service';
-import { StripeWebhookService } from './stripe-webhook.service';
+import { PaymentProvider } from '@fnd/domain';
+import { ProcessWebhookCommand } from './commands/ProcessWebhookCommand';
 import {
   CreateCheckoutDto,
   CreatePortalDto,
@@ -13,7 +15,7 @@ import {
 export class BillingController {
   constructor(
     private readonly billingService: BillingService,
-    private readonly webhookService: StripeWebhookService,
+    private readonly commandBus: CommandBus,
   ) {}
 
   @Post('checkout')
@@ -53,19 +55,39 @@ export class BillingController {
     return this.billingService.getAvailablePlans();
   }
 
-  @Post('webhook')
+  @Post('webhook/:provider')
+  @HttpCode(HttpStatus.OK)
   async handleWebhook(
+    @Param('provider') provider: string,
     @Req() req: RawBodyRequest<Request>,
-    @Headers('stripe-signature') signature: string,
+    @Headers() headers: Record<string, string>,
   ): Promise<{ received: boolean }> {
-    const payload = req.rawBody;
-
-    if (!payload) {
-      throw new Error('Missing raw body');
+    // Validate provider
+    const validProviders = Object.values(PaymentProvider);
+    const normalizedProvider = provider.toUpperCase() as PaymentProvider;
+    if (!validProviders.includes(normalizedProvider)) {
+      throw new NotFoundException(`Unknown payment provider: ${provider}`);
     }
 
-    await this.webhookService.handleWebhook(payload, signature);
+    const payload = req.rawBody;
+    if (!payload) {
+      throw new BadRequestException('Missing raw body');
+    }
 
-    return { received: true };
+    // Extract signature based on provider
+    const signature = this.extractWebhookSignature(normalizedProvider, headers);
+
+    return this.commandBus.execute(
+      new ProcessWebhookCommand(normalizedProvider, payload, signature),
+    );
+  }
+
+  private extractWebhookSignature(provider: PaymentProvider, headers: Record<string, string>): string {
+    switch (provider) {
+      case PaymentProvider.STRIPE:
+        return headers['stripe-signature'] || '';
+      default:
+        return headers['x-webhook-signature'] || headers['x-signature'] || '';
+    }
   }
 }

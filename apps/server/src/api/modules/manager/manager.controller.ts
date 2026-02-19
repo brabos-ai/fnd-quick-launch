@@ -19,7 +19,8 @@ import { SuperAdminGuard } from '../../guards/super-admin.guard';
 import { ManagerService } from './manager.service';
 import { ManagerPlanService } from './manager-plan.service';
 import { ManagerSubscriptionService } from './manager-subscription.service';
-import { StripeService } from '../billing/stripe.service';
+import { IPaymentGatewayFactory } from '@fnd/contracts';
+import { PaymentProvider } from '@fnd/domain';
 import {
   ListUsersDto,
   UpdateUserStatusDto,
@@ -38,7 +39,7 @@ import {
   AtRiskMetricsDto,
   CreatePlanDto,
   UpdatePlanDto,
-  LinkStripeDto,
+  LinkGatewayDto,
   CreatePlanPriceDto,
   UpdatePlanPriceDto,
   PlanResponseDto,
@@ -49,7 +50,9 @@ import {
   ManualCancelDto,
   ListSubscriptionsDto,
   SubscriptionResponseDto,
-  StripeProductDto,
+  GatewayProductResponseDto,
+  GatewayPriceResponseDto,
+  GatewayHealthResponseDto,
   SearchAccountsDto,
   AccountSearchItemDto,
   ToggleRlsDto,
@@ -64,7 +67,7 @@ import {
   UpdatePlanCommand,
   ActivatePlanCommand,
   DeactivatePlanCommand,
-  LinkStripePlanCommand,
+  LinkGatewayPlanCommand,
   ExtendAccessCommand,
   GrantTrialCommand,
   ManualUpgradeCommand,
@@ -84,7 +87,7 @@ export class ManagerController {
     private readonly managerService: ManagerService,
     private readonly planService: ManagerPlanService,
     private readonly subscriptionService: ManagerSubscriptionService,
-    private readonly stripeService: StripeService,
+    @Inject('IPaymentGatewayFactory') private readonly gatewayFactory: IPaymentGatewayFactory,
     private readonly commandBus: CommandBus,
     @Inject('IRlsManager') private readonly rlsManager: RlsManager,
   ) {}
@@ -282,7 +285,7 @@ export class ManagerController {
 
   /**
    * PATCH /api/v1/manager/plans/:id/activate
-   * Activate plan (validates Stripe ID exists)
+   * Activate plan
    */
   @Patch('plans/:id/activate')
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -327,17 +330,25 @@ export class ManagerController {
   }
 
   /**
-   * POST /api/v1/manager/plans/:id/link-stripe
-   * Link Stripe product to plan
+   * POST /api/v1/manager/plans/:id/link-gateway
+   * Link a payment gateway product to a plan (provider-agnostic)
    */
-  @Post('plans/:id/link-stripe')
+  @Post('plans/:id/link-gateway')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async linkStripePlan(
+  async linkGatewayPlan(
     @Param('id') id: string,
-    @Body() dto: LinkStripeDto,
+    @Body() dto: LinkGatewayDto,
     @Request() req: any,
   ): Promise<void> {
-    await this.commandBus.execute(new LinkStripePlanCommand(id, dto.stripeProductId, req.user.id));
+    await this.commandBus.execute(
+      new LinkGatewayPlanCommand(
+        id,
+        dto.provider,
+        dto.providerProductId,
+        dto.providerPriceIds ?? [],
+        req.user.id,
+      ),
+    );
   }
 
   // ========================================
@@ -420,51 +431,64 @@ export class ManagerController {
   }
 
   // ========================================
-  // Stripe Integration
+  // Gateway Integration (multi-provider)
   // ========================================
 
   /**
-   * GET /api/v1/manager/stripe/products
-   * List Stripe products
+   * GET /api/v1/manager/gateway/:provider/products
+   * List products from the specified payment gateway
    */
-  @Get('stripe/products')
-  async listStripeProducts(): Promise<StripeProductDto[]> {
-    const products = await this.stripeService.listProducts();
-
-    return Promise.all(
-      products.map(async (product: any) => {
-        const prices = await this.stripeService.listPrices(product.id);
-        return {
-          id: product.id,
-          name: product.name,
-          description: product.description,
-          active: product.active,
-          prices: prices.map((price: any) => ({
-            id: price.id,
-            currency: price.currency,
-            unitAmount: price.unit_amount,
-            recurring: price.recurring,
-            active: price.active,
-          })),
-        };
-      }),
-    );
+  @Get('gateway/:provider/products')
+  async listGatewayProducts(
+    @Param('provider') provider: PaymentProvider,
+  ): Promise<GatewayProductResponseDto[]> {
+    const gateway = this.gatewayFactory.create(provider);
+    const products = await gateway.listProducts();
+    return products.map((product) => ({
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      active: product.active,
+    }));
   }
 
   /**
-   * GET /api/v1/manager/stripe/products/:id/prices
-   * List prices for a Stripe product
+   * GET /api/v1/manager/gateway/:provider/products/:id/prices
+   * List prices for a product in the specified payment gateway
    */
-  @Get('stripe/products/:id/prices')
-  async listStripePrices(@Param('id') productId: string): Promise<any[]> {
-    const prices = await this.stripeService.listPrices(productId);
-    return prices.map((price: any) => ({
+  @Get('gateway/:provider/products/:id/prices')
+  async listGatewayPrices(
+    @Param('provider') provider: PaymentProvider,
+    @Param('id') productId: string,
+  ): Promise<GatewayPriceResponseDto[]> {
+    const gateway = this.gatewayFactory.create(provider);
+    const prices = await gateway.listPrices(productId);
+    return prices.map((price) => ({
       id: price.id,
-      productId,
-      amount: price.unit_amount,
       currency: price.currency,
-      interval: price.recurring?.interval || 'month',
+      unitAmount: price.unitAmount,
+      interval: price.interval,
+      active: price.active,
     }));
+  }
+
+  /**
+   * POST /api/v1/manager/gateway/:provider/health
+   * Validate gateway credentials and connectivity
+   */
+  @Post('gateway/:provider/health')
+  @HttpCode(HttpStatus.OK)
+  async checkGatewayHealth(
+    @Param('provider') provider: PaymentProvider,
+  ): Promise<GatewayHealthResponseDto> {
+    const gateway = this.gatewayFactory.create(provider);
+    const result = await gateway.healthCheck();
+    return {
+      provider,
+      healthy: result.healthy,
+      latencyMs: result.latencyMs,
+      message: result.message,
+    };
   }
 
   // ========================================

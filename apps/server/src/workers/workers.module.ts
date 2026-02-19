@@ -1,29 +1,19 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
+import { CqrsModule } from '@nestjs/cqrs';
 import { SharedModule } from '../shared/shared.module';
 import { IConfigurationService } from '@fnd/contracts';
 import { EmailWorker } from './email.worker';
 import { AuditWorker } from './audit.worker';
-import { StripeWebhookWorker } from './stripe-webhook.worker';
+import { PaymentWebhookWorker } from './payment-webhook.worker';
+import { PaymentDunningWorker } from './payment-dunning.worker';
+import { BillingModule } from '../api/modules/billing/billing.module';
 
-/**
- * Workers Module
- * Groups all BullMQ workers for background job processing
- *
- * Workers:
- * - EmailWorker: Processes email sending jobs
- * - AuditWorker: Processes audit log persistence jobs
- * - StripeWebhookWorker: Processes Stripe webhook events
- *
- * @remarks
- * - Imports SharedModule to access repositories and services
- * - Configures BullModule.forRootAsync with Redis connection via IConfigurationService
- * - Workers are only initialized when NODE_MODE includes 'workers' or 'hybrid'
- */
 @Module({
   imports: [
     SharedModule,
-    // Configure BullMQ with Redis connection from IConfigurationService
+    CqrsModule,
+    BillingModule,
     BullModule.forRootAsync({
       imports: [SharedModule],
       inject: ['IConfigurationService'],
@@ -35,27 +25,29 @@ import { StripeWebhookWorker } from './stripe-webhook.worker';
             port: parseInt(redisUrl.port || '6379', 10),
             password: redisUrl.password || undefined,
             username: redisUrl.username || undefined,
-            maxRetriesPerRequest: null, // Required for BullMQ
+            maxRetriesPerRequest: null,
           },
         };
       },
     }),
-    // Register queues (connection inherited from forRoot)
     BullModule.registerQueue(
       { name: 'email' },
       { name: 'audit' },
-      { name: 'stripe-webhook' },
+      { name: 'payment-webhook' },
+      { name: 'payment-dunning' },
     ),
   ],
   providers: [
     EmailWorker,
     AuditWorker,
-    StripeWebhookWorker,
+    PaymentWebhookWorker,
+    PaymentDunningWorker,
   ],
   exports: [
     EmailWorker,
     AuditWorker,
-    StripeWebhookWorker,
+    PaymentWebhookWorker,
+    PaymentDunningWorker,
   ],
 })
 export class WorkersModule {}
