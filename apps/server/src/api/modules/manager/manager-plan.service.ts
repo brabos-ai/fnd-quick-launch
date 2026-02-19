@@ -76,7 +76,6 @@ export class ManagerPlanService {
         description: dto.description || null,
         features: dto.features as any,
         is_active: false,
-        stripe_product_id: null,
         created_at: now,
         updated_at: now,
       })
@@ -139,9 +138,8 @@ export class ManagerPlanService {
       throw new NotFoundException(`Plan not found: ${id}`);
     }
 
-    if (!plan.stripe_product_id) {
-      throw new BadRequestException('Cannot activate plan without Stripe product ID. Link a Stripe product first.');
-    }
+    // TODO (F0004 Feature 4): Check payment_provider_mappings for at least one active gateway link
+    // For now, allow activation without gateway mapping
 
     await this.db
       .updateTable('plans')
@@ -185,6 +183,7 @@ export class ManagerPlanService {
 
   /**
    * Link Stripe product to plan
+   * @deprecated Use linkGatewayPlan (F0004 Feature 4) - kept for backward compatibility during migration
    */
   async linkStripePlan(id: string, stripeProductId: string): Promise<void> {
     const plan = await this.db
@@ -197,13 +196,8 @@ export class ManagerPlanService {
       throw new NotFoundException(`Plan not found: ${id}`);
     }
 
-    await this.db
-      .updateTable('plans')
-      .set({ stripe_product_id: stripeProductId, updated_at: new Date() })
-      .where('id', '=', id)
-      .execute();
-
-    this.logger.info('Stripe product linked to plan', {
+    // TODO (F0004 Feature 4): Replace with payment_provider_mappings insert
+    this.logger.info('Stripe product link requested (deprecated - use linkGatewayPlan)', {
       operation: 'manager.link_stripe_plan',
       module: 'ManagerPlanService',
       planId: id,
@@ -234,7 +228,6 @@ export class ManagerPlanService {
         amount: dto.amount,
         currency: dto.currency,
         interval: dto.interval,
-        stripe_price_id: dto.stripePriceId || null,
         is_current: false,
         created_at: now,
       })
@@ -315,7 +308,6 @@ export class ManagerPlanService {
       description: plan.description,
       features: plan.features,
       isActive: plan.is_active,
-      stripeProductId: plan.stripe_product_id,
       prices: prices.map(this.mapPlanPriceToDto),
       createdAt: new Date(plan.created_at),
       updatedAt: new Date(plan.updated_at),
@@ -332,9 +324,7 @@ export class ManagerPlanService {
       amount: price.amount,
       currency: price.currency,
       interval: price.interval,
-      stripePriceId: price.stripe_price_id,
       isCurrent: price.is_current,
-      provider: 'stripe',
       createdAt: new Date(price.created_at),
       updatedAt: new Date(price.created_at), // plan_prices doesn't have updated_at
     };

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { IConfigurationService, IFeatureFlags } from '@fnd/contracts';
+import { IConfigurationService, IFeatureFlags, GatewayConfig } from '@fnd/contracts';
+import { PaymentProvider } from '@fnd/domain';
 
 @Injectable()
 export class ConfigurationService implements IConfigurationService {
@@ -9,7 +10,6 @@ export class ConfigurationService implements IConfigurationService {
   getFrontendUrl(): string {
     return this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3000';
   }
-
 
   getResendApiKey(): string {
     const apiKey = this.configService.get<string>('RESEND_API_KEY');
@@ -66,29 +66,51 @@ export class ConfigurationService implements IConfigurationService {
     return secret;
   }
 
-  // Stripe configuration methods
-  getStripeSecretKey(): string {
-    const key = this.configService.get<string>('STRIPE_SECRET_KEY');
-    if (!key) {
-      throw new Error('STRIPE_SECRET_KEY is required for billing functionality');
+  // Gateway-agnostic payment configuration
+  getGatewayConfig(provider: PaymentProvider): GatewayConfig {
+    const prefix = provider.toUpperCase();
+
+    const secretKey = this.configService.get<string>(`${prefix}_SECRET_KEY`);
+    if (!secretKey) {
+      throw new Error(`${prefix}_SECRET_KEY is required for ${provider} billing functionality`);
     }
-    return key;
-  }
 
-  getStripeWebhookSecret(): string {
-    const secret = this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
-    if (!secret) {
-      throw new Error('STRIPE_WEBHOOK_SECRET is required for webhook verification');
+    const webhookSecret = this.configService.get<string>(`${prefix}_WEBHOOK_SECRET`);
+    if (!webhookSecret) {
+      throw new Error(`${prefix}_WEBHOOK_SECRET is required for ${provider} webhook verification`);
     }
-    return secret;
+
+    return {
+      provider,
+      secretKey,
+      publicKey: this.configService.get<string>(`${prefix}_PUBLIC_KEY`),
+      webhookSecret,
+    };
   }
 
-  getStripeSuccessUrl(): string {
-    return this.configService.get<string>('STRIPE_SUCCESS_URL') || `${this.getFrontendUrl()}/settings/billing?success=true`;
+  getGatewayWebhookSecret(provider: PaymentProvider): string {
+    const config = this.getGatewayConfig(provider);
+    return config.webhookSecret;
   }
 
-  getStripeCancelUrl(): string {
-    return this.configService.get<string>('STRIPE_CANCEL_URL') || `${this.getFrontendUrl()}/settings/billing?canceled=true`;
+  getCheckoutSuccessUrl(): string {
+    return this.configService.get<string>('CHECKOUT_SUCCESS_URL')
+      || this.configService.get<string>('STRIPE_SUCCESS_URL')
+      || `${this.getFrontendUrl()}/settings/billing?success=true`;
+  }
+
+  getCheckoutCancelUrl(): string {
+    return this.configService.get<string>('CHECKOUT_CANCEL_URL')
+      || this.configService.get<string>('STRIPE_CANCEL_URL')
+      || `${this.getFrontendUrl()}/settings/billing?canceled=true`;
+  }
+
+  getBillingScope(): 'account' | 'workspace' {
+    const scope = this.configService.get<string>('BILLING_SCOPE') || 'account';
+    if (scope !== 'account' && scope !== 'workspace') {
+      throw new Error('BILLING_SCOPE must be one of: account, workspace');
+    }
+    return scope as 'account' | 'workspace';
   }
 
   // Redis configuration methods

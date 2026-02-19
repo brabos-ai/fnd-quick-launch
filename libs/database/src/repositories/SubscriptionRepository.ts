@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Kysely } from 'kysely';
 import { Subscription } from '@fnd/domain';
-import { Database, SubscriptionTable } from '../types';
+import { Database } from '../types';
 import { ISubscriptionRepository } from '../interfaces';
 
 @Injectable()
@@ -39,16 +39,6 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     return results.map(this.mapToEntity);
   }
 
-  async findByStripeSubscriptionId(stripeSubscriptionId: string): Promise<Subscription | null> {
-    const result = await this.db
-      .selectFrom('subscriptions')
-      .selectAll()
-      .where('stripe_subscription_id', '=', stripeSubscriptionId)
-      .executeTakeFirst();
-
-    return result ? this.mapToEntity(result) : null;
-  }
-
   async findActiveByWorkspaceId(workspaceId: string): Promise<Subscription | null> {
     const result = await this.db
       .selectFrom('subscriptions')
@@ -68,8 +58,6 @@ export class SubscriptionRepository implements ISubscriptionRepository {
         account_id: data.accountId,
         workspace_id: data.workspaceId,
         plan_price_id: data.planPriceId,
-        stripe_subscription_id: data.stripeSubscriptionId,
-        stripe_customer_id: data.stripeCustomerId,
         status: data.status,
         current_period_end: data.currentPeriodEnd,
         canceled_at: data.canceledAt,
@@ -116,8 +104,6 @@ export class SubscriptionRepository implements ISubscriptionRepository {
       accountId: row.account_id,
       workspaceId: row.workspace_id,
       planPriceId: row.plan_price_id,
-      stripeSubscriptionId: row.stripe_subscription_id,
-      stripeCustomerId: row.stripe_customer_id,
       status: row.status,
       currentPeriodEnd: row.current_period_end ? new Date(row.current_period_end) : null,
       canceledAt: row.canceled_at ? new Date(row.canceled_at) : null,

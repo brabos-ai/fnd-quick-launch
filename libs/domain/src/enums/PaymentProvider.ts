@@ -1,6 +1,7 @@
 export enum PaymentProvider {
-  STRIPE = 'STRIPE',
-  MERCADOPAGO = 'MERCADOPAGO',
-  PAGSEGURO = 'PAGSEGURO',
-  ASAAS = 'ASAAS',
+  STRIPE = 'stripe',
+  MERCADOPAGO = 'mercadopago',
+  PAGSEGURO = 'pagseguro',
+  ASAAS = 'asaas',
+  PAGARME = 'pagarme',
 }

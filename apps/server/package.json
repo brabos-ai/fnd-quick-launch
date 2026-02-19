@@ -7,7 +7,8 @@
     "build": "tsc --build",
     "clean": "rimraf dist tsconfig.tsbuildinfo",
     "dev": "nodemon",
-    "start": "node dist/local.js"
+    "start": "node dist/local.js",
+    "start:test": "ts-node -r tsconfig-paths/register scripts/bootstrap-check.ts"
   },
   "dependencies": {
     "@fnd/domain": "*",

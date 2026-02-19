@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards, Req, RawBodyRequest, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Req, RawBodyRequest, Headers, HttpCode, HttpStatus } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { BillingService } from './billing.service';
 import { StripeWebhookService } from './stripe-webhook.service';
@@ -17,6 +17,7 @@ export class BillingController {
   ) {}
 
   @Post('checkout')
+  @HttpCode(HttpStatus.CREATED)
   @UseGuards(JwtAuthGuard)
   async createCheckoutSession(
     @Body() dto: CreateCheckoutDto,
@@ -27,6 +28,7 @@ export class BillingController {
   }
 
   @Post('portal')
+  @HttpCode(HttpStatus.CREATED)
   @UseGuards(JwtAuthGuard)
   async createPortalSession(
     @Body() dto: CreatePortalDto,

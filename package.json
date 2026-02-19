@@ -47,7 +47,8 @@
     "infra:up": "docker compose -f infra/docker-compose.yml up -d",
     "infra:down": "docker compose -f infra/docker-compose.yml down",
     "release": "bash scripts/release.sh",
-    "build:docker": "bash scripts/build-docker.sh"
+    "build:docker": "bash scripts/build-docker.sh",
+    "stripe": "stripe listen --forward-to http://localhost:3001/api/v1/billing/webhooks/stripe"
   },
   "devDependencies": {
     "@orangeopensource/hurl": "^7.1.0",

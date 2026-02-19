@@ -10,7 +10,8 @@ export class SubscriptionCreatedEvent implements IDomainEvent {
       workspaceId: string;
       accountId: string;
       planCode: string;
-      stripeSubscriptionId: string;
+      provider: string;
+      providerSubscriptionId: string;
       status: string;
     },
     public readonly occurredAt: Date = new Date(),

@@ -3,8 +3,6 @@ export interface Subscription {
   accountId: string | null;
   workspaceId: string | null;
   planPriceId: string;
-  stripeSubscriptionId: string;
-  stripeCustomerId: string;
   status: string;
   currentPeriodEnd: Date | null;
   canceledAt: Date | null;

@@ -6,9 +6,8 @@ export class PlanPriceResponseDto {
   amount!: number;
   currency!: string;
   interval!: string;
-  stripePriceId?: string | null;
   isCurrent!: boolean;
-  provider!: string;
+  provider?: string | null;
   createdAt!: Date;
   updatedAt!: Date;
 }
@@ -20,7 +19,6 @@ export class PlanResponseDto {
   description?: string | null;
   features!: PlanFeatures;
   isActive!: boolean;
-  stripeProductId?: string | null;
   prices!: PlanPriceResponseDto[];
   createdAt!: Date;
   updatedAt!: Date;
