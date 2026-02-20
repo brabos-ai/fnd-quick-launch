@@ -1,4 +1,5 @@
-import { IsString, IsUUID, IsNotEmpty } from 'class-validator';
+import { IsString, IsUUID, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
+import { PaymentProvider } from '@fnd/domain';
 
 export class CreateCheckoutDto {
   @IsUUID()
@@ -8,4 +9,8 @@ export class CreateCheckoutDto {
   @IsString()
   @IsNotEmpty()
   planCode!: string;
+
+  @IsOptional()
+  @IsEnum(PaymentProvider)
+  provider?: PaymentProvider;
 }

@@ -7,7 +7,8 @@
     "build": "tsc --build",
     "clean": "rimraf dist tsconfig.tsbuildinfo",
     "dev": "nodemon",
-    "start": "node dist/local.js"
+    "start": "node dist/local.js",
+    "start:test": "ts-node -r tsconfig-paths/register scripts/bootstrap-check.ts"
   },
   "dependencies": {
     "@fnd/domain": "*",
@@ -26,7 +27,7 @@
     "class-validator": "^0.14.2",
     "ioredis": "^5.3.0",
     "reflect-metadata": "^0.1.13",
-    "resend": "^2.0.0",
+    "resend": "^5.0.0",
     "rxjs": "^7.8.0",
     "stripe": "^17.7.0",
     "winston": "^3.10.0",

@@ -17,7 +17,7 @@ interface PlanCardProps {
   onActivate: () => void
   onDeactivate: () => void
   onAddPrice: () => void
-  onLinkStripe: () => void
+  onLinkGateway: () => void
 }
 
 export function PlanCard({
@@ -26,7 +26,7 @@ export function PlanCard({
   onActivate,
   onDeactivate,
   onAddPrice,
-  onLinkStripe,
+  onLinkGateway,
 }: PlanCardProps) {
   const displayBadge = plan.features.display.badge
   const badgeVariants = {
@@ -35,12 +35,14 @@ export function PlanCard({
     'best-value': { label: 'Melhor Custo', variant: 'default' as const },
   }
 
+  const activeMappings = plan.providerMappings?.filter((m) => m.isActive) ?? []
+
   return (
     <Card className={plan.features.display.highlighted ? 'border-primary' : ''}>
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <CardTitle>{plan.name}</CardTitle>
               {displayBadge && badgeVariants[displayBadge] && (
                 <Badge variant={badgeVariants[displayBadge].variant}>
@@ -53,8 +55,19 @@ export function PlanCard({
             </div>
             <CardDescription className="mt-1">{plan.description}</CardDescription>
             <div className="mt-2 text-sm text-muted-foreground">
-              Código: <span className="font-mono">{plan.code}</span>
+              Codigo: <span className="font-mono">{plan.code}</span>
             </div>
+
+            {/* Provider mapping badges */}
+            {activeMappings.length > 0 && (
+              <div className="mt-2 flex items-center gap-1 flex-wrap">
+                {activeMappings.map((mapping) => (
+                  <Badge key={mapping.provider} variant="outline" className="text-xs">
+                    {mapping.provider} ✓
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
 
           <DropdownMenu>
@@ -70,11 +83,11 @@ export function PlanCard({
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onAddPrice}>
                 <DollarSign className="mr-2 h-4 w-4" />
-                Adicionar Preço
+                Adicionar Preco
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={onLinkStripe}>
+              <DropdownMenuItem onClick={onLinkGateway}>
                 <Link className="mr-2 h-4 w-4" />
-                Vincular Stripe
+                Vincular Gateway
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {plan.isActive ? (
@@ -102,7 +115,7 @@ export function PlanCard({
               {plan.features.limits.workspaces === -1 ? 'Ilimitado' : plan.features.limits.workspaces}
             </div>
             <div>
-              <span className="text-muted-foreground">Usuários:</span>{' '}
+              <span className="text-muted-foreground">Usuarios:</span>{' '}
               {plan.features.limits.usersPerWorkspace === -1
                 ? 'Ilimitado'
                 : plan.features.limits.usersPerWorkspace}
@@ -127,7 +140,7 @@ export function PlanCard({
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold mb-2">Preços ({plan.prices.length})</h4>
+          <h4 className="text-sm font-semibold mb-2">Precos ({plan.prices.length})</h4>
           {plan.prices.length > 0 ? (
             <div className="space-y-1 text-sm">
               {plan.prices.map((price) => (
@@ -143,15 +156,9 @@ export function PlanCard({
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">Nenhum preço cadastrado</p>
+            <p className="text-sm text-muted-foreground">Nenhum preco cadastrado</p>
           )}
         </div>
-
-        {plan.stripeProductId && (
-          <div className="text-xs text-muted-foreground">
-            Stripe Product: <span className="font-mono">{plan.stripeProductId}</span>
-          </div>
-        )}
       </CardContent>
     </Card>
   )

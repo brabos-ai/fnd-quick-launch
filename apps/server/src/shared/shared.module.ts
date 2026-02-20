@@ -22,6 +22,7 @@ import {
   ISubscriptionRepository,
   IWebhookEventRepository,
   IInviteRepository,
+  IPaymentProviderMappingRepository,
   UserRepository,
   AccountRepository,
   WorkspaceRepository,
@@ -36,6 +37,7 @@ import {
   ImpersonateSessionRepository,
   InviteRepository,
   EmailChangeRequestRepository,
+  PaymentProviderMappingRepository,
   createDatabase,
   RlsManager,
 } from '@fnd/database';
@@ -68,6 +70,7 @@ const AUTH_TOKEN_REPOSITORY_TOKEN = 'IAuthTokenRepository';
 const IMPERSONATE_SESSION_REPOSITORY_TOKEN = 'IImpersonateSessionRepository';
 const INVITE_REPOSITORY_TOKEN = 'IInviteRepository';
 const EMAIL_CHANGE_REQUEST_REPOSITORY_TOKEN = 'IEmailChangeRequestRepository';
+const PAYMENT_PROVIDER_MAPPING_REPOSITORY_TOKEN = 'IPaymentProviderMappingRepository';
 const EMAIL_QUEUE_SERVICE_TOKEN = 'IEmailQueueService';
 const EVENT_BROKER_TOKEN = 'IEventBroker';
 const CONFIGURATION_SERVICE_TOKEN = 'IConfigurationService';
@@ -173,6 +176,11 @@ const RLS_MANAGER_TOKEN = 'IRlsManager';
       inject: [DATABASE_TOKEN],
     },
     {
+      provide: PAYMENT_PROVIDER_MAPPING_REPOSITORY_TOKEN,
+      useFactory: (db) => new PaymentProviderMappingRepository(db),
+      inject: [DATABASE_TOKEN],
+    },
+    {
       provide: EMAIL_QUEUE_SERVICE_TOKEN,
       useClass: EmailQueueService,
     },
@@ -230,6 +238,7 @@ const RLS_MANAGER_TOKEN = 'IRlsManager';
     IMPERSONATE_SESSION_REPOSITORY_TOKEN,
     INVITE_REPOSITORY_TOKEN,
     EMAIL_CHANGE_REQUEST_REPOSITORY_TOKEN,
+    PAYMENT_PROVIDER_MAPPING_REPOSITORY_TOKEN,
     EMAIL_QUEUE_SERVICE_TOKEN,
     EVENT_BROKER_TOKEN,
     CONFIGURATION_SERVICE_TOKEN,

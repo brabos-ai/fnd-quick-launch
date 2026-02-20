@@ -9,6 +9,66 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Added
 
+#### [2026-02-19] F0004-gateway-agnostic-payments
+
+**Resumo:** Abstração completa de gateway de pagamento com padrão Adapter e Factory. Sistema desacoplado do Stripe via `IPaymentGateway` interface e tabela polimórfica `payment_provider_mappings`. Suporte a múltiplos gateways simultâneos com billing scope configurável (account/workspace).
+
+**Principais Entregas:**
+
+| Componente | Descrição |
+|------------|-----------|
+| **BillingService** | Checkout e portal agnósticos com injeção de gateway via factory |
+| **StripeAdapter** | Implementação completa de IPaymentGateway para Stripe |
+| **PaymentGatewayFactory** | Factory resolvendo adapters por PaymentProvider enum |
+| **WebhookNormalizerService** | Normalização de eventos de providers para WebhookEventType |
+| **PaymentWebhookWorker** | Processamento assíncrono idempotente com BullMQ |
+| **DunningService** | Tratamento de falhas de pagamento com notificação e suspensão |
+| **ManagerController** | Endpoints admin para health check e vinculação de produtos |
+| **LinkGatewayModal** | Wizard 3 etapas para vincular planos a produtos de gateway |
+| **PaymentProviderMappingRepository** | Repository para mapeamentos polimórficos entity-provider |
+| **CQRS Handlers** | ProcessWebhook, HandlePaymentFailed, SuspendSubscription |
+
+**Estatísticas:**
+- Business: 15 (services, adapters, controllers, workers, handlers)
+- Frontend: 6 (pages, components, hooks)
+- Database: 3 (migrations, repositories, entities)
+- Contracts: 4 (interfaces, types)
+- Total: 87 arquivos
+
+**Requisitos Implementados:** ✅ 12/12 (RF01-RF12)
+- ✅ Gateway factory com resolução dinâmica
+- ✅ Tabela payment_provider_mappings polimórfica
+- ✅ Webhooks por provider com verificação de assinatura
+- ✅ Normalização de eventos para tipos internos
+- ✅ BILLING_SCOPE configurável (account/workspace)
+- ✅ Customer ID separado por workspace (BILLING_SCOPE=workspace)
+- ✅ Customer ID compartilhado por account (BILLING_SCOPE=account)
+- ✅ Admin UI para integrar novos gateways
+- ✅ Link de planos a produtos de qualquer gateway
+- ✅ Processamento de falha de pagamento (dunning)
+- ✅ Checkout com priceId via mapeamento (não hardcoded)
+- ✅ Múltiplos gateways simultâneos
+
+**Critérios de Aceite:** ✅ 14/14
+- [x] BillingService injeta IPaymentGateway
+- [x] PaymentGatewayFactory resolve adapter por provider
+- [x] StripeAdapter implementa IPaymentGateway completo
+- [x] Tabela payment_provider_mappings criada
+- [x] Webhooks normalizados para WebhookEventType
+- [x] Endpoint /billing/webhook/{provider} funcional
+- [x] BILLING_SCOPE account/workspace funcionando
+- [x] Admin UI permite linkar planos a qualquer gateway
+- [x] Health check valida credenciais
+- [x] Checkout usa priceId do mapping table
+- [x] Falha de pagamento gera notificação
+- [x] PaymentProvider enum inclui PAGARME
+- [x] Novo adapter não requer mudança em BillingService
+- [x] 87 arquivos compilando sem erro
+
+---
+
+### Added
+
 #### [2026-01-29] F0003-auth-audit-logging
 
 **Resumo:** Implementação completa de auditoria para eventos de autenticação. Os handlers de auth agora publicam eventos de auditoria na fila BullMQ, seguindo padrão existente. Adicionada conta "system" para eventos sem contexto de usuário. Todos os 8 requisitos funcionais implementados.

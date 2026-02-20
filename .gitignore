@@ -166,4 +166,8 @@ docs/
 .vscode/
 .fnd/
 .claude/
+.kilocode/
+.agent/
+.agents/
+.opencode/
 tmpclaude*

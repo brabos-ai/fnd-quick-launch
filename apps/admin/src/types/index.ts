@@ -250,9 +250,14 @@ export interface PlanPrice {
   amount: number
   currency: string
   interval: 'monthly' | 'yearly'
-  stripePriceId?: string | null
   isCurrent: boolean
   createdAt: string
+}
+
+export interface ProviderMapping {
+  provider: PaymentProvider
+  providerId: string
+  isActive: boolean
 }
 
 export interface ManagerPlan {
@@ -262,7 +267,7 @@ export interface ManagerPlan {
   description: string
   features: PlanFeatures
   isActive: boolean
-  stripeProductId?: string | null
+  providerMappings?: ProviderMapping[]
   prices: PlanPrice[]
   createdAt: string
   updatedAt: string
@@ -285,18 +290,35 @@ export interface ManagerSubscription {
   }
 }
 
-export interface StripeProduct {
+// Gateway types (multi-provider)
+export type PaymentProvider = 'stripe' | 'mercadopago' | 'pagseguro' | 'asaas' | 'pagarme'
+
+export interface GatewayProduct {
   id: string
   name: string
   description?: string | null
+  active: boolean
 }
 
-export interface StripePrice {
+export interface GatewayPrice {
   id: string
-  productId: string
-  amount: number
   currency: string
-  interval: 'month' | 'year'
+  unitAmount: number
+  interval: string
+  active: boolean
+}
+
+export interface GatewayHealthResult {
+  provider: string
+  healthy: boolean
+  latencyMs: number
+  message?: string
+}
+
+export interface LinkGatewayInput {
+  provider: PaymentProvider
+  providerProductId: string
+  providerPriceIds?: { planPriceId: string; providerPriceId: string }[]
 }
 
 // Input types
@@ -317,7 +339,6 @@ export interface CreatePlanPriceInput {
   amount: number
   currency: string
   interval: 'monthly' | 'yearly'
-  stripePriceId?: string
 }
 
 export interface ExtendAccessInput {

@@ -12,9 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { LoadingButton } from '@/components/ui/loading-button'
-import { Skeleton } from '@/components/ui/skeleton'
 import { useCreatePlanPrice } from '@/hooks/use-plans'
-import { useStripePrices } from '@/hooks/use-stripe'
 import type { CreatePlanPriceInput, ManagerPlan } from '@/types'
 
 interface PlanPriceFormProps {
@@ -28,15 +26,9 @@ export function PlanPriceForm({ open, onOpenChange, plan }: PlanPriceFormProps) 
     amount: 0,
     currency: 'brl',
     interval: 'monthly',
-    stripePriceId: '',
   })
 
   const createMutation = useCreatePlanPrice()
-
-  // Fetch Stripe prices if plan has a linked Stripe product
-  const { data: stripePrices, isLoading: isLoadingPrices } = useStripePrices(
-    plan?.stripeProductId || ''
-  )
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,28 +37,19 @@ export function PlanPriceForm({ open, onOpenChange, plan }: PlanPriceFormProps) 
     const data = {
       ...formData,
       amount: formData.amount * 100, // Convert to cents
-      stripePriceId: formData.stripePriceId || undefined,
     }
 
     await createMutation.mutateAsync({ planId: plan.id, data })
     onOpenChange(false)
-    setFormData({ amount: 0, currency: 'brl', interval: 'monthly', stripePriceId: '' })
-  }
-
-  // Format price for display (e.g., "$29.90/month")
-  const formatStripePrice = (price: { amount: number; currency: string; interval: string }) => {
-    const amount = (price.amount / 100).toFixed(2)
-    const currency = price.currency.toUpperCase()
-    const interval = price.interval === 'month' ? 'mensal' : 'anual'
-    return `${currency} ${amount} (${interval})`
+    setFormData({ amount: 0, currency: 'brl', interval: 'monthly' })
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Adicionar Preço</DialogTitle>
-          <DialogDescription>Adicione um novo preço para este plano.</DialogDescription>
+          <DialogTitle>Adicionar Preco</DialogTitle>
+          <DialogDescription>Adicione um novo preco para este plano.</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -116,33 +99,6 @@ export function PlanPriceForm({ open, onOpenChange, plan }: PlanPriceFormProps) 
                 <SelectItem value="yearly">Anual</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-
-          <div>
-            <Label htmlFor="stripePriceId">Stripe Price ID (opcional)</Label>
-            {!plan?.stripeProductId ? (
-              <p className="text-xs text-muted-foreground mt-2">
-                Vincule um produto Stripe ao plano para selecionar preços automaticamente.
-              </p>
-            ) : isLoadingPrices ? (
-              <Skeleton className="h-10 w-full" />
-            ) : (
-              <Select
-                value={formData.stripePriceId}
-                onValueChange={(value) => setFormData({ ...formData, stripePriceId: value })}
-              >
-                <SelectTrigger id="stripePriceId">
-                  <SelectValue placeholder="Nenhum (opcional)" />
-                </SelectTrigger>
-                <SelectContent>
-                  {stripePrices?.map((price) => (
-                    <SelectItem key={price.id} value={price.id}>
-                      {price.id} - {formatStripePrice(price)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
           </div>
 
           <DialogFooter>

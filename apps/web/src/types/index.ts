@@ -113,7 +113,6 @@ export interface PlanPrice {
   amount: number
   currency: string
   interval: 'month' | 'year'
-  stripeId: string
 }
 
 // Billing Plan (from API)
