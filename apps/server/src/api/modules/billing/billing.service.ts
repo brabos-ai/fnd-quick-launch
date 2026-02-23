@@ -1,14 +1,17 @@
 import { Injectable, NotFoundException, BadRequestException, ForbiddenException, ConflictException, Inject } from '@nestjs/common';
+import { Kysely } from 'kysely';
 import {
   IAccountRepository,
   IWorkspaceRepository,
   IWorkspaceUserRepository,
   IPlanRepository,
   ISubscriptionRepository,
-  IUserRepository,
+  IPaymentProviderMappingRepository,
+  Database,
 } from '@fnd/database';
-import { IStripeService, IConfigurationService, IAuthorizationService } from '@fnd/contracts';
-import { UserRole, Action, Resource } from '@fnd/domain';
+import { IPaymentGatewayFactory, IConfigurationService, IAuthorizationService } from '@fnd/contracts';
+import { UserRole, Action, Resource, PaymentProvider } from '@fnd/domain';
+import { IUserRepository } from '@fnd/database';
 import { PlanService } from './plan.service';
 import {
   BillingInfoResponseDto,
@@ -32,13 +35,17 @@ export class BillingService {
     private readonly planRepository: IPlanRepository,
     @Inject('ISubscriptionRepository')
     private readonly subscriptionRepository: ISubscriptionRepository,
-    @Inject('IStripeService')
-    private readonly stripeService: IStripeService,
+    @Inject('IPaymentGatewayFactory')
+    private readonly gatewayFactory: IPaymentGatewayFactory,
+    @Inject('IPaymentProviderMappingRepository')
+    private readonly mappingRepository: IPaymentProviderMappingRepository,
     @Inject('IAuthorizationService')
     private readonly authorizationService: IAuthorizationService,
     private readonly planService: PlanService,
     @Inject('IConfigurationService')
     private readonly configService: IConfigurationService,
+    @Inject('DATABASE')
+    private readonly db: Kysely<Database>,
   ) {}
 
   async createCheckoutSession(dto: CreateCheckoutDto, userId: string): Promise<{ checkoutUrl: string; sessionId: string }> {
@@ -54,7 +61,7 @@ export class BillingService {
       throw new NotFoundException('Workspace not found');
     }
 
-    // 3. Check authorization (super-admin bypass + owner workspace check)
+    // 3. Check authorization
     await this.authorizationService.require(user, Action.MANAGE, Resource.BILLING, {
       workspaceId: dto.workspaceId,
     });
@@ -71,47 +78,86 @@ export class BillingService {
       throw new ConflictException('Workspace já possui este plano');
     }
 
-    // 6. Get or create Stripe customer
+    // 6. Get account
     const account = await this.accountRepository.findById(workspace.accountId);
     if (!account) {
       throw new NotFoundException('Account not found');
     }
 
-    let customerId = account.stripeCustomerId;
+    // 7. Resolve provider and gateway
+    const provider = dto.provider ?? PaymentProvider.STRIPE;
+    const gateway = this.gatewayFactory.create(provider);
 
-    if (!customerId) {
-      // Create Stripe customer
-      const user = await this.accountRepository.findById(workspace.accountId); // Get account owner
-      if (!user) {
-        throw new NotFoundException('Account owner not found');
-      }
+    // 8. Resolve billing entity based on BILLING_SCOPE
+    const billingScope = this.configService.getBillingScope();
+    const entityType = billingScope; // 'account' | 'workspace'
+    const entityId = billingScope === 'account' ? account.id : workspace.id;
 
-      customerId = await this.stripeService.createCustomer(
-        user.name, // Using account name as customer name
-        user.name,
-      );
+    // 9. Resolve or create customer mapping
+    let customerId: string;
+    const customerMapping = await this.mappingRepository.findActiveByEntityAndProvider(
+      entityType,
+      entityId,
+      provider,
+    );
 
-      // Save customer ID to account
-      await this.accountRepository.update(workspace.accountId, { stripeCustomerId: customerId });
+    if (customerMapping) {
+      customerId = customerMapping.providerId;
+    } else {
+      // Create customer in gateway and store mapping
+      const customerResult = await gateway.createCustomer(user.email, user.fullName || user.email, {
+        entityType,
+        entityId,
+      });
+      customerId = customerResult.id;
+
+      await this.mappingRepository.create({
+        entityType,
+        entityId,
+        provider,
+        providerId: customerId,
+        isActive: true,
+      });
     }
 
-    // 7. Get price for plan
-    // TODO: Get current price from plan_prices table
-    // For now, hardcoded priceId (needs to be configured from Stripe)
-    const priceId = 'price_xxx'; // Placeholder
+    // 10. Resolve priceId via plan_price mapping
+    const planPrice = await this.db
+      .selectFrom('plan_prices')
+      .select(['id'])
+      .where('plan_id', '=', plan.id)
+      .where('is_current', '=', true)
+      .executeTakeFirst();
 
-    // 8. Create checkout session
-    const session = await this.stripeService.createCheckoutSession({
+    if (!planPrice) {
+      throw new BadRequestException('Este plano não possui um preço ativo configurado');
+    }
+
+    const priceMapping = await this.mappingRepository.findActiveByEntityAndProvider(
+      'plan_price',
+      planPrice.id,
+      provider,
+    );
+
+    if (!priceMapping) {
+      throw new BadRequestException(
+        `Este plano não está vinculado ao gateway ${provider}. Configure o link via painel de administração.`,
+      );
+    }
+
+    // 11. Create checkout session
+    const session = await gateway.createCheckoutSession({
       customerId,
-      priceId,
-      workspaceId: dto.workspaceId,
-      successUrl: this.configService.getStripeSuccessUrl(),
-      cancelUrl: this.configService.getStripeCancelUrl(),
+      priceId: priceMapping.providerId,
+      entityId: workspace.id,
+      entityType: 'workspace',
+      successUrl: this.configService.getCheckoutSuccessUrl(),
+      cancelUrl: this.configService.getCheckoutCancelUrl(),
+      metadata: { planCode: dto.planCode },
     });
 
     return {
       checkoutUrl: session.url,
-      sessionId: session.id,
+      sessionId: session.sessionId,
     };
   }
 
@@ -128,7 +174,7 @@ export class BillingService {
       throw new NotFoundException('Workspace not found');
     }
 
-    // 3. Check authorization (super-admin bypass + owner workspace check)
+    // 3. Check authorization
     await this.authorizationService.require(user, Action.MANAGE, Resource.BILLING, {
       workspaceId: dto.workspaceId,
     });
@@ -139,16 +185,31 @@ export class BillingService {
       throw new NotFoundException('Account not found');
     }
 
-    // 5. Verify account has Stripe customer
-    if (!account.stripeCustomerId) {
+    // 5. Resolve provider (default STRIPE — portal is a Stripe-specific capability)
+    const provider = PaymentProvider.STRIPE;
+    const gateway = this.gatewayFactory.create(provider);
+
+    // 6. Resolve billing entity based on BILLING_SCOPE
+    const billingScope = this.configService.getBillingScope();
+    const entityType = billingScope;
+    const entityId = billingScope === 'account' ? account.id : workspace.id;
+
+    // 7. Resolve customerId via mapping
+    const customerMapping = await this.mappingRepository.findActiveByEntityAndProvider(
+      entityType,
+      entityId,
+      provider,
+    );
+
+    if (!customerMapping) {
       throw new BadRequestException('Você ainda não possui assinaturas ativas');
     }
 
-    // 6. Create portal session
+    // 8. Create portal session
     const frontendUrl = this.configService.getFrontendUrl();
     const returnUrl = `${frontendUrl}/settings/billing`;
 
-    const session = await this.stripeService.createPortalSession(account.stripeCustomerId, returnUrl);
+    const session = await gateway.createPortalSession(customerMapping.providerId, returnUrl);
 
     return {
       portalUrl: session.url,
@@ -168,7 +229,7 @@ export class BillingService {
       throw new NotFoundException('Workspace not found');
     }
 
-    // 3. Check authorization (super-admin bypass + workspace member check)
+    // 3. Check authorization
     await this.authorizationService.require(user, Action.READ, Resource.BILLING, {
       workspaceId,
     });
@@ -184,7 +245,7 @@ export class BillingService {
 
     // 7. Count users in workspace
     // TODO: Implement workspaceUserRepository.countByWorkspaceId
-    const usersInWorkspace = 1; // Placeholder
+    const usersInWorkspace = 1;
 
     return {
       plan: {

@@ -6,6 +6,7 @@ import {
   StripePortalSession,
 } from '@fnd/contracts';
 import { IConfigurationService } from '@fnd/contracts';
+import { PaymentProvider } from '@fnd/domain';
 
 @Injectable()
 export class StripeService implements IStripeService {
@@ -15,8 +16,8 @@ export class StripeService implements IStripeService {
     @Inject('IConfigurationService')
     private readonly configService: IConfigurationService,
   ) {
-    const secretKey = this.configService.getStripeSecretKey();
-    this.stripe = new Stripe(secretKey, {
+    const config = this.configService.getGatewayConfig(PaymentProvider.STRIPE);
+    this.stripe = new Stripe(config.secretKey, {
       apiVersion: '2025-02-24.acacia',
     });
   }
@@ -71,7 +72,7 @@ export class StripeService implements IStripeService {
   }
 
   async constructWebhookEvent(payload: string | Buffer, signature: string): Promise<any> {
-    const webhookSecret = this.configService.getStripeWebhookSecret();
+    const webhookSecret = this.configService.getGatewayWebhookSecret(PaymentProvider.STRIPE);
 
     try {
       const event = this.stripe.webhooks.constructEvent(payload, signature, webhookSecret);

@@ -13,3 +13,7 @@ export { IPlanRepository, PlanWithPrice } from './IPlanRepository';
 export { ISubscriptionRepository } from './ISubscriptionRepository';
 export { IInviteRepository, InviteFilters } from './IInviteRepository';
 export { IEmailChangeRequestRepository } from './IEmailChangeRequestRepository';
+export {
+  IPaymentProviderMappingRepository,
+  CreatePaymentProviderMappingData,
+} from './IPaymentProviderMappingRepository';

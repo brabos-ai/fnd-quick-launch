@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Kysely } from 'kysely';
 import { Plan, PlanPrice } from '@fnd/domain';
-import { Database, PlanTable } from '../types';
+import { Database } from '../types';
 import { IPlanRepository, PlanWithPrice } from '../interfaces';
 
 @Injectable()
@@ -59,7 +59,6 @@ export class PlanRepository implements IPlanRepository {
       )
       .select([
         'plans.id',
-        'plans.stripe_product_id',
         'plans.code',
         'plans.name',
         'plans.description',
@@ -68,7 +67,6 @@ export class PlanRepository implements IPlanRepository {
         'plans.created_at',
         'plans.updated_at',
         'plan_prices.id as price_id',
-        'plan_prices.stripe_price_id',
         'plan_prices.amount as price_amount',
         'plan_prices.currency as price_currency',
         'plan_prices.interval as price_interval',
@@ -86,7 +84,6 @@ export class PlanRepository implements IPlanRepository {
           ? {
               id: row.price_id,
               planId: row.id,
-              stripePriceId: row.stripe_price_id || null,
               amount: row.price_amount,
               currency: row.price_currency || 'brl',
               interval: row.price_interval || 'month',
@@ -104,7 +101,6 @@ export class PlanRepository implements IPlanRepository {
     const result = await this.db
       .insertInto('plans')
       .values({
-        stripe_product_id: data.stripeProductId,
         code: data.code,
         name: data.name,
         description: data.description,
@@ -125,7 +121,6 @@ export class PlanRepository implements IPlanRepository {
       updated_at: now,
     };
 
-    if (data.stripeProductId !== undefined) updateData.stripe_product_id = data.stripeProductId;
     if (data.name !== undefined) updateData.name = data.name;
     if (data.description !== undefined) updateData.description = data.description;
     if (data.features !== undefined) updateData.features = data.features;
@@ -144,7 +139,6 @@ export class PlanRepository implements IPlanRepository {
   private mapToEntity(row: any): Plan {
     return {
       id: row.id,
-      stripeProductId: row.stripe_product_id,
       code: row.code,
       name: row.name,
       description: row.description,

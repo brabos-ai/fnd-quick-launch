@@ -59,7 +59,6 @@ export class PlanService implements IPlanService {
           'p.description',
           'p.features',
           'p.is_active',
-          'p.stripe_product_id',
           'p.created_at',
           'p.updated_at',
         ])
@@ -76,9 +75,8 @@ export class PlanService implements IPlanService {
         code: result.code as PlanCode,
         name: result.name,
         description: result.description || '',
-        features: result.features as PlanFeatures,
+        features: result.features as unknown as PlanFeatures,
         isActive: result.is_active,
-        stripeProductId: result.stripe_product_id || null,
         createdAt: new Date(result.created_at),
         updatedAt: new Date(result.updated_at),
       };

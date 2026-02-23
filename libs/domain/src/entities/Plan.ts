@@ -2,7 +2,6 @@ import { PlanFeatures } from '../types/PlanFeatures';
 
 export interface Plan {
   id: string;
-  stripeProductId: string | null;
   code: string;
   name: string;
   description: string | null;

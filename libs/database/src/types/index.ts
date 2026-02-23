@@ -12,3 +12,4 @@ export { SessionsTable } from './SessionsTable';
 export { LoginAttemptsTable } from './LoginAttemptsTable';
 export { AuthTokensTable } from './AuthTokensTable';
 export { ImpersonateSessionsTable } from './ImpersonateSessionsTable';
+export { PaymentProviderMappingTable } from './PaymentProviderMappingTable';

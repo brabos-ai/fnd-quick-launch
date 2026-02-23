@@ -1,4 +1,6 @@
 import { IFeatureFlags } from '../features/IFeatureFlags';
+import { GatewayConfig } from '../payment/types';
+import { PaymentProvider } from '@fnd/domain';
 
 export interface IConfigurationService {
   getFrontendUrl(): string;
@@ -12,11 +14,12 @@ export interface IConfigurationService {
   // JWT configuration
   getJwtSecret(): string;
 
-  // Stripe configuration
-  getStripeSecretKey(): string;
-  getStripeWebhookSecret(): string;
-  getStripeSuccessUrl(): string;
-  getStripeCancelUrl(): string;
+  // Gateway-agnostic payment configuration
+  getGatewayConfig(provider: PaymentProvider): GatewayConfig;
+  getGatewayWebhookSecret(provider: PaymentProvider): string;
+  getCheckoutSuccessUrl(): string;
+  getCheckoutCancelUrl(): string;
+  getBillingScope(): 'account' | 'workspace';
 
   // Redis configuration
   getRedisUrl(): string;

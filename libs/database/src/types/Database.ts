@@ -13,6 +13,7 @@ import { AuthTokensTable } from './AuthTokensTable';
 import { ImpersonateSessionsTable } from './ImpersonateSessionsTable';
 import { InvitesTable } from './InvitesTable';
 import { EmailChangeRequestsTable } from './EmailChangeRequestsTable';
+import { PaymentProviderMappingTable } from './PaymentProviderMappingTable';
 
 export interface Database {
   accounts: AccountTable;
@@ -30,4 +31,5 @@ export interface Database {
   impersonate_sessions: ImpersonateSessionsTable;
   invites: InvitesTable;
   email_change_requests: EmailChangeRequestsTable;
+  payment_provider_mappings: PaymentProviderMappingTable;
 }

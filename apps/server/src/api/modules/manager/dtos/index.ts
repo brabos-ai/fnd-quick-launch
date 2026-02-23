@@ -18,6 +18,7 @@ export * from './AtRiskMetricsDto';
 export * from './plans/CreatePlanDto';
 export * from './plans/UpdatePlanDto';
 export * from './plans/LinkStripeDto';
+export * from './plans/LinkGatewayDto';
 export * from './plans/CreatePlanPriceDto';
 export * from './plans/UpdatePlanPriceDto';
 export * from './plans/PlanResponseDto';
@@ -30,8 +31,13 @@ export * from './subscriptions/ManualCancelDto';
 export * from './subscriptions/ListSubscriptionsDto';
 export * from './subscriptions/SubscriptionResponseDto';
 
-// Stripe
+// Stripe (kept for backward compatibility)
 export * from './stripe/StripeProductDto';
+
+// Gateway (multi-provider)
+export * from './gateway/GatewayProductResponseDto';
+export * from './gateway/GatewayPriceResponseDto';
+export * from './gateway/GatewayHealthResponseDto';
 
 // Accounts
 export * from './accounts/SearchAccountsDto';

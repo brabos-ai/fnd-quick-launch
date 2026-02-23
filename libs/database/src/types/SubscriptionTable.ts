@@ -5,8 +5,6 @@ export interface SubscriptionTable {
   account_id: string | null;
   workspace_id: string | null;
   plan_price_id: string;
-  stripe_subscription_id: string;
-  stripe_customer_id: string;
   status: string;
   current_period_start: Date | null;
   current_period_end: Date | null;

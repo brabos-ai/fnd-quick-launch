@@ -30,7 +30,9 @@ export * from './messaging/commands';
 
 // Payment
 export { IPaymentGateway } from './payment/IPaymentGateway';
-export { CustomerResult, CustomerData } from './payment/types';
+export { IPaymentGatewayFactory } from './payment/IPaymentGatewayFactory';
+export { IWebhookNormalizer } from './payment/IWebhookNormalizer';
+export { IStripeService, StripeCheckoutSession, StripePortalSession } from './payment/IStripeService';
 export * from './payment/types';
 
 // Billing

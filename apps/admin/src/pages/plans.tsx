@@ -6,7 +6,7 @@ import { usePlans, useActivatePlan, useDeactivatePlan } from '@/hooks/use-plans'
 import { PlanCard } from '@/components/features/plans/plan-card'
 import { PlanForm } from '@/components/features/plans/plan-form'
 import { PlanPriceForm } from '@/components/features/plans/plan-price-form'
-import { LinkStripeModal } from '@/components/features/plans/link-stripe-modal'
+import { LinkGatewayModal } from '@/components/features/plans/link-gateway-modal'
 import type { ManagerPlan } from '@/types'
 
 export function PlansPage() {
@@ -20,8 +20,8 @@ export function PlansPage() {
   const [priceFormOpen, setPriceFormOpen] = useState(false)
   const [priceFormPlan, setPriceFormPlan] = useState<ManagerPlan | undefined>(undefined)
 
-  const [linkStripeOpen, setLinkStripeOpen] = useState(false)
-  const [linkStripePlan, setLinkStripePlan] = useState<ManagerPlan | undefined>(undefined)
+  const [linkGatewayOpen, setLinkGatewayOpen] = useState(false)
+  const [linkGatewayPlan, setLinkGatewayPlan] = useState<ManagerPlan | undefined>(undefined)
 
   const handleCreatePlan = () => {
     setSelectedPlan(undefined)
@@ -38,9 +38,9 @@ export function PlansPage() {
     setPriceFormOpen(true)
   }
 
-  const handleLinkStripe = (plan: ManagerPlan) => {
-    setLinkStripePlan(plan)
-    setLinkStripeOpen(true)
+  const handleLinkGateway = (plan: ManagerPlan) => {
+    setLinkGatewayPlan(plan)
+    setLinkGatewayOpen(true)
   }
 
   const handleActivate = (plan: ManagerPlan) => {
@@ -58,7 +58,7 @@ export function PlansPage() {
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-bold">Planos</h1>
           <p className="text-muted-foreground mt-1">
-            Gerenciar planos de assinatura e preços
+            Gerenciar planos de assinatura e precos
           </p>
         </div>
         <Button onClick={handleCreatePlan}>
@@ -91,13 +91,13 @@ export function PlansPage() {
                 onActivate={() => handleActivate(plan)}
                 onDeactivate={() => handleDeactivate(plan)}
                 onAddPrice={() => handleAddPrice(plan)}
-                onLinkStripe={() => handleLinkStripe(plan)}
+                onLinkGateway={() => handleLinkGateway(plan)}
               />
             ))}
         </div>
       ) : (
         <div className="border rounded-lg p-8 text-center text-muted-foreground">
-          Nenhum plano cadastrado. Crie o primeiro plano para começar.
+          Nenhum plano cadastrado. Crie o primeiro plano para comecar.
         </div>
       )}
 
@@ -108,11 +108,15 @@ export function PlansPage() {
         onOpenChange={setPriceFormOpen}
         plan={priceFormPlan}
       />
-      <LinkStripeModal
-        open={linkStripeOpen}
-        onOpenChange={setLinkStripeOpen}
-        plan={linkStripePlan}
-      />
+      {linkGatewayPlan && (
+        <LinkGatewayModal
+          planId={linkGatewayPlan.id}
+          planPrices={linkGatewayPlan.prices}
+          open={linkGatewayOpen}
+          onClose={() => setLinkGatewayOpen(false)}
+          onSuccess={() => {}}
+        />
+      )}
     </div>
   )
 }

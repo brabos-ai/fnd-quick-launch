@@ -10,6 +10,7 @@ export class SubscriptionCanceledEvent implements IDomainEvent {
       workspaceId: string;
       accountId: string;
       canceledAt: string;
+      provider?: string;
       reason?: string;
     },
     public readonly occurredAt: Date = new Date(),
