@@ -30,7 +30,7 @@ export class BillingController {
   }
 
   @Post('portal')
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   async createPortalSession(
     @Body() dto: CreatePortalDto,

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { ILoggerService, IConfigurationService } from '@fnd/contracts';
+import { ILoggerService } from '@fnd/contracts';
 import { ISubscriptionRepository } from '@fnd/database';
 import { SuspendSubscriptionCommand } from './commands/SuspendSubscriptionCommand';
 
@@ -21,8 +21,6 @@ export class DunningService {
     private readonly subscriptionRepository: ISubscriptionRepository,
     @Inject('ILoggerService')
     private readonly logger: ILoggerService,
-    @Inject('IConfigurationService')
-    private readonly configService: IConfigurationService,
     private readonly commandBus: CommandBus,
   ) {
     this.gracePeriodDays = 7;

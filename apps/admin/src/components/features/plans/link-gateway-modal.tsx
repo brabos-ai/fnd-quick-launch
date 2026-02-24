@@ -72,8 +72,12 @@ export function LinkGatewayModal({
 
   const handleCheckHealth = async () => {
     if (!selectedProvider) return
-    const result = await healthMutation.mutateAsync(selectedProvider as PaymentProvider)
-    setHealthResult(result)
+    try {
+      const result = await healthMutation.mutateAsync(selectedProvider as PaymentProvider)
+      setHealthResult(result)
+    } catch {
+      // Error already handled by mutation onError (toast)
+    }
   }
 
   const handleNextStep1 = () => {

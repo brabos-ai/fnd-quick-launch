@@ -186,30 +186,6 @@ export class ManagerPlanService {
   }
 
   /**
-   * Link Stripe product to plan
-   * @deprecated Use linkGatewayPlan (F0004 Feature 4) - kept for backward compatibility during migration
-   */
-  async linkStripePlan(id: string, stripeProductId: string): Promise<void> {
-    const plan = await this.db
-      .selectFrom('plans')
-      .selectAll()
-      .where('id', '=', id)
-      .executeTakeFirst();
-
-    if (!plan) {
-      throw new NotFoundException(`Plan not found: ${id}`);
-    }
-
-    // TODO (F0004 Feature 4): Replace with payment_provider_mappings insert
-    this.logger.info('Stripe product link requested (deprecated - use linkGatewayPlan)', {
-      operation: 'manager.link_stripe_plan',
-      module: 'ManagerPlanService',
-      planId: id,
-      stripeProductId,
-    });
-  }
-
-  /**
    * Link a gateway product to a plan using payment_provider_mappings table.
    * Creates entries for the plan and each plan_price mapping provided.
    */

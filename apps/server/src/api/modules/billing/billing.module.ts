@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { BillingController } from './billing.controller';
 import { BillingService } from './billing.service';
-import { StripeService } from './stripe.service';
 import { StripeAdapter } from './adapters/stripe.adapter';
 import { PaymentGatewayFactory } from './payment-gateway.factory';
 import { PlanService } from './plan.service';
@@ -30,7 +29,6 @@ const EventHandlers = [
   controllers: [BillingController],
   providers: [
     BillingService,
-    StripeService,
     StripeAdapter,
     {
       provide: 'StripeAdapter',
@@ -46,10 +44,6 @@ const EventHandlers = [
       useExisting: StripeAdapter,
     },
     {
-      provide: 'IStripeService',
-      useClass: StripeService,
-    },
-    {
       provide: 'IPlanService',
       useClass: PlanService,
     },
@@ -62,10 +56,8 @@ const EventHandlers = [
   exports: [
     'IPaymentGatewayFactory',
     'IPaymentGateway',
-    'IStripeService',
     'IPlanService',
     PlanService,
-    StripeService,
     StripeAdapter,
     PaymentGatewayFactory,
     WebhookNormalizerService,
