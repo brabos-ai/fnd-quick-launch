@@ -57,13 +57,17 @@ const clearAuthAndRedirect = () => {
   window.location.replace('/login')
 }
 
-// Request interceptor to add auth token
+// Request interceptor to add auth token and workspace context
 api.interceptors.request.use(
   (config) => {
     const authState = getAuthState()
 
     if (authState?.accessToken) {
       config.headers.Authorization = `Bearer ${authState.accessToken}`
+    }
+
+    if (authState?.currentWorkspace?.id) {
+      config.headers['x-workspace-id'] = authState.currentWorkspace.id
     }
 
     return config

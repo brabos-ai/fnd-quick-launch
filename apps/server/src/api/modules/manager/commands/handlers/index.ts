@@ -5,7 +5,6 @@ import { CreatePlanCommandHandler } from './CreatePlanCommandHandler';
 import { UpdatePlanCommandHandler } from './UpdatePlanCommandHandler';
 import { ActivatePlanCommandHandler } from './ActivatePlanCommandHandler';
 import { DeactivatePlanCommandHandler } from './DeactivatePlanCommandHandler';
-import { LinkStripePlanCommandHandler } from './LinkStripePlanCommandHandler';
 import { LinkGatewayPlanCommandHandler } from './LinkGatewayPlanCommandHandler';
 import { ExtendAccessCommandHandler } from './ExtendAccessCommandHandler';
 import { GrantTrialCommandHandler } from './GrantTrialCommandHandler';
@@ -20,7 +19,6 @@ export const CommandHandlers = [
   UpdatePlanCommandHandler,
   ActivatePlanCommandHandler,
   DeactivatePlanCommandHandler,
-  LinkStripePlanCommandHandler,
   LinkGatewayPlanCommandHandler,
   ExtendAccessCommandHandler,
   GrantTrialCommandHandler,

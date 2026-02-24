@@ -7,13 +7,19 @@ export interface IAsyncContextService {
    * Runs a callback within a new async context with the given requestId.
    * All async operations within this callback will have access to the requestId.
    */
-  run<T>(requestId: string, callback: () => T | Promise<T>): T | Promise<T>;
+  run<T>(requestId: string, callback: () => T | Promise<T>, workspaceId?: string): T | Promise<T>;
 
   /**
    * Gets the current requestId from the async context.
    * Returns undefined if called outside of an async context.
    */
   getRequestId(): string | undefined;
+
+  /**
+   * Gets the current workspaceId from the async context.
+   * Returns undefined if called outside of an async context or header not sent.
+   */
+  getWorkspaceId(): string | undefined;
 
   /**
    * Gets the full context store.
@@ -27,4 +33,5 @@ export interface IAsyncContextService {
  */
 export interface AsyncContextStore {
   requestId: string;
+  workspaceId?: string;
 }

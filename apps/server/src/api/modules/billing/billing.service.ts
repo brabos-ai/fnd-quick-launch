@@ -1,5 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException, ForbiddenException, ConflictException, Inject } from '@nestjs/common';
-import { Kysely } from 'kysely';
+import { Injectable, NotFoundException, BadRequestException, ConflictException, Inject } from '@nestjs/common';
 import {
   IAccountRepository,
   IWorkspaceRepository,
@@ -7,10 +6,9 @@ import {
   IPlanRepository,
   ISubscriptionRepository,
   IPaymentProviderMappingRepository,
-  Database,
 } from '@fnd/database';
 import { IPaymentGatewayFactory, IConfigurationService, IAuthorizationService } from '@fnd/contracts';
-import { UserRole, Action, Resource, PaymentProvider } from '@fnd/domain';
+import { Action, Resource, PaymentProvider } from '@fnd/domain';
 import { IUserRepository } from '@fnd/database';
 import { PlanService } from './plan.service';
 import {
@@ -44,8 +42,6 @@ export class BillingService {
     private readonly planService: PlanService,
     @Inject('IConfigurationService')
     private readonly configService: IConfigurationService,
-    @Inject('DATABASE')
-    private readonly db: Kysely<Database>,
   ) {}
 
   async createCheckoutSession(dto: CreateCheckoutDto, userId: string): Promise<{ checkoutUrl: string; sessionId: string }> {
@@ -121,12 +117,7 @@ export class BillingService {
     }
 
     // 10. Resolve priceId via plan_price mapping
-    const planPrice = await this.db
-      .selectFrom('plan_prices')
-      .select(['id'])
-      .where('plan_id', '=', plan.id)
-      .where('is_current', '=', true)
-      .executeTakeFirst();
+    const planPrice = await this.planRepository.findCurrentPriceByPlanId(plan.id);
 
     if (!planPrice) {
       throw new BadRequestException('Este plano não possui um preço ativo configurado');

@@ -10,6 +10,7 @@ export interface IPlanRepository {
   findByCode(code: string): Promise<Plan | null>;
   findActive(): Promise<Plan[]>;
   findActiveWithCurrentPrices(): Promise<PlanWithPrice[]>;
+  findCurrentPriceByPlanId(planId: string): Promise<PlanPrice | null>;
   create(data: Omit<Plan, 'id' | 'createdAt' | 'updatedAt'>): Promise<Plan>;
   update(id: string, data: Partial<Plan>): Promise<Plan>;
 }

@@ -96,6 +96,27 @@ export class PlanRepository implements IPlanRepository {
     });
   }
 
+  async findCurrentPriceByPlanId(planId: string): Promise<PlanPrice | null> {
+    const result = await this.db
+      .selectFrom('plan_prices')
+      .selectAll()
+      .where('plan_id', '=', planId)
+      .where('is_current', '=', true)
+      .executeTakeFirst();
+
+    if (!result) return null;
+
+    return {
+      id: result.id,
+      planId: result.plan_id,
+      amount: result.amount,
+      currency: result.currency,
+      interval: result.interval,
+      isCurrent: result.is_current,
+      createdAt: new Date(result.created_at),
+    };
+  }
+
   async create(data: Omit<Plan, 'id' | 'createdAt' | 'updatedAt'>): Promise<Plan> {
     const now = new Date();
     const result = await this.db

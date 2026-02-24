@@ -79,7 +79,7 @@ export interface GatewayHealthResult {
 export interface RawWebhookEvent {
   id: string;
   type: string;
-  data: any;
+  data: any; // provider-specific payload
   provider: PaymentProvider;
   receivedAt: Date;
 }
@@ -99,6 +99,6 @@ export interface NormalizedWebhookEvent {
   entityType?: string;
   entityId?: string;
   accountId?: string;
-  data: any;
+  data: any; // normalized event-specific data
   idempotencyKey: string;
 }

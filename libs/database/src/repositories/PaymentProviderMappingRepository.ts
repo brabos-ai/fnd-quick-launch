@@ -80,6 +80,14 @@ export class PaymentProviderMappingRepository implements IPaymentProviderMapping
         created_at: now,
         updated_at: now,
       })
+      .onConflict((oc) =>
+        oc.constraint('uq_ppm_entity_type_entity_id_provider').doUpdateSet({
+          provider_id: data.providerId,
+          is_active: data.isActive ?? true,
+          metadata: data.metadata ? JSON.stringify(data.metadata) : null,
+          updated_at: now,
+        })
+      )
       .returningAll()
       .executeTakeFirstOrThrow();
 

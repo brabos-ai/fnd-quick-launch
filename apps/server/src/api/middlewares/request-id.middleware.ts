@@ -4,6 +4,7 @@ import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 import { IAsyncContextService, IMetricsService } from '@fnd/contracts';
 
 const REQUEST_ID_HEADER = 'X-Request-ID';
+const WORKSPACE_ID_HEADER = 'x-workspace-id';
 
 /**
  * Middleware that establishes async context with requestId for each HTTP request.
@@ -54,9 +55,12 @@ export class RequestIdMiddleware implements NestMiddleware {
       });
     });
 
+    // Extract workspace ID from request header
+    const workspaceId = req.get(WORKSPACE_ID_HEADER) || undefined;
+
     // Run next() within async context
     this.asyncContext.run(requestId, () => {
       next();
-    });
+    }, workspaceId);
   }
 }

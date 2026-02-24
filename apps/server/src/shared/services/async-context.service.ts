@@ -10,12 +10,16 @@ import { IAsyncContextService, AsyncContextStore } from '@fnd/contracts';
 export class AsyncContextService implements IAsyncContextService {
   private readonly storage = new AsyncLocalStorage<AsyncContextStore>();
 
-  run<T>(requestId: string, callback: () => T | Promise<T>): T | Promise<T> {
-    return this.storage.run({ requestId }, callback);
+  run<T>(requestId: string, callback: () => T | Promise<T>, workspaceId?: string): T | Promise<T> {
+    return this.storage.run({ requestId, workspaceId }, callback);
   }
 
   getRequestId(): string | undefined {
     return this.storage.getStore()?.requestId;
+  }
+
+  getWorkspaceId(): string | undefined {
+    return this.storage.getStore()?.workspaceId;
   }
 
   getStore(): AsyncContextStore | undefined {
