@@ -140,4 +140,3 @@
 {"files":{"APP-SERVER.md":".codeadd/project/APP-SERVER.md (logging, validation, auth, CQRS, workers, payment gateway)","APP-ADMIN.md":".codeadd/project/APP-ADMIN.md (admin dashboard: state, routing, forms, charts)","APP-WEB.md":".codeadd/project/APP-WEB.md (main app: state, routing, forms, theme, hooks)","APP-SITE.md":".codeadd/project/APP-SITE.md (landing page: sections, animation, styling)","LIB-DATABASE.md":".codeadd/project/LIB-DATABASE.md (migrations, repositories, RLS, queries)","LIB-CONTRACTS.md":".codeadd/project/LIB-CONTRACTS.md (DI interfaces: services, payment, messaging, cqrs)","LIB-DOMAIN.md":".codeadd/project/LIB-DOMAIN.md (entities, enums, authorization, error types)","LIB-SHARED.md":".codeadd/project/LIB-SHARED.md (API response types, cross-app contracts)"}}
 {"generate":"Run /architecture-analyzer to regenerate these files"}
 ```
-

@@ -164,7 +164,7 @@ nul
 docs/
 
 .vscode/
-.fnd/
+.codeadd/
 .claude/
 .kilocode/
 .agent/
