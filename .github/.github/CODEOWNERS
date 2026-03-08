@@ -1,6 +1,0 @@
-# CODEOWNERS
-* @xmaiconx
-.github/ @xmaiconx
-*.env @xmaiconx
-*.key @xmaiconx
-*.pem @xmaiconx
